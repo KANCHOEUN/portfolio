@@ -1,0 +1,586 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #282c34;
+  --foreground: #abb2bf;
+  --red: #e06c75;
+  --green: #98c379;
+  --yellow: #e5c07b;
+  --blue: #61afef;
+  --purple: #c678dd;
+  --cyan: #56b6c2;
+  --border: #3e4451;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/Pretendard-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/Pretendard-Medium.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/Pretendard-SemiBold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/Pretendard-Bold.woff2") format("woff2");
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: "Pretendard", system-ui, sans-serif;
+}
+
+.dark {
+  --background: #282c34;
+  --foreground: #abb2bf;
+  --red: #e06c75;
+  --green: #98c379;
+  --yellow: #e5c07b;
+  --blue: #61afef;
+  --purple: #c678dd;
+  --cyan: #56b6c2;
+  --border: #3e4451;
+}
+
+.light {
+  --background: #fafafa;
+  --foreground: #383a42;
+  --red: #e45649;
+  --green: #50a14f;
+  --yellow: #c18401;
+  --blue: #4078f2;
+  --purple: #a626a4;
+  --cyan: #0184bc;
+  --border: #e5e5e5;
+}
+
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(107, 113, 125, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 113, 125, 0.7);
+}
+
+.light ::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 150, 0.5);
+}
+
+.light ::-webkit-scrollbar-thumb:hover {
+  background: rgba(150, 150, 150, 0.7);
+}
+
+/* Hide scrollbar arrows */
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+.file-tab {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-right-width: 1px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 38px;
+  border-right: 1px solid #343a47;
+}
+
+.light .file-tab {
+  border-right: 1px solid #d4d4d4;
+}
+
+.folder {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.5rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.folder:hover {
+  background-color: #2c313a;
+}
+
+.light .folder:hover {
+  background-color: #eaeaeb;
+}
+
+.file {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.5rem;
+  padding-left: 1.5rem;
+  cursor: pointer;
+  position: relative;
+  white-space: nowrap;
+}
+
+.file:hover {
+  background-color: #2c313a;
+}
+
+.light .file:hover {
+  background-color: #eaeaeb;
+}
+
+.active-file {
+  background-color: #2c313a;
+}
+
+.light .active-file {
+  background-color: #eaeaeb;
+}
+
+.line-number {
+  color: #636d83;
+  text-align: right;
+  padding-right: 1rem;
+  user-select: none;
+}
+
+.light .line-number {
+  color: #999;
+}
+
+/* Hierarchy lines */
+.project-container {
+  position: relative;
+}
+
+.files-container {
+  position: relative;
+  padding-left: 0.5rem;
+  border-left: 1px solid #3e4451;
+  margin-left: 0.75rem;
+}
+
+.light .files-container {
+  border-left: 1px solid #d4d4d4;
+}
+
+/* Mobile styles */
+@media (max-width: 767px) {
+  .file-tab {
+    height: 44px; /* Slightly taller on mobile for better touch targets */
+  }
+}
+
+/* Fix light mode */
+html.light {
+  background-color: #fafafa !important;
+}
+
+html.light body {
+  background-color: #fafafa !important;
+  color: #383a42 !important;
+}
+
+html.light .bg-\[\#282c34\] {
+  background-color: #fafafa !important;
+}
+
+html.light .bg-\[\#21252b\] {
+  background-color: #f0f0f0 !important;
+}
+
+html.light .text-\[\#abb2bf\] {
+  color: #383a42 !important;
+}
+
+html.light .border-\[\#181a1f\] {
+  border-color: #d4d4d4 !important;
+}
+
+html.light .border-\[\#343a47\] {
+  border-color: #d4d4d4 !important;
+}
+
+/* Fix light mode divider colors */
+html.light .border-\[\#343a47\],
+html.light .border-\[\#181a1f\] {
+  border-color: #d4d4d4 !important;
+}
+
+/* Make sure the resize handle has the correct color in light mode */
+html.light .bg-\[\#343a47\] {
+  background-color: #d4d4d4 !important;
+}
+
+/* Add text truncation */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Input field at bottom */
+.terminal-input {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+/* Content padding for scrollbar */
+.content-padding {
+  padding-right: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+/* Terminal styles */
+.terminal-container {
+  font-family: Consolas, Menlo, monospace;
+  line-height: 1.5;
+  height: 100%;
+  padding: 1rem;
+  overflow: auto;
+}
+
+.terminal-output {
+  min-height: 20px;
+}
+
+.terminal-input-form {
+  display: flex;
+  align-items: center;
+}
+
+/* ASCII art styles */
+.ascii-art {
+  font-family: Consolas, Menlo, monospace;
+  white-space: pre;
+  display: inline-block;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 20px 0;
+  line-height: 1.2;
+}
+
+/* Git graph styles */
+.git-graph {
+  position: relative;
+  padding-left: 1rem;
+}
+
+.git-branch {
+  position: relative;
+}
+
+/* 브랜치 라인 위치 고정을 위한 새로운 클래스 */
+.fixed-branch-line {
+  position: absolute;
+  z-index: 10;
+}
+
+/* Git graph styles */
+.git-graph-container {
+  position: relative;
+}
+
+.branch-section {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.branch-item {
+  position: relative;
+}
+
+/* 모바일 및 작은 화면에서의 스타일 개선 */
+@media (max-width: 640px) {
+  * {
+  }
+}
+
+/* 브랜치 라인 위치 고정을 위한 클래스 - 모든 화면 크기에서 동일하게 적용 */
+.git-branch {
+  position: relative;
+  min-width: 80px; /* 모든 화면에서 동일한 최소 너비 */
+}
+
+/* Add these specific light mode overrides at the end of the file */
+
+/* Fix light mode for branch items in resume page */
+html.light .bg-\[\#2c313a\] {
+  background-color: #f0f0f0 !important;
+}
+
+html.light .text-\[\#abb2bf\] {
+  color: #383a42 !important;
+}
+
+html.light .text-\[\#98c379\] {
+  color: #50a14f !important;
+}
+
+html.light .text-\[\#61afef\] {
+  color: #4078f2 !important;
+}
+
+/* Blog viewer transitions */
+.blog-viewer-enter {
+  transform: translateX(100%);
+}
+
+.blog-viewer-enter-active {
+  transform: translateX(0);
+  transition: transform 0.3s ease-in-out;
+}
+
+.blog-viewer-exit {
+  transform: translateX(0);
+}
+
+.blog-viewer-exit-active {
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Prose light mode overrides */
+html.light .prose-invert {
+  --tw-prose-body: #383a42;
+  --tw-prose-headings: #c18401;
+  --tw-prose-lead: #383a42;
+  --tw-prose-links: #4078f2;
+  --tw-prose-bold: #383a42;
+  --tw-prose-counters: #383a42;
+  --tw-prose-bullets: #383a42;
+  --tw-prose-hr: #d4d4d4;
+  --tw-prose-quotes: #383a42;
+  --tw-prose-quote-borders: #d4d4d4;
+  --tw-prose-captions: #383a42;
+  --tw-prose-code: #50a14f;
+  --tw-prose-pre-code: #50a14f;
+  --tw-prose-pre-bg: #eaeaeb;
+  --tw-prose-th-borders: #d4d4d4;
+  --tw-prose-td-borders: #d4d4d4;
+}
+
+/* Add these styles at the end of the file */
+
+/* Iframe viewer transitions */
+.iframe-viewer-enter {
+  transform: translateX(100%);
+}
+
+.iframe-viewer-enter-active {
+  transform: translateX(0);
+  transition: transform 0.3s ease-in-out;
+}
+
+.iframe-viewer-exit {
+  transform: translateX(0);
+}
+
+.iframe-viewer-exit-active {
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Fix iframe border in light mode */
+html.light iframe {
+  border: 1px solid #d4d4d4;
+}
+
+/* Split view styles */
+.split-view {
+  display: flex;
+  height: 100%;
+}
+
+.split-view-left,
+.split-view-right {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: width 0.3s ease-in-out;
+}
+
+.split-view-content {
+  flex: 1;
+  overflow: auto;
+}
+
+/* 높이 관련 수정 */
+.h-full {
+  height: 100% !important;
+}
+
+/* 컨텐츠 영역이 전체 높이를 차지하도록 */
+.flex-1 {
+  flex: 1 1 0% !important;
+}
+
+/* iframe 컨테이너 스타일 */
+.iframe-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* 탭 스타일 */
+.tabs-header {
+  display: flex;
+  overflow-x: auto;
+  background-color: #21252b;
+  border-bottom: 1px solid #343a47;
+  position: relative;
+  height: 38px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(107, 113, 125, 0.5) transparent;
+}
+
+.light .tabs-header {
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #d4d4d4;
+  scrollbar-color: rgba(150, 150, 150, 0.5) transparent;
+}
+
+.tabs-header::-webkit-scrollbar {
+  height: 4px;
+  width: 4px;
+}
+
+.tabs-header::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tabs-header::-webkit-scrollbar-thumb {
+  background: rgba(107, 113, 125, 0.5);
+  border-radius: 4px;
+}
+
+.tabs-header::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 113, 125, 0.7);
+}
+
+.light .tabs-header::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 150, 0.5);
+}
+
+.light .tabs-header::-webkit-scrollbar-thumb:hover {
+  background: rgba(150, 150, 150, 0.7);
+}
+
+.tabs-header .file-tab {
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  height: 38px;
+}
+
+.tabs-header .file-tab.active {
+  border-bottom: 2px solid #61afef;
+}
+
+/* 반응형 그리드 */
+@media (min-width: 640px) {
+  .grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* 고정 헤더 */
+.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* 콘텐츠 헤더 고정 */
+h1.sticky {
+  background-color: #282c34;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin-top: 0;
+}
+
+.light h1.sticky {
+  background-color: #fafafa;
+}
+
+/* 탭 제목 최대 너비 */
+.max-w-150 {
+  max-width: 150px;
+}
+
+/* 탭 활성화 표시 */
+.border-b-2 {
+  border-bottom-width: 2px;
+}
+
+.border-blue-500 {
+  border-color: #61afef;
+}
+
+/* 모바일 탭 스타일 */
+@media (max-width: 767px) {
+  .tabs-header {
+    height: 44px;
+  }
+
+  .tabs-header .file-tab {
+    height: 44px;
+  }
+}

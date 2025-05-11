@@ -1,0 +1,71 @@
+.flipCard {
+  background-color: transparent;
+  perspective: 1000px;
+  height: 100%;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.flipCardInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.flipped .flipCardInner {
+  transform: rotateY(180deg);
+}
+
+.flipCardFront,
+.flipCardBack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.flipCardFront {
+  padding: 20px;
+}
+
+.flipCardBack {
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.glowGreen {
+  box-shadow: 0 0 15px 5px rgba(152, 195, 121, 0.7);
+}
+
+.glowWhite {
+  box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.7);
+}
+
+html.light .glowGreen {
+  box-shadow: 0 0 15px 5px rgba(80, 161, 79, 0.7);
+}
+
+html.light .glowWhite {
+  box-shadow: 0 0 15px 5px rgba(200, 200, 200, 0.7);
+}
+
+@media (max-width: 768px) {
+  .flipCard {
+    height: 250px;
+  }
+}
