@@ -7,7 +7,7 @@ import { ChevronDown, ChevronRight, Folder, FileText } from "lucide-react"
 const projects = [
   {
     id: "project1",
-    name: "Project One",
+    name: "Pigrest",
     pages: [
       { id: "intro1", name: "소개", type: "file" },
       { id: "diagram1", name: "다이어그램", type: "file" },
@@ -16,7 +16,7 @@ const projects = [
   },
   {
     id: "project2",
-    name: "Project Two",
+    name: "RE-VERSE",
     pages: [
       { id: "intro2", name: "소개", type: "file" },
       { id: "diagram2", name: "다이어그램", type: "file" },
@@ -25,7 +25,7 @@ const projects = [
   },
   {
     id: "project3",
-    name: "Project Three",
+    name: "PARSLEY",
     pages: [
       { id: "intro3", name: "소개", type: "file" },
       { id: "diagram3", name: "다이어그램", type: "file" },

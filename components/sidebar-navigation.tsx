@@ -36,7 +36,7 @@ const mainNavigation = [
     children: [
       {
         id: "project1",
-        name: "Project One",
+        name: "Pigrest",
         isFolder: true,
         children: [
           { id: "intro1", name: "소개", path: "/portfolio?file=intro1" },
@@ -46,7 +46,7 @@ const mainNavigation = [
       },
       {
         id: "project2",
-        name: "Project Two",
+        name: "RE-VERSE",
         isFolder: true,
         children: [
           { id: "intro2", name: "소개", path: "/portfolio?file=intro2" },
@@ -56,7 +56,7 @@ const mainNavigation = [
       },
       {
         id: "project3",
-        name: "Project Three",
+        name: "PARSLEY",
         isFolder: true,
         children: [
           { id: "intro3", name: "소개", path: "/portfolio?file=intro3" },

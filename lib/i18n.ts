@@ -1,3 +1,5 @@
+// 다국어 지원을 위한 번역 데이터와 유틸리티 함수
+
 export type Language = "ko" | "en"
 
 // 번역 키 타입 정의
@@ -157,20 +159,20 @@ const ko: TranslationKeys = {
   "terminal.skills.desc": "기술 스택 표시",
   "terminal.history.desc": "최근 활동 표시",
   "terminal.unknown.command": "명령어를 찾을 수 없습니다. 'help'를 입력하여 사용 가능한 명령어를 확인하세요.",
-  "terminal.name": "이름: 홍길동",
+  "terminal.name": "이름: 조혜은",
   "terminal.role": "직무: 백엔드 개발자",
   "terminal.intro": "저는 견고하고 확장 가능한 시스템을 구축하는 데 집중하는 열정적인 백엔드 개발자입니다.",
   "terminal.expertise": "제 전문 분야는 Java, Spring Boot 및 클라우드 인프라입니다.",
   "terminal.beliefs": "저는 깨끗한 코드, 철저한 테스트 및 지속적인 학습을 믿습니다.",
-  "terminal.current.work": "현재 작업 중:",
-  "terminal.microservice.optimization": "- 마이크로서비스 아키텍처 최적화",
-  "terminal.performance.tuning": "- 고트래픽 애플리케이션을 위한 성능 튜닝",
-  "terminal.opensource.contribution": "- 오픈 소스 프로젝트에 기여",
+  // "terminal.current.work": "현재 작업 중:",
+  // "terminal.microservice.optimization": "- 마이크로서비스 아키텍처 최적화",
+  // "terminal.performance.tuning": "- 고트래픽 애플리케이션을 위한 성능 튜닝",
+  // "terminal.opensource.contribution": "- 오픈 소스 프로젝트에 기여",
   "terminal.recent.activity": "최근 활동:",
-  "terminal.activity.1": "1. 2023-12 ~ 현재: 마이크로서비스 아키텍처 최적화 작업 중",
-  "terminal.activity.2": "2. 2023-06 ~ 2023-11: 고성능 API 게이트웨이 개발",
-  "terminal.activity.3": "3. 2022-09 ~ 2023-05: 전자상거래 플랫폼용 확장 가능한 백엔드 구축",
-  "terminal.activity.4": "4. 2022-01 ~ 2022-08: 클라우드 배포를 위한 CI/CD 파이프라인 구현",
+  "terminal.activity.1": "1. 2025-05 ~ 현재: 포트폴리오 사이트 구현 중",
+  "terminal.activity.2": "2. 2025-03 ~ 현재: Pigrest 프로젝트 진행 중",
+  "terminal.activity.3": "3. 2023-07 ~ 2024-12: 티맥스 FOCUS 서비스 - 가격 정책 모듈 설계 및 구현",
+  "terminal.activity.4": "4. 2022-01 ~ 2022-12: 삼성 청년 SW 아카데미 - RE-VERSE와 PARSLEY 프로젝트 진행",
   "terminal.placeholder": "'help' 입력하여 명령어 확인 또는 ↑↓ 키로 명령어 탐색",
 
   // 포트폴리오
@@ -179,9 +181,9 @@ const ko: TranslationKeys = {
   "portfolio.file.not.found": "파일을 찾을 수 없습니다",
 
   // 프로젝트
-  "project.one": "프로젝트 원",
-  "project.two": "프로젝트 투",
-  "project.three": "프로젝트 쓰리",
+  "project.one": "Pigrest",
+  "project.two": "RE-VERSE",
+  "project.three": "PARSLEY",
   "project.intro": "소개",
   "project.diagram": "다이어그램",
   "project.related": "관련 글",
@@ -282,7 +284,7 @@ const ko: TranslationKeys = {
   "content.project.one.sequence": "시퀀스 다이어그램",
   "content.project.one.sequence.desc": "주요 기능의 시퀀스 다이어그램입니다.",
   "content.project.two.api.design": "API 설계",
-  "content.project.two.api.design.desc": "RESTful API 설계 및 엔드포인트 구조입니다.",
+  "content.project.two.api.design.desc": "RESTful API 설계 및 엔드포인�� 구조입니다.",
   "content.project.three.ml.pipeline": "ML 파이프라인",
   "content.project.three.ml.pipeline.desc": "머신러닝 모델 학습 및 배포 파이프라인입니다.",
 
@@ -326,9 +328,9 @@ const en: TranslationKeys = {
   "portfolio.file.not.found": "File not found",
 
   // 프로젝트
-  "project.one": "Project One",
-  "project.two": "Project Two",
-  "project.three": "Project Three",
+  "project.one": "Pigrest",
+  "project.two": "RE-VERSE",
+  "project.three": "PARSLEY",
   "project.intro": "Introduction",
   "project.diagram": "Diagram",
   "project.related": "Related Articles",

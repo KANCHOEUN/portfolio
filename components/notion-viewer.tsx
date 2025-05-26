@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { useEffect } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import { NotionRenderer } from "react-notion-x";
 
 interface NotionViewerProps {
     notionPageId: string
@@ -11,31 +10,22 @@ interface NotionViewerProps {
 }
 
 export default function NotionViewer({ notionPageId, onClose }: NotionViewerProps) {
-    const [markdown, setMarkdown] = useState<string | null>(null);
+    const [markdown, setMarkdown] = useState<any | null>(null);
 
     useEffect(() => {
-        async function fetchMarkdown() {
-            const res = await fetch(`/api/notion?pageId=${notionPageId}`);
-            const data = await res.json();
-            setMarkdown(data.markdown);
-        }
-        fetchMarkdown();
-    }, [notionPageId]);
+        fetch(`/api/notion?pageId=${notionPageId}`)
+          .then(res => res.json())
+          .then(data => setMarkdown(data.recordMap));
+      }, [notionPageId]);
+    
+    if (!markdown) return <p>Loading Notion content...</p>;
 
-    if (!markdown) return <p>Loading...</p>;
 
     return (
         <div className="h-full flex flex-col bg-[#282c34] dark:bg-[#282c34] light:bg-[#fafafa]">
             <div className="flex-1 overflow-hidden h-full">
-                {/* <iframe
-          src={url}
-          className="w-full h-full border-0"
-          title={title}
-          sandbox="allow-scripts allow-same-origin allow-forms"
-          loading="lazy"
-        /> */}
-                <div w-full h-full border-0>
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
+                <div className="w-full h-full border-0 overflow-y-auto">
+                    <NotionRenderer recordMap={markdown} fullPage={true} darkMode={false} />
                 </div>
             </div>
         </div>

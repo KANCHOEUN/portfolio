@@ -45,12 +45,14 @@ ${t("terminal.intro")}
 ${t("terminal.expertise")}
 ${t("terminal.beliefs")}
 
-${t("terminal.current.work")}
-${t("terminal.microservice.optimization")}
-${t("terminal.performance.tuning")}
-${t("terminal.opensource.contribution")}
+
       `
   }, [t])
+
+//   ${t("terminal.current.work")}
+// ${t("terminal.microservice.optimization")}
+// ${t("terminal.performance.tuning")}
+// ${t("terminal.opensource.contribution")}
 
   // Typewriter effect
   const typeWriter = useCallback(async (text: string) => {
@@ -99,7 +101,8 @@ ${t("terminal.opensource.contribution")}
       `whoami - ${t("terminal.whoami.desc")}`,
       `clear - ${t("terminal.clear.desc")}`,
       `skills - ${t("terminal.skills.desc")}`,
-      `history - ${t("terminal.history.desc")}`,
+      `history - ${t("terminal.history.desc")}
+            `,
     ]
     return commandDescriptions.join("\n")
   }, [t])
@@ -130,6 +133,7 @@ ${t("terminal.opensource.contribution")}
         ├── Jenkins
         ├── GitHub Actions
         └── Argo CD
+      
 `
   }, [t])
 
@@ -140,6 +144,7 @@ ${t("terminal.activity.1")}
 ${t("terminal.activity.2")}
 ${t("terminal.activity.3")}
 ${t("terminal.activity.4")}
+      
 `
   }, [t])
 

@@ -16,7 +16,7 @@ export default function Header() {
           href="/about"
           className="text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] font-medium hover:text-[#e5c07b] dark:hover:text-[#e5c07b] light:hover:text-[#4078f2]"
         >
-          HIA
+          HYEEUN CHO
         </Link>
       </div>
       <div className="flex items-center justify-end w-1/3 gap-2">

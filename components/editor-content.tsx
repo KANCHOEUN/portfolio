@@ -9,6 +9,8 @@ import IframeViewer from "./iframe-viewer"
 import { useLanguage } from "@/contexts/language-context"
 import { useSearchParams, useRouter } from "next/navigation"
 import { projectContentData, projectInfo, relatedArticlesData } from "@/lib/project-content"
+import { url } from "inspector"
+import NotionViewer from "./notion-viewer"
 
 interface EditorContentProps {
   activeFile: string | null
@@ -26,56 +28,55 @@ interface OpenTab {
 // Sample blog posts data with real URLs
 const blogPosts = [
   {
-    id: "how-we-built-project-one",
-    title: "How We Built Project One",
+    id: "uuid",
+    title: "UUID 적용기",
     description:
-      "A deep dive into the development process of Project One, including the challenges we faced and how we overcame them.",
-    image: "/placeholder.svg?height=200&width=300",
+      "UUID를 도입하게 된 배경과 실제 코드에 어떻게 적용하였는가",
+    image: "https://kanchoeun.github.io/assets/img/posts/uuid.png",
     url: "https://kanchoeun.github.io/posts/UUID-%EC%A0%81%EC%9A%A9%EA%B8%B0/",
   },
   {
-    id: "lessons-learned",
-    title: "Lessons Learned from Project One",
-    description: "Key insights and takeaways from developing and launching Project One, with tips for future projects.",
-    image: "/placeholder.svg?height=200&width=300",
-    url: "https://kanchoeun.github.io/posts/%EA%B3%B5%ED%86%B5-%EC%9D%91%EB%8B%55-%ED%98%95%EC%8B%9D-%EC%A0%81%EC%9A%A9%EA%B8%B0/",
+    id: "common-response-format",
+    title: "공통 응답 형식 적용기",
+    description: "Pigrest 프로젝트에서 정의한 공통 응답 형식과 ResponseBodyAdvice를 적용하지 않은 이유",
+    image: "https://kanchoeun.github.io/assets/img/posts/spring-mvc-request-life-cycle.jpg",
+    url: "https://kanchoeun.github.io/posts/%EA%B3%B5%ED%86%B5-%EC%9D%91%EB%8B%B5-%ED%98%95%EC%8B%9D-%EC%A0%81%EC%9A%A9%EA%B8%B0/",
   },
   {
-    id: "case-study",
-    title: "Project One: A Case Study",
+    id: "filter-interceptor-response-body",
+    title: "Filter와 Interceptor에서 Response의 body를 수정할 수 있을까",
     description:
-      "An in-depth analysis of Project One's architecture, performance optimizations, and user experience design.",
-    image: "/placeholder.svg?height=200&width=300",
-    url: "https://vercel.com",
+      "Spring MVC Request Lifecycle에서 HttpMessageConverter 톺아보기",
+    image: "https://kanchoeun.github.io/assets/img/posts/spring-mvc-request-life-cycle-http-message-converter.svg",
+    url: "https://kanchoeun.github.io/posts/Filter%EC%99%80-Interceptor%EC%97%90%EC%84%9C-Response%EC%9D%98-body%EB%A5%BC-%EC%88%98%EC%A0%95%ED%95%A0-%EC%88%98-%EC%9E%88%EC%9D%84%EA%B9%8C/",
   },
   {
-    id: "future-roadmap",
-    title: "The Future of Project One",
-    description: "Upcoming features, improvements, and the roadmap for Project One's continued development and growth.",
-    image: "/placeholder.svg?height=200&width=300",
-    url: "https://nextjs.org",
+    id: "index-performance",
+    title: "INDEX를 적용하여 성능 개선하기",
+    description: "EXPLAIN 명령어로 병목 식별하고, 4만 건 이상의 데이터 성능 46% 향상시키기",
+    image: "https://re-verse.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F95a5f1ad-4464-4a33-b743-c773a2133990%2FUntitled.png?table=block&id=49792335-1313-46ea-94d5-af47b7b4d885&spaceId=1dc760ff-98aa-4cb3-b846-75e0be268835&width=2000&userId=&cache=v2",
+    url: "https://www.notion.so/choeun/INDEX-1ff9d8968ca3801d82acf4679a919f8f",
   },
   {
-    id: "user-engagement",
-    title: "User Engagement Analysis",
-    description:
-      "A detailed analysis of user engagement metrics for Project Two, with insights on improving retention.",
-    image: "/placeholder.svg?height=200&width=300",
-    url: "https://tailwindcss.com",
+    id: "gitlab-ci",
+    title: "GitLab CI 파이프라인 구축하기",
+    description: "GitLab CI 파이프라인을 구축 방법 및 발생한 이슈들 기록",
+    image: "https://choeun.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fc535450d-5e96-4e1f-b8e6-a7b95b3eec87%2FUntitled.png?table=block&id=1ff9d896-8ca3-815f-9c36-e294bbb66ef6&spaceId=5d0a987d-8a0f-4ad2-a579-07d63bd3b542&width=2000&userId=&cache=v2",
+    url: "https://www.notion.so/choeun/GitLab-CI-1ff9d8968ca380169aa2d223996b4f6d",
   },
   {
-    id: "performance-optimization",
-    title: "Performance Optimization",
-    description: "How we optimized Project Two for better performance on mobile devices with limited resources.",
-    image: "/placeholder.svg?height=200&width=300",
-    url: "https://react.dev",
-  },
-  {
-    id: "health-api-documentation",
-    title: "Health API Documentation",
+    id: "argo-cd",
+    title: "Argo CD 파이프라인 구축하기",
     description: "Comprehensive documentation for the Health API used in Project Two, with examples and use cases.",
-    image: "/placeholder.svg?height=200&width=300",
-    url: "https://developer.mozilla.org",
+    image: "https://choeun.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8c234292-e9a8-4fa0-a3c3-1766fdefae60%2FUntitled.png?table=block&id=1ff9d896-8ca3-8113-a2f6-ed66966fa453&spaceId=5d0a987d-8a0f-4ad2-a579-07d63bd3b542&width=2000&userId=&cache=v2",
+    url: "https://www.notion.so/choeun/Argo-CD-1ff9d8968ca3800da11fc2224537449c",
+  },
+  {
+    id: "hpa-artillery",
+    title: "HPA 적용 테스트 (feat.Artillery)",
+    description: "서버에 부하를 줘서 Horizontal Pod Autoscaler를 테스트해보자",
+    image: "https://choeun.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8171808e-639c-4cf6-9afa-b6813eaeecce%2FUntitled.png?table=block&id=1ff9d896-8ca3-8114-a9a4-d7131ce0b81e&spaceId=5d0a987d-8a0f-4ad2-a579-07d63bd3b542&width=2000&userId=&cache=v2",
+    url: "https://www.notion.so/HPA-feat-Artillery-1ff9d8968ca3803dacfbef45bb3d84e0",
   },
   {
     id: "scalable-data-processing",
@@ -141,6 +142,8 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
   const [forceRender, setForceRender] = useState(0)
   const tabsHeaderRef = useRef<HTMLDivElement>(null)
   const contentAreaRef = useRef<HTMLDivElement>(null)
+
+  console.log(selectedBlog);
 
   // 파일 타입에 따른 페이지 이름 매핑 - language를 의존성에 추가
   const getFilePageName = useCallback(
@@ -328,6 +331,8 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
       const articleIds = relatedArticlesData[fileId as keyof typeof relatedArticlesData] || []
       const filteredPosts = blogPosts.filter((post) => articleIds.includes(post.id))
 
+      console.log(filteredPosts);
+
       const getProjectName = () => {
         try {
           if (fileId.includes("1")) return t("project.one")
@@ -356,7 +361,7 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
               />
             ))}
           </div>
-        </div>
+        </div> 
       )
     },
     [t, language], // language 의존성 추가
@@ -651,7 +656,11 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
 
           <div className="flex-1 overflow-auto">
             {selectedBlog ? (
-              <IframeViewer url={selectedBlog.url} title={selectedBlog.title} onClose={handleCloseBlogViewer} />
+              selectedBlog.url.includes("notion.so") ? (
+                  <NotionViewer notionPageId={selectedBlog.url.split("/").pop()?.split("-").pop() || ""} onClose={handleCloseBlogViewer} />
+              ) : (
+                <IframeViewer url={selectedBlog.url} title={selectedBlog.title} onClose={handleCloseBlogViewer} />
+              )
             ) : (
               <div className="h-full">{getActiveTabContent()}</div>
             )}
@@ -720,7 +729,11 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
                 </button>
               </div>
               <div className="flex-1 overflow-hidden">
-                <IframeViewer url={selectedBlog.url} title={selectedBlog.title} onClose={handleCloseBlogViewer} />
+                {selectedBlog.url.includes("notion.so") ? (
+                  <NotionViewer notionPageId={selectedBlog.url.split("/").pop()?.split("-").pop() || ""} onClose={handleCloseBlogViewer} />
+                ) : (
+                  <IframeViewer url={selectedBlog.url} title={selectedBlog.title} onClose={handleCloseBlogViewer} />
+                )}
               </div>
             </div>
           )}

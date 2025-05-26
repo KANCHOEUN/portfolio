@@ -4,8 +4,17 @@ import "./globals.css"
 import Header from "@/components/header"
 import { LanguageProvider } from "@/contexts/language-context"
 
+// core styles shared by all of react-notion-x (required)
+import 'react-notion-x/src/styles.css'
+
+// used for code syntax highlighting (optional)
+import 'prismjs/themes/prism-tomorrow.css'
+
+// used for rendering equations (optional)
+import 'katex/dist/katex.min.css'
+
 export const metadata: Metadata = {
-  title: "Developer Portfolio",
+  title: "HYEEUN",
   description: "A code editor themed developer portfolio",
   icons: {
     icon: [
@@ -37,10 +46,10 @@ export const metadata: Metadata = {
     initialScale: 1,
     maximumScale: 1,
   },
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#000000' },
-  ],
+  // themeColor: [
+  //   { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+  //   { media: '(prefers-color-scheme: dark)', color: '#000000' },
+  // ],
 }
 
 export default function RootLayout({

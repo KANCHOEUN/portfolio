@@ -7,9 +7,9 @@ interface IframeViewerProps {
 }
 
 export default function IframeViewer({ url, title, onClose }: IframeViewerProps) {
-  const openInNewTab = () => {
-    window.open(url, "_blank", "noopener,noreferrer")
-  }
+  // const openInNewTab = () => {
+  //   window.open(url, "_blank", "noopener,noreferrer")
+  // }
 
   return (
     <div className="h-full flex flex-col bg-[#282c34] dark:bg-[#282c34] light:bg-[#fafafa]">
