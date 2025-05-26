@@ -263,11 +263,12 @@ html.light .bg-\[\#343a47\] {
   width: 100%;
 }
 
-/* Content padding for scrollbar */
+/* Content padding for scrollbar - 수정된 부분 */
 .content-padding {
-  padding-right: 16px;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding: 1.5rem;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* Terminal styles */
@@ -461,48 +462,62 @@ html.light iframe {
   height: 100%;
 }
 
-/* 탭 스타일 */
+/* 탭 헤더 스타일 개선 - 수정된 부분 */
 .tabs-header {
   display: flex;
   overflow-x: auto;
+  overflow-y: hidden;
   background-color: #21252b;
   border-bottom: 1px solid #343a47;
-  position: relative;
+  position: sticky;
+  top: 0;
   height: 38px;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(107, 113, 125, 0.5) transparent;
+  min-height: 38px;
+  max-height: 38px;
+  z-index: 20; /* z-index 증가 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.tabs-header::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .light .tabs-header {
   background-color: #f0f0f0;
   border-bottom: 1px solid #d4d4d4;
-  scrollbar-color: rgba(150, 150, 150, 0.5) transparent;
 }
 
-.tabs-header::-webkit-scrollbar {
+/* 커스텀 스크롤바를 상단에 위치 */
+.tabs-header::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: 0;
+  right: 0;
   height: 4px;
-  width: 4px;
-}
-
-.tabs-header::-webkit-scrollbar-track {
   background: transparent;
+  z-index: 20;
+  pointer-events: none;
 }
 
-.tabs-header::-webkit-scrollbar-thumb {
-  background: rgba(107, 113, 125, 0.5);
-  border-radius: 4px;
+.tabs-header.scrollable::before {
+  background: linear-gradient(
+    to right,
+    rgba(107, 113, 125, 0.3) 0%,
+    rgba(107, 113, 125, 0.5) 50%,
+    rgba(107, 113, 125, 0.3) 100%
+  );
+  pointer-events: auto;
 }
 
-.tabs-header::-webkit-scrollbar-thumb:hover {
-  background: rgba(107, 113, 125, 0.7);
-}
-
-.light .tabs-header::-webkit-scrollbar-thumb {
-  background: rgba(150, 150, 150, 0.5);
-}
-
-.light .tabs-header::-webkit-scrollbar-thumb:hover {
-  background: rgba(150, 150, 150, 0.7);
+.light .tabs-header.scrollable::before {
+  background: linear-gradient(
+    to right,
+    rgba(150, 150, 150, 0.3) 0%,
+    rgba(150, 150, 150, 0.5) 50%,
+    rgba(150, 150, 150, 0.3) 100%
+  );
 }
 
 .tabs-header .file-tab {
@@ -510,10 +525,36 @@ html.light iframe {
   cursor: pointer;
   transition: border-color 0.2s;
   height: 38px;
+  min-height: 38px;
+  max-height: 38px;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  border-right: 1px solid #343a47;
+  gap: 0.5rem;
+}
+
+.light .tabs-header .file-tab {
+  border-right: 1px solid #d4d4d4;
 }
 
 .tabs-header .file-tab.active {
   border-bottom: 2px solid #61afef;
+}
+
+/* 모바일에서의 탭 헤더 스타일 */
+@media (max-width: 767px) {
+  .tabs-header {
+    height: 44px;
+    min-height: 44px;
+    max-height: 44px;
+  }
+
+  .tabs-header .file-tab {
+    height: 44px;
+    min-height: 44px;
+    max-height: 44px;
+  }
 }
 
 /* 반응형 그리드 */
@@ -541,24 +582,25 @@ html.light iframe {
   }
 }
 
-/* 고정 헤더 */
+/* 고정 헤더 - 수정된 부분 */
 .sticky {
   position: sticky;
   top: 0;
   z-index: 10;
 }
 
-/* 콘텐츠 헤더 고정 */
-h1.sticky {
+/* 콘텐츠 헤더 고정 - 탭 헤더보다 낮은 z-index */
+/* h1.sticky {
   background-color: #282c34;
   padding-top: 1rem;
   padding-bottom: 1rem;
   margin-top: 0;
-}
+  z-index: 10; /* 탭 헤더보다 낮음 */
+/* }
 
 .light h1.sticky {
   background-color: #fafafa;
-}
+} */
 
 /* 탭 제목 최대 너비 */
 .max-w-150 {
@@ -583,4 +625,13 @@ h1.sticky {
   .tabs-header .file-tab {
     height: 44px;
   }
+}
+
+/* 언어 토글 버튼 라이트 모드 색상 보강 */
+html.light button[aria-label="Toggle language"] {
+  color: #6b7280 !important;
+}
+
+html.light button[aria-label="Toggle language"]:hover {
+  color: #2563eb !important;
 }

@@ -2,30 +2,13 @@
 
 import type React from "react"
 
-import { useState, useEffect, useRef } from "react"
-import { FileCode, X, PiggyBankIcon as Pig, Fish, Leaf, ExternalLink } from "lucide-react"
+import { useState, useEffect, useRef, useCallback } from "react"
+import { FileCode, X, PiggyBankIcon as Pig, Fish, Leaf, ExternalLink, Calendar, Github, List } from "lucide-react"
 import BlogCard from "./blog-card"
 import IframeViewer from "./iframe-viewer"
 import { useLanguage } from "@/contexts/language-context"
 import { useSearchParams, useRouter } from "next/navigation"
-
-// Add fallback translations
-const fallbackTranslations = {
-  en: {
-    portfolio: {
-      explorer: "EXPLORER",
-      noFile: "No file is open",
-      fileNotFound: "File not found",
-    },
-  },
-  kr: {
-    portfolio: {
-      explorer: "탐색기",
-      noFile: "열린 파일이 없습니다",
-      fileNotFound: "파일을 찾을 수 없습니다",
-    },
-  },
-}
+import { projectContentData, projectInfo, relatedArticlesData } from "@/lib/project-content"
 
 interface EditorContentProps {
   activeFile: string | null
@@ -55,7 +38,7 @@ const blogPosts = [
     title: "Lessons Learned from Project One",
     description: "Key insights and takeaways from developing and launching Project One, with tips for future projects.",
     image: "/placeholder.svg?height=200&width=300",
-    url: "https://kanchoeun.github.io/posts/%EA%B3%B5%ED%86%B5-%EC%9D%91%EB%8B%B5-%ED%98%95%EC%8B%9D-%EC%A0%81%EC%9A%A9%EA%B8%B0/",
+    url: "https://kanchoeun.github.io/posts/%EA%B3%B5%ED%86%B5-%EC%9D%91%EB%8B%55-%ED%98%95%EC%8B%9D-%EC%A0%81%EC%9A%A9%EA%B8%B0/",
   },
   {
     id: "case-study",
@@ -126,19 +109,6 @@ const blogPosts = [
   },
 ]
 
-// 파일 타입에 따른 페이지 이름 매핑
-const filePageNames: Record<string, string> = {
-  intro1: "소개",
-  diagram1: "다이어그램",
-  related1: "관련 글",
-  intro2: "소개",
-  diagram2: "다이어그램",
-  related2: "관련 글",
-  intro3: "소개",
-  diagram3: "다이어그램",
-  related3: "관련 글",
-}
-
 // 프로젝트 아이콘 매핑
 const getProjectIcon = (fileId: string) => {
   if (fileId.includes("1")) {
@@ -151,215 +121,15 @@ const getProjectIcon = (fileId: string) => {
   return <FileCode size={16} className="text-[#61afef] dark:text-[#61afef] light:text-[#4078f2] flex-shrink-0" />
 }
 
-// Sample content for files - now with custom HTML content instead of markdown
-const fileContents: Record<string, { project: string; content: React.ReactNode }> = {
-  intro1: {
-    project: "Project One",
-    content: (
-      <div className="p-6 content-padding">
-        <h1 className="text-2xl font-bold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-8 py-4">
-          Project One Introduction
-        </h1>
-        <p className="mb-4 dark:text-[#abb2bf] light:text-[#383a42]">
-          This is the introduction to Project One. It includes the project overview, goals, and key features.
-        </p>
-        <h2 className="text-xl font-semibold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-2">Overview</h2>
-        <p className="dark:text-[#abb2bf] light:text-[#383a42]">
-          Project One is a web application that helps users manage their tasks efficiently.
-        </p>
-      </div>
-    ),
-  },
-  diagram1: {
-    project: "Project One",
-    content: (
-      <div className="p-6 content-padding">
-        <h1 className="text-2xl font-bold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-8 py-4">
-          Project One Diagram
-        </h1>
-        <p className="mb-4 dark:text-[#abb2bf] light:text-[#383a42]">
-          This page contains the architecture diagram and flow charts for Project One.
-        </p>
-        <h2 className="text-xl font-semibold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-2">
-          Architecture
-        </h2>
-        <p className="mb-4 dark:text-[#abb2bf] light:text-[#383a42]">
-          The application follows a microservices architecture with the following components:
-        </p>
-        <ul className="list-disc pl-6 mb-4 dark:text-[#abb2bf] light:text-[#383a42]">
-          <li className="mb-1">Frontend (React)</li>
-          <li className="mb-1">Backend API (Node.js)</li>
-          <li className="mb-1">Database (MongoDB)</li>
-        </ul>
-      </div>
-    ),
-  },
-  related1: {
-    project: "Project One",
-    content: (
-      <div className="p-6 content-padding">
-        <h1 className="text-2xl font-bold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-8 py-4">
-          Related Articles
-        </h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {blogPosts.slice(0, 4).map((post) => (
-            <BlogCard
-              key={post.id}
-              title={post.title}
-              description={post.description}
-              image={post.image}
-              url={post.url}
-            />
-          ))}
-        </div>
-      </div>
-    ),
-  },
-  // Add more content for other files as needed
-  intro2: {
-    project: "Project Two",
-    content: (
-      <div className="p-6 content-padding">
-        <h1 className="text-2xl font-bold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-8 py-4">
-          Project Two Introduction
-        </h1>
-        <p className="mb-4 dark:text-[#abb2bf] light:text-[#383a42]">
-          Project Two is a mobile application built with React Native. It focuses on health tracking and wellness.
-        </p>
-        <h2 className="text-xl font-semibold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-2">
-          Key Features
-        </h2>
-        <ul className="list-disc pl-6 dark:text-[#abb2bf] light:text-[#383a42]">
-          <li className="mb-1">Activity tracking</li>
-          <li className="mb-1">Meal planning</li>
-          <li className="mb-1">Sleep analysis</li>
-        </ul>
-      </div>
-    ),
-  },
-  diagram2: {
-    project: "Project Two",
-    content: (
-      <div className="p-6 content-padding">
-        <h1 className="text-2xl font-bold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-8 py-4">
-          Project Two Architecture
-        </h1>
-        <h2 className="text-xl font-semibold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-2">
-          System Design
-        </h2>
-        <div className="bg-[#2c313a] dark:bg-[#2c313a] light:bg-[#eaeaeb] p-4 rounded font-mono mb-4 dark:text-[#abb2bf] light:text-[#383a42]">
-          Mobile App → API Gateway → Microservices → Database
-        </div>
-        <h2 className="text-xl font-semibold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-2">
-          Technology Stack
-        </h2>
-        <ul className="list-disc pl-6 dark:text-[#abb2bf] light:text-[#383a42]">
-          <li className="mb-1">React Native</li>
-          <li className="mb-1">Node.js</li>
-          <li className="mb-1">MongoDB</li>
-          <li className="mb-1">AWS</li>
-        </ul>
-      </div>
-    ),
-  },
-  related2: {
-    project: "Project Two",
-    content: (
-      <div className="p-6 content-padding">
-        <h1 className="text-2xl font-bold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-8 py-4">
-          Project Two Resources
-        </h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {blogPosts.slice(4, 7).map((post) => (
-            <BlogCard
-              key={post.id}
-              title={post.title}
-              description={post.description}
-              image={post.image}
-              url={post.url}
-            />
-          ))}
-        </div>
-      </div>
-    ),
-  },
-  intro3: {
-    project: "Project Three",
-    content: (
-      <div className="p-6 content-padding">
-        <h1 className="text-2xl font-bold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-8 py-4">
-          Project Three Overview
-        </h1>
-        <p className="mb-4 dark:text-[#abb2bf] light:text-[#383a42]">
-          Project Three is an AI-powered data analysis platform for business intelligence.
-        </p>
-        <h2 className="text-xl font-semibold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-2">
-          Problem Statement
-        </h2>
-        <p className="dark:text-[#abb2bf] light:text-[#383a42]">
-          Businesses struggle to extract meaningful insights from large datasets efficiently.
-        </p>
-      </div>
-    ),
-  },
-  diagram3: {
-    project: "Project Three",
-    content: (
-      <div className="p-6 content-padding">
-        <h1 className="text-2xl font-bold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-8 py-4">
-          Project Three System Architecture
-        </h1>
-        <h2 className="text-xl font-semibold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-2">
-          High-Level Design
-        </h2>
-        <ul className="list-disc pl-6 mb-4 dark:text-[#abb2bf] light:text-[#383a42]">
-          <li className="mb-1">Data Collection Layer</li>
-          <li className="mb-1">Processing Engine</li>
-          <li className="mb-1">Analysis Framework</li>
-          <li className="mb-1">Visualization Dashboard</li>
-        </ul>
-        <h2 className="text-xl font-semibold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-2">
-          Data Flow
-        </h2>
-        <div className="bg-[#2c313a] dark:bg-[#2c313a] light:bg-[#eaeaeb] p-4 rounded font-mono dark:text-[#abb2bf] light:text-[#383a42]">
-          Raw Data → ETL Pipeline → Data Lake → Analysis → Visualization
-        </div>
-      </div>
-    ),
-  },
-  related3: {
-    project: "Project Three",
-    content: (
-      <div className="p-6 content-padding">
-        <h1 className="text-2xl font-bold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-8 py-4">
-          Project Three Documentation
-        </h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {blogPosts.slice(7).map((post) => (
-            <BlogCard
-              key={post.id}
-              title={post.title}
-              description={post.description}
-              image={post.image}
-              url={post.url}
-            />
-          ))}
-        </div>
-      </div>
-    ),
-  },
-}
+// 기술 스택 뱃지 컴포넌트
+const TechBadge = ({ tech }: { tech: string }) => (
+  <span className="inline-block bg-[#2c313a] dark:bg-[#2c313a] light:bg-[#eaeaeb] text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] px-3 py-1 rounded-full text-sm mr-2 mb-2">
+    {tech}
+  </span>
+)
 
-// Map project files to their related blog posts
-const fileToBlogPostsMap: Record<string, string[]> = {
-  related1: ["how-we-built-project-one", "lessons-learned", "case-study", "future-roadmap"],
-  related2: ["user-engagement", "performance-optimization", "health-api-documentation"],
-  related3: ["scalable-data-processing", "machine-learning-models", "data-visualization-techniques", "team-structure"],
-}
-
-// Simplify the EditorContent component to use useLanguage directly
 export default function EditorContent({ activeFile, setActiveFile }: EditorContentProps) {
-  const { language, translations } = useLanguage()
+  const { t, language } = useLanguage()
   const searchParams = useSearchParams()
   const router = useRouter()
   const fileParam = searchParams.get("file")
@@ -368,7 +138,229 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
   const [selectedBlog, setSelectedBlog] = useState<{ url: string; title: string } | null>(null)
   const [isMobileView, setIsMobileView] = useState(false)
   const [currentFile, setCurrentFile] = useState<string | null>(null)
+  const [forceRender, setForceRender] = useState(0)
   const tabsHeaderRef = useRef<HTMLDivElement>(null)
+  const contentAreaRef = useRef<HTMLDivElement>(null)
+
+  // 파일 타입에 따른 페이지 이름 매핑 - language를 의존성에 추가
+  const getFilePageName = useCallback(
+    (fileId: string) => {
+      try {
+        if (fileId.includes("intro")) return t("project.intro")
+        if (fileId.includes("diagram")) return t("project.diagram")
+        if (fileId.includes("related")) return t("project.related")
+      } catch (error) {
+        console.warn("Translation error for file page name:", fileId, error)
+      }
+      return fileId
+    },
+    [t, language], // language 의존성 추가
+  )
+
+  // 목차 클릭 핸들러
+  const handleTocClick = (id: string) => {
+    const element = document.getElementById(id)
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" })
+    }
+  }
+
+  // 콘텐츠 렌더링 함수 - language를 의존성에 추가
+  const renderContentSection = useCallback(
+    (section: any) => {
+      switch (section.type) {
+        case "description":
+          return (
+            <p key={section.contentKey} className="mb-4 dark:text-[#abb2bf] light:text-[#383a42]">
+              {t(section.contentKey)}
+            </p>
+          )
+        case "section":
+          return (
+            <div key={section.titleKey} id={section.id}>
+              <h2 className="text-xl font-semibold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-2">
+                {t(section.titleKey)}
+              </h2>
+              {section.contentKey && (
+                <p className="mb-4 dark:text-[#abb2bf] light:text-[#383a42]">{t(section.contentKey)}</p>
+              )}
+            </div>
+          )
+        case "list":
+          return (
+            <ul key="list" className="list-disc pl-6 mb-4 dark:text-[#abb2bf] light:text-[#383a42]">
+              {section.items.map((item: string, index: number) => (
+                <li key={index} className="mb-1">
+                  {t(item)}
+                </li>
+              ))}
+            </ul>
+          )
+        case "code":
+          return (
+            <div
+              key="code"
+              className="bg-[#2c313a] dark:bg-[#2c313a] light:bg-[#eaeaeb] p-4 rounded font-mono mb-4 dark:text-[#abb2bf] light:text-[#383a42]"
+            >
+              {section.content}
+            </div>
+          )
+        case "toc":
+          return (
+            <div key="toc" className="mb-6 p-4 bg-[#2c313a] dark:bg-[#2c313a] light:bg-[#eaeaeb] rounded">
+              <div className="flex items-center mb-3">
+                <List size={16} className="text-[#61afef] dark:text-[#61afef] light:text-[#4078f2] mr-2" />
+                <h3 className="text-lg font-semibold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42]">목차</h3>
+              </div>
+              <ul className="space-y-2">
+                {section.items.map((item: any, index: number) => (
+                  <li key={index}>
+                    <button
+                      onClick={() => handleTocClick(item.id)}
+                      className="text-[#61afef] dark:text-[#61afef] light:text-[#4078f2] hover:text-[#56b6c2] dark:hover:text-[#56b6c2] light:hover:text-[#0184bc] transition-colors text-left"
+                    >
+                      {index + 1}. {t(item.titleKey)}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        default:
+          return null
+      }
+    },
+    [t, language], // language 의존성 추가
+  )
+
+  // 파일 콘텐츠 생성 - language를 의존성에 추가
+  const getFileContent = useCallback(
+    (fileId: string): { project: string; content: React.ReactNode } | null => {
+      try {
+        // 관련 글 페이지 처리
+        if (fileId.includes("related")) {
+          const getProjectName = () => {
+            if (fileId.includes("1")) return t("project.one")
+            if (fileId.includes("2")) return t("project.two")
+            if (fileId.includes("3")) return t("project.three")
+            return "Project"
+          }
+
+          return {
+            project: getProjectName(),
+            content: renderRelatedArticles(fileId),
+          }
+        }
+
+        // 일반 콘텐츠 페이지 처리
+        const contentData = projectContentData[fileId as keyof typeof projectContentData]
+        if (!contentData) return null
+
+        const getProjectName = () => {
+          if (fileId.includes("1")) return t("project.one")
+          if (fileId.includes("2")) return t("project.two")
+          if (fileId.includes("3")) return t("project.three")
+          return "Project"
+        }
+
+        return {
+          project: getProjectName(),
+          content: (
+            <div className="p-6">
+              {/* 프로젝트 정보 (intro 페이지에만 표시) */}
+              {contentData.projectKey && (
+                <div className="mb-6">
+                  {/* 제목과 GitHub 아이콘을 함께 배치 */}
+                  <div className="flex items-center mb-4">
+                    <h1 className="text-2xl font-bold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mr-3">
+                      {t(contentData.titleKey)}
+                    </h1>
+                    <a
+                      href={projectInfo[contentData.projectKey].githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] hover:text-[#61afef] dark:hover:text-[#61afef] light:hover:text-[#4078f2] transition-colors h-full"
+                      title="GitHub Repository"
+                    >
+                      <Github size={20} className="bottom-0" />
+                    </a>
+                  </div>
+
+                  <div className="flex items-center my-2 px-1">
+                    <Calendar size={16} className="text-[#98c379] dark:text-[#98c379] light:text-[#50a14f] mr-2" />
+                    <span className="text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] font-medium">
+                      {projectInfo[contentData.projectKey].period}
+                    </span>
+                  </div>
+                  <div className="mt-3">
+                    {projectInfo[contentData.projectKey].techStack.map((tech) => (
+                      <TechBadge key={tech} tech={tech} />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* intro 페이지가 아닌 경우 기본 제목 */}
+              {!contentData.projectKey && (
+                <h1 className="text-2xl font-bold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-4">
+                  {t(contentData.titleKey)}
+                </h1>
+              )}
+
+              {/* 콘텐츠 섹션들 */}
+              {contentData.sections.map((section, index) => (
+                <div key={index}>{renderContentSection(section)}</div>
+              ))}
+            </div>
+          ),
+        }
+      } catch (error) {
+        console.warn("Error getting file content for:", fileId, error)
+        return null
+      }
+    },
+    [t, language, renderContentSection], // language와 renderContentSection 의존성 추가
+  )
+
+  // 관련 글 목록 렌더링 - language를 의존성에 추가
+  const renderRelatedArticles = useCallback(
+    (fileId: string) => {
+      const articleIds = relatedArticlesData[fileId as keyof typeof relatedArticlesData] || []
+      const filteredPosts = blogPosts.filter((post) => articleIds.includes(post.id))
+
+      const getProjectName = () => {
+        try {
+          if (fileId.includes("1")) return t("project.one")
+          if (fileId.includes("2")) return t("project.two")
+          if (fileId.includes("3")) return t("project.three")
+        } catch (error) {
+          console.warn("Translation error for project name:", fileId, error)
+        }
+        return "Project"
+      }
+
+      return (
+        <div className="p-6">
+          <h1 className="text-2xl font-bold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-8">
+            {getProjectName()} {t("project.related")}
+          </h1>
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
+            {filteredPosts.map((post) => (
+              <BlogCard
+                key={post.id}
+                title={post.title}
+                description={post.description}
+                image={post.image}
+                url={post.url}
+                onClick={(url, title) => handleBlogCardClick(url, title)}
+              />
+            ))}
+          </div>
+        </div>
+      )
+    },
+    [t, language], // language 의존성 추가
+  )
 
   // 화면 크기 감지
   useEffect(() => {
@@ -391,50 +383,148 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
 
   // 파일이 변경될 때 탭 업데이트
   useEffect(() => {
-    if (currentFile && fileContents[currentFile]) {
-      // 이미 열려있는 탭인지 확인
+    if (currentFile && getFileContent(currentFile)) {
       const existingTabIndex = openTabs.findIndex((tab) => tab.id === currentFile && tab.type === "file")
 
       if (existingTabIndex === -1) {
-        // 새 탭 추가
         setOpenTabs((prev) => [
           ...prev,
           {
             id: currentFile,
-            title: filePageNames[currentFile] || currentFile,
+            title: getFilePageName(currentFile),
             type: "file",
             projectIcon: getProjectIcon(currentFile),
           },
         ])
+      } else {
+        // 기존 탭의 제목 업데이트 (언어 변경 시)
+        setOpenTabs((prev) =>
+          prev.map((tab) =>
+            tab.id === currentFile && tab.type === "file" ? { ...tab, title: getFilePageName(currentFile) } : tab,
+          ),
+        )
       }
 
-      // 활성 탭 설정
       setActiveTab(currentFile)
     }
-  }, [currentFile, openTabs])
+  }, [currentFile, getFileContent, getFilePageName])
 
-  // 탭 스크롤 이벤트 핸들러 추가
+  // 언어 변경 시 모든 탭 제목 업데이트 및 콘텐츠 강제 리렌더링
   useEffect(() => {
-    const handleTabsScroll = (e: WheelEvent) => {
-      const tabsHeader = tabsHeaderRef.current
-      if (tabsHeader && tabsHeader.contains(e.target as Node)) {
+    setOpenTabs((prev) =>
+      prev.map((tab) => ({
+        ...tab,
+        title: tab.type === "file" ? getFilePageName(tab.id) : tab.title,
+      })),
+    )
+
+    // 강제 리렌더링
+    setForceRender((prev) => prev + 1)
+  }, [language, getFilePageName])
+
+  // 탭 스크롤 관련 함수들
+  const checkScrollable = useCallback(() => {
+    const tabsHeader = tabsHeaderRef.current
+    if (!tabsHeader) return false
+
+    const isScrollable = tabsHeader.scrollWidth > tabsHeader.clientWidth
+
+    if (isScrollable) {
+      tabsHeader.classList.add("scrollable")
+    } else {
+      tabsHeader.classList.remove("scrollable")
+    }
+
+    return isScrollable
+  }, [openTabs.length])
+
+  // 탭 스크롤 이벤트 핸들러
+  useEffect(() => {
+    const tabsHeader = tabsHeaderRef.current
+    if (!tabsHeader) return
+
+    const initialCheck = () => {
+      setTimeout(() => {
+        checkScrollable()
+      }, 100)
+    }
+
+    // 마우스 휠 스크롤 핸들러 - 탭 헤더에서만 동작
+    const handleWheelScroll = (e: WheelEvent) => {
+      const target = e.target as Element
+
+      // 탭 헤더 영역에서만 가로 스크롤 처리
+      if (
+        target === tabsHeader ||
+        target.parentElement === tabsHeader ||
+        (target.closest && target.closest(".tabs-header") === tabsHeader)
+      ) {
+        if (tabsHeader.scrollWidth <= tabsHeader.clientWidth) {
+          return
+        }
+
         e.preventDefault()
-        tabsHeader.scrollLeft += e.deltaY
+        e.stopPropagation()
+        e.stopImmediatePropagation()
+
+        const scrollAmount = e.deltaY || e.deltaX
+        tabsHeader.scrollLeft += scrollAmount
+
+        return false
       }
     }
 
-    // 탭 헤더에 휠 이벤트 리스너 추가
-    const tabsHeader = tabsHeaderRef.current
-    if (tabsHeader) {
-      tabsHeader.addEventListener("wheel", handleTabsScroll, { passive: false })
+    // 터치 스크롤 (모바일)
+    let startX = 0
+    let scrollLeft = 0
+    let isDown = false
+
+    const handleTouchStart = (e: TouchEvent) => {
+      isDown = true
+      startX = e.touches[0].pageX - tabsHeader.offsetLeft
+      scrollLeft = tabsHeader.scrollLeft
     }
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!isDown) return
+      e.preventDefault()
+      const x = e.touches[0].pageX - tabsHeader.offsetLeft
+      const walk = (x - startX) * 2
+      tabsHeader.scrollLeft = scrollLeft - walk
+    }
+
+    const handleTouchEnd = () => {
+      isDown = false
+    }
+
+    const handleResize = () => {
+      setTimeout(() => {
+        checkScrollable()
+      }, 100)
+    }
+
+    initialCheck()
+    document.addEventListener("wheel", handleWheelScroll, { passive: false, capture: true })
+    tabsHeader.addEventListener("touchstart", handleTouchStart, { passive: false })
+    tabsHeader.addEventListener("touchmove", handleTouchMove, { passive: false })
+    tabsHeader.addEventListener("touchend", handleTouchEnd)
+    window.addEventListener("resize", handleResize)
 
     return () => {
-      if (tabsHeader) {
-        tabsHeader.removeEventListener("wheel", handleTabsScroll)
-      }
+      document.removeEventListener("wheel", handleWheelScroll, { capture: true })
+      tabsHeader.removeEventListener("touchstart", handleTouchStart)
+      tabsHeader.removeEventListener("touchmove", handleTouchMove)
+      tabsHeader.removeEventListener("touchend", handleTouchEnd)
+      window.removeEventListener("resize", handleResize)
     }
-  }, [])
+  }, [checkScrollable])
+
+  // 탭이 추가/제거될 때마다 스크롤 가능 여부 업데이트
+  useEffect(() => {
+    setTimeout(() => {
+      checkScrollable()
+    }, 100)
+  }, [openTabs, checkScrollable])
 
   // 블로그 카드 클릭 처리
   const handleBlogCardClick = (url: string, title: string) => {
@@ -450,28 +540,23 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
   const handleCloseTab = (tabId: string, e: React.MouseEvent) => {
     e.stopPropagation()
 
-    // 탭 제거
     setOpenTabs((prev) => prev.filter((tab) => tab.id !== tabId))
 
-    // 닫은 탭이 활성 탭이었다면 다른 탭으로 전환
     if (activeTab === tabId) {
       if (openTabs.length > 1) {
         const tabIndex = openTabs.findIndex((tab) => tab.id === tabId)
         const newActiveTab = openTabs[tabIndex === 0 ? 1 : tabIndex - 1]
         setActiveTab(newActiveTab.id)
 
-        // 파일 탭이면 URL 업데이트
         if (newActiveTab.type === "file") {
           setActiveFile(newActiveTab.id)
         }
       } else {
-        // 마지막 탭을 닫는 경우
         setActiveTab(null)
         setActiveFile(null)
       }
     }
 
-    // 파일 탭이면 activeFile 상태 업데이트
     if (openTabs.find((tab) => tab.id === tabId)?.type === "file") {
       if (tabId === currentFile) {
         setActiveFile(null)
@@ -483,7 +568,6 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
   const handleTabClick = (tabId: string) => {
     setActiveTab(tabId)
 
-    // 파일 탭이면 URL 업데이트
     const tab = openTabs.find((tab) => tab.id === tabId)
     if (tab?.type === "file") {
       setActiveFile(tabId)
@@ -498,55 +582,11 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
     if (!tab) return null
 
     if (tab.type === "file") {
-      return fileContents[tab.id]?.content
+      const fileContent = getFileContent(tab.id)
+      return <div key={forceRender}>{fileContent?.content}</div>
     }
 
     return null
-  }
-
-  // 관련 글 목록 렌더링
-  const renderRelatedArticles = (fileId: string) => {
-    let filteredPosts: typeof blogPosts = []
-
-    if (fileId === "related1") {
-      filteredPosts = blogPosts.filter((post) =>
-        ["how-we-built-project-one", "lessons-learned", "case-study", "future-roadmap"].includes(post.id),
-      )
-    } else if (fileId === "related2") {
-      filteredPosts = blogPosts.filter((post) =>
-        ["user-engagement", "performance-optimization", "health-api-documentation"].includes(post.id),
-      )
-    } else if (fileId === "related3") {
-      filteredPosts = blogPosts.filter((post) =>
-        [
-          "scalable-data-processing",
-          "machine-learning-models",
-          "data-visualization-techniques",
-          "team-structure",
-        ].includes(post.id),
-      )
-    }
-
-    return (
-      <div className="p-6 content-padding">
-        <h1 className="text-2xl font-bold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-8 py-4 sticky top-0 bg-[#282c34] dark:bg-[#282c34] light:bg-[#fafafa] z-10">
-          {fileId.includes("1") ? "Project One" : fileId.includes("2") ? "Project Two" : "Project Three"} Related
-          Articles
-        </h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {filteredPosts.map((post) => (
-            <BlogCard
-              key={post.id}
-              title={post.title}
-              description={post.description}
-              image={post.image}
-              url={post.url}
-              onClick={(url, title) => handleBlogCardClick(url, title)}
-            />
-          ))}
-        </div>
-      </div>
-    )
   }
 
   // 탭이 없을 때 빈 화면 표시
@@ -555,7 +595,7 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
       <div className="flex-1 flex items-center justify-center h-full">
         <div className="text-center text-[#6b717d] dark:text-[#6b717d] light:text-gray-500">
           <FileCode size={48} className="mx-auto mb-4" />
-          <h3 className="text-xl">{translations[language].portfolio.noFile}</h3>
+          <h3 className="text-xl">{t("portfolio.no.file")}</h3>
         </div>
       </div>
     )
@@ -564,16 +604,16 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
   return (
     <div className="flex-1 bg-[#282c34] dark:bg-[#282c34] light:bg-[#fafafa] flex flex-col h-full">
       {isMobileView ? (
-        // 모바일 뷰에서 탭 방식으로 표시
+        // 모바일 뷰
         <div className="flex flex-col h-full">
           <div
             ref={tabsHeaderRef}
-            className="tabs-header sticky top-0 z-10 bg-[#21252b] dark:bg-[#21252b] light:bg-[#f0f0f0] border-b border-[#343a47] dark:border-[#343a47] light:border-[#d4d4d4] flex overflow-x-auto"
+            className="tabs-header sticky top-0 z-20 bg-[#21252b] dark:bg-[#21252b] light:bg-[#f0f0f0] border-b border-[#343a47] dark:border-[#343a47] light:border-[#d4d4d4] flex overflow-x-auto flex-shrink-0"
           >
             {openTabs.map((tab) => (
               <div
                 key={tab.id}
-                className={`file-tab flex items-center cursor-pointer ${
+                className={`file-tab flex items-center cursor-pointer flex-shrink-0 ${
                   activeTab === tab.id ? "border-b-2 border-[#61afef]" : ""
                 }`}
                 onClick={() => handleTabClick(tab.id)}
@@ -591,7 +631,7 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
               </div>
             ))}
             {selectedBlog && (
-              <div className="file-tab flex items-center cursor-pointer border-b-2 border-[#61afef]">
+              <div className="file-tab flex items-center cursor-pointer border-b-2 border-[#61afef] flex-shrink-0">
                 <ExternalLink
                   size={16}
                   className="text-[#61afef] dark:text-[#61afef] light:text-[#4078f2] flex-shrink-0"
@@ -613,39 +653,33 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
             {selectedBlog ? (
               <IframeViewer url={selectedBlog.url} title={selectedBlog.title} onClose={handleCloseBlogViewer} />
             ) : (
-              <div className="h-full">
-                {activeTab &&
-                openTabs.find((tab) => tab.id === activeTab)?.type === "file" &&
-                currentFile &&
-                currentFile.includes("related")
-                  ? renderRelatedArticles(currentFile)
-                  : getActiveTabContent()}
-              </div>
+              <div className="h-full">{getActiveTabContent()}</div>
             )}
           </div>
         </div>
       ) : (
-        // 데스크톱 뷰에서 분할 화면으로 표시
+        // 데스크톱 뷰
         <div className="flex h-full">
-          {/* 탭 헤더 */}
+          {/* 메인 콘텐츠 영역 */}
           <div
             className={`flex flex-col ${selectedBlog ? "w-1/2" : "w-full"}`}
             style={{ transition: "width 0.3s ease-in-out" }}
           >
+            {/* 탭 헤더 - 고정 */}
             <div
               ref={tabsHeaderRef}
-              className="tabs-header sticky top-0 z-10 bg-[#21252b] dark:bg-[#21252b] light:bg-[#f0f0f0] border-b border-[#343a47] dark:border-[#343a47] light:border-[#d4d4d4] flex overflow-x-auto"
+              className="tabs-header sticky top-0 z-20 bg-[#21252b] dark:bg-[#21252b] light:bg-[#f0f0f0] border-b border-[#343a47] dark:border-[#343a47] light:border-[#d4d4d4] flex overflow-x-auto flex-shrink-0"
             >
               {openTabs.map((tab) => (
                 <div
                   key={tab.id}
-                  className={`file-tab flex items-center cursor-pointer ${
+                  className={`file-tab flex items-center cursor-pointer flex-shrink-0 ${
                     activeTab === tab.id ? "border-b-2 border-[#61afef]" : ""
                   }`}
                   onClick={() => handleTabClick(tab.id)}
                 >
                   {tab.projectIcon}
-                  <span className="text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] truncate max-w-[150px] ml-2">
+                  <span className="text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] truncate max-w-[150px] ml-2 whitespace-nowrap">
                     {tab.title}
                   </span>
                   <button
@@ -658,25 +692,16 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
               ))}
             </div>
 
-            {/* 콘텐츠 영역 */}
-            <div className="flex-1 overflow-auto">
-              {activeTab && (
-                <div className="h-full">
-                  {activeTab &&
-                  openTabs.find((tab) => tab.id === activeTab)?.type === "file" &&
-                  currentFile &&
-                  currentFile.includes("related")
-                    ? renderRelatedArticles(currentFile)
-                    : getActiveTabContent()}
-                </div>
-              )}
+            {/* 콘텐츠 영역 - 탭 헤더 아래 독립적 스크롤 */}
+            <div ref={contentAreaRef} className="flex-1 overflow-auto">
+              {activeTab && <div className="h-full">{getActiveTabContent()}</div>}
             </div>
           </div>
 
-          {/* 블로그 뷰어 */}
+          {/* 블로그 뷰어 - iframe 영역 */}
           {selectedBlog && (
-            <div className="w-1/2 h-full border-l border-[#343a47] dark:border-[#343a47] light:border-[#d4d4d4]">
-              <div className="file-tab flex justify-between bg-[#21252b] dark:bg-[#21252b] light:bg-[#f0f0f0] border-b border-[#343a47] dark:border-[#343a47] light:border-[#d4d4d4] sticky top-0 z-10">
+            <div className="w-1/2 h-full border-l border-[#343a47] dark:border-[#343a47] light:border-[#d4d4d4] flex flex-col flex-shrink-0">
+              <div className="file-tab flex justify-between bg-[#21252b] dark:bg-[#21252b] light:bg-[#f0f0f0] border-b border-[#343a47] dark:border-[#343a47] light:border-[#d4d4d4] sticky top-0 z-20 flex-shrink-0">
                 <div className="flex items-center overflow-hidden">
                   <ExternalLink
                     size={16}
@@ -694,7 +719,7 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
                   <X size={16} />
                 </button>
               </div>
-              <div className="h-[calc(100%-38px)]">
+              <div className="flex-1 overflow-hidden">
                 <IframeViewer url={selectedBlog.url} title={selectedBlog.title} onClose={handleCloseBlogViewer} />
               </div>
             </div>

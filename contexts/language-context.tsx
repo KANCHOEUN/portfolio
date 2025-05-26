@@ -1,135 +1,76 @@
 "use client"
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
-
-type Language = "en" | "kr"
-
-interface Translations {
-  en: {
-    header: {
-      about: string
-      resume: string
-      portfolio: string
-    }
-    terminal: {
-      helpDesc: string
-      whoamiDesc: string
-      clearDesc: string
-      skillsDesc: string
-      historyDesc: string
-      unknownCommand: string
-    }
-    portfolio: {
-      explorer: string
-      noFile: string
-      fileNotFound: string
-    }
-  }
-  kr: {
-    header: {
-      about: string
-      resume: string
-      portfolio: string
-    }
-    terminal: {
-      helpDesc: string
-      whoamiDesc: string
-      clearDesc: string
-      skillsDesc: string
-      historyDesc: string
-      unknownCommand: string
-    }
-    portfolio: {
-      explorer: string
-      noFile: string
-      fileNotFound: string
-    }
-  }
-}
-
-const translations: Translations = {
-  en: {
-    header: {
-      about: "About",
-      resume: "Resume",
-      portfolio: "Portfolio",
-    },
-    terminal: {
-      helpDesc: "Show available commands",
-      whoamiDesc: "Display information about me",
-      clearDesc: "Clear the terminal",
-      skillsDesc: "Display my technical skills",
-      historyDesc: "Show my recent activity",
-      unknownCommand: "Command not found. Type 'help' to see available commands.",
-    },
-    portfolio: {
-      explorer: "EXPLORER",
-      noFile: "No file is open",
-      fileNotFound: "File not found",
-    },
-  },
-  kr: {
-    header: {
-      about: "소개",
-      resume: "이력서",
-      portfolio: "포트폴리오",
-    },
-    terminal: {
-      helpDesc: "사용 가능한 명령어 표시",
-      whoamiDesc: "내 정보 표시",
-      clearDesc: "터미널 지우기",
-      skillsDesc: "기술 스택 표시",
-      historyDesc: "최근 활동 표시",
-      unknownCommand: "명령어를 찾을 수 없습니다. 'help'를 입력하여 사용 가능한 명령어를 확인하세요.",
-    },
-    portfolio: {
-      explorer: "탐색기",
-      noFile: "열린 파일이 없습니다",
-      fileNotFound: "파일을 찾을 수 없습니다",
-    },
-  },
-}
+import { type Language, t } from "@/lib/i18n"
 
 interface LanguageContextType {
   language: Language
   toggleLanguage: () => void
-  translations: Translations
+  t: (key: string) => string
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>("en")
+  const [language, setLanguage] = useState<Language>("ko")
 
   useEffect(() => {
-    const savedLanguage = localStorage.getItem("language") as Language
-    if (savedLanguage && (savedLanguage === "en" || savedLanguage === "kr")) {
-      setLanguage(savedLanguage)
+    try {
+      const savedLanguage = localStorage.getItem("language") as Language
+      if (savedLanguage && (savedLanguage === "ko" || savedLanguage === "en")) {
+        setLanguage(savedLanguage)
+      }
+    } catch (error) {
+      console.warn("Failed to load language from localStorage:", error)
     }
   }, [])
 
   const toggleLanguage = () => {
-    const newLanguage = language === "en" ? "kr" : "en"
-    setLanguage(newLanguage)
-    localStorage.setItem("language", newLanguage)
+    try {
+      const newLanguage: Language = language === "ko" ? "en" : "ko"
+      setLanguage(newLanguage)
+      localStorage.setItem("language", newLanguage)
+
+      // 언어 변경 이벤트 발생
+      const event = new CustomEvent("languageChange", { detail: newLanguage })
+      window.dispatchEvent(event)
+    } catch (error) {
+      console.warn("Failed to save language to localStorage:", error)
+    }
+  }
+
+  const translate = (key: string) => {
+    try {
+      return t(key as any, language)
+    } catch (error) {
+      console.warn("Translation error for key:", key, error)
+      return key
+    }
   }
 
   return (
-    <LanguageContext.Provider value={{ language, toggleLanguage, translations }}>{children}</LanguageContext.Provider>
+    <LanguageContext.Provider value={{ language, toggleLanguage, t: translate }}>{children}</LanguageContext.Provider>
   )
 }
 
-// Modify the useLanguage hook to provide fallback values when used outside a provider
+// useLanguage 훅을 수정하여 더 안전한 fallback 값 제공
 export function useLanguage() {
   const context = useContext(LanguageContext)
 
-  // Return fallback values if context is undefined
+  // 컨텍스트가 없을 때 기본값 반환
   if (context === undefined) {
-    // Instead of throwing an error, return default values
+    console.warn("useLanguage must be used within a LanguageProvider, using fallback values")
     return {
-      language: "en" as Language,
+      language: "ko" as Language,
       toggleLanguage: () => {},
-      translations,
+      t: (key: string) => {
+        try {
+          return t(key as any, "ko")
+        } catch (error) {
+          console.warn("Fallback translation error for key:", key, error)
+          return key
+        }
+      },
     }
   }
 

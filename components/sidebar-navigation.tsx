@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import {
   ChevronDown,
@@ -23,34 +23,6 @@ import {
 } from "lucide-react"
 import ResizeHandle from "./resize-handle"
 import { useLanguage } from "@/contexts/language-context"
-
-// Add this near the top of the file, after imports
-const fallbackTranslations = {
-  en: {
-    header: {
-      about: "About",
-      resume: "Resume",
-      portfolio: "Portfolio",
-    },
-    portfolio: {
-      explorer: "EXPLORER",
-      noFile: "No file is open",
-      fileNotFound: "File not found",
-    },
-  },
-  kr: {
-    header: {
-      about: "소개",
-      resume: "이력서",
-      portfolio: "포트폴리오",
-    },
-    portfolio: {
-      explorer: "탐색기",
-      noFile: "열린 파일이 없습니다",
-      fileNotFound: "파일을 찾을 수 없습니다",
-    },
-  },
-}
 
 // Main navigation structure
 const mainNavigation = [
@@ -144,7 +116,6 @@ const getParentFolders = (fileId: string, items: any[], parents: string[] = []):
   return []
 }
 
-// Then modify the SidebarNavigation function to handle potential context errors
 export default function SidebarNavigation({
   setActiveFile,
   activeFile,
@@ -156,26 +127,14 @@ export default function SidebarNavigation({
   const searchParams = useSearchParams()
   const fileParam = searchParams.get("file")
 
-  // Add a try/catch for the language context
-  // let languageContext
-  const [language, setLanguage] = useState<"en" | "kr">("en")
-  const [translations, setTranslations] = useState(fallbackTranslations)
-  const [toggleLanguageFunction, setToggleLanguage] = useState(() => {})
+  // useLanguage 훅을 직접 사용하고 language 의존성 추가
+  const { t, language } = useLanguage()
 
-  const context = useLanguage()
-  useEffect(() => {
-    setLanguage(context.language)
-    setTranslations(context.translations)
-    setToggleLanguage(() => context.toggleLanguage)
-  }, [context.language, context.translations, context.toggleLanguage])
-
-  // const { language, translations } = languageContext;
-
-  // Rest of the component remains the same...
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({
     portfolio: true, // Portfolio is expanded by default
   })
   const [sidebarWidth, setSidebarWidth] = useState(260) // Default width
+  const [forceUpdate, setForceUpdate] = useState(0) // 강제 리렌더링용
 
   // Load expanded state from localStorage on mount
   useEffect(() => {
@@ -211,6 +170,18 @@ export default function SidebarNavigation({
       }
     }
   }, [fileParam])
+
+  // 언어 변경 이벤트 리스너 추가
+  useEffect(() => {
+    const handleLanguageChange = () => {
+      setForceUpdate((prev) => prev + 1)
+    }
+
+    window.addEventListener("languageChange", handleLanguageChange)
+    return () => {
+      window.removeEventListener("languageChange", handleLanguageChange)
+    }
+  }, [])
 
   const toggleItem = (itemId: string, event: React.MouseEvent) => {
     event.stopPropagation()
@@ -258,86 +229,142 @@ export default function SidebarNavigation({
     }
   }
 
-  // Translate navigation items
-  const getTranslatedName = (id: string, name: string) => {
-    if (language === "kr") {
-      if (id === "about") return translations.kr.header.about
-      if (id === "resume") return translations.kr.header.resume
-      if (id === "portfolio") return translations.kr.header.portfolio
-    }
-    return name
-  }
+  // 번역된 이름을 가져오는 함수를 useCallback으로 감싸서 language 변경 시 재계산
+  const getTranslatedName = useCallback(
+    (id: string, name: string) => {
+      try {
+        if (id === "about") return t("header.about")
+        if (id === "resume") return t("header.resume")
+        if (id === "portfolio") return t("header.portfolio")
+      } catch (error) {
+        console.warn("Translation error for key:", id, error)
+      }
+      return name
+    },
+    [t],
+  )
 
-  const renderItems = (items: any[], level = 0) => {
-    return items.map((item) => (
-      <div key={item.id} className="project-container">
-        {item.isFolder ? (
-          <>
-            <div
-              className={`folder ${level > 0 ? "pl-" + level * 4 : ""}`}
-              onClick={(e) => {
-                if (item.path && !item.children) {
-                  handleItemClick(item)
-                } else {
-                  toggleItem(item.id, e)
-                }
-              }}
-            >
-              {item.children && (
-                <>
-                  {expandedItems[item.id] ? (
-                    <ChevronDown
-                      size={16}
-                      className="text-[#6b717d] dark:text-[#6b717d] light:text-gray-500 flex-shrink-0"
-                    />
-                  ) : (
-                    <ChevronRight
-                      size={16}
-                      className="text-[#6b717d] dark:text-[#6b717d] light:text-gray-500 flex-shrink-0"
-                    />
-                  )}
-                </>
-              )}
-              {item.id === "project1" ? (
-                <Pig size={16} className="text-[#e06c75] dark:text-[#e06c75] light:text-[#e45649] flex-shrink-0" />
-              ) : item.id === "project2" ? (
-                <Fish size={16} className="text-[#61afef] dark:text-[#61afef] light:text-[#4078f2] flex-shrink-0" />
-              ) : item.id === "project3" ? (
-                <Leaf size={16} className="text-[#98c379] dark:text-[#98c379] light:text-[#50a14f] flex-shrink-0" />
-              ) : (
-                <Folder size={16} className="text-[#e5c07b] dark:text-[#e5c07b] light:text-[#c18401] flex-shrink-0" />
-              )}
-              <span className="truncate">{getTranslatedName(item.id, item.name)}</span>
-            </div>
-            {item.children && expandedItems[item.id] && (
-              <div className="files-container dark:border-[#3e4451] light:border-[#d4d4d4]">
-                {renderItems(item.children, level + 1)}
+  // 프로젝트 파일 이름도 번역 적용
+  const getTranslatedFileName = useCallback(
+    (fileName: string) => {
+      try {
+        if (fileName === "소개") return t("project.intro")
+        if (fileName === "다이어그램") return t("project.diagram")
+        if (fileName === "관련 글") return t("project.related")
+      } catch (error) {
+        console.warn("Translation error for file name:", fileName, error)
+      }
+      return fileName
+    },
+    [t],
+  )
+
+  // renderItems 함수에서 번역된 파일 이름 사용
+  const renderItems = useCallback(
+    (items: any[], level = 0) => {
+      const handleClick = (item: any) => {
+        if (item.path) {
+          router.push(item.path)
+          if (item.path.includes("?file=") && setActiveFile) {
+            const fileId = item.path.split("=")[1]
+            setActiveFile(fileId)
+          }
+          if (onItemClick) {
+            onItemClick()
+          }
+        }
+      }
+
+      const toggle = (itemId: string, event: React.MouseEvent) => {
+        event.stopPropagation()
+        setExpandedItems((prev) => ({
+          ...prev,
+          [itemId]: !prev[itemId],
+        }))
+      }
+
+      const isActive = (item: any) => {
+        if (item.path && !item.path.includes("?file=")) {
+          return pathname === item.path
+        }
+        if (item.path && item.path.includes("?file=") && fileParam) {
+          const fileId = item.path.split("=")[1]
+          return fileId === fileParam
+        }
+        return false
+      }
+
+      return items.map((item) => (
+        <div key={item.id} className="project-container">
+          {item.isFolder ? (
+            <>
+              <div
+                className={`folder ${level > 0 ? "pl-" + level * 4 : ""}`}
+                onClick={(e) => {
+                  if (item.path && !item.children) {
+                    handleClick(item)
+                  } else {
+                    toggle(item.id, e)
+                  }
+                }}
+              >
+                {item.children && (
+                  <>
+                    {expandedItems[item.id] ? (
+                      <ChevronDown
+                        size={16}
+                        className="text-[#6b717d] dark:text-[#6b717d] light:text-gray-500 flex-shrink-0"
+                      />
+                    ) : (
+                      <ChevronRight
+                        size={16}
+                        className="text-[#6b717d] dark:text-[#6b717d] light:text-gray-500 flex-shrink-0"
+                      />
+                    )}
+                  </>
+                )}
+                {item.id === "project1" ? (
+                  <Pig size={16} className="text-[#e06c75] dark:text-[#e06c75] light:text-[#e45649] flex-shrink-0" />
+                ) : item.id === "project2" ? (
+                  <Fish size={16} className="text-[#61afef] dark:text-[#61afef] light:text-[#4078f2] flex-shrink-0" />
+                ) : item.id === "project3" ? (
+                  <Leaf size={16} className="text-[#98c379] dark:text-[#98c379] light:text-[#50a14f] flex-shrink-0" />
+                ) : (
+                  <Folder size={16} className="text-[#e5c07b] dark:text-[#e5c07b] light:text-[#c18401] flex-shrink-0" />
+                )}
+                <span className="truncate">{getTranslatedName(item.id, item.name)}</span>
               </div>
-            )}
-          </>
-        ) : (
-          <div
-            className={`file ${level > 0 ? "pl-" + level * 4 : ""} ${
-              isItemActive(item) ? "active-file dark:bg-[#2c313a] light:bg-[#eaeaeb]" : ""
-            }`}
-            onClick={() => handleItemClick(item)}
-          >
-            {getFileIcon(item.name, item)}
-            <span className="truncate">{item.name}</span>
-          </div>
-        )}
-      </div>
-    ))
-  }
+              {item.children && expandedItems[item.id] && (
+                <div className="files-container dark:border-[#3e4451] light:border-[#d4d4d4]">
+                  {renderItems(item.children, level + 1)}
+                </div>
+              )}
+            </>
+          ) : (
+            <div
+              className={`file ${level > 0 ? "pl-" + level * 4 : ""} ${
+                isActive(item) ? "active-file dark:bg-[#2c313a] light:bg-[#eaeaeb]" : ""
+              }`}
+              onClick={() => handleClick(item)}
+            >
+              {getFileIcon(item.name, item)}
+              <span className="truncate">{getTranslatedFileName(item.name)}</span>
+            </div>
+          )}
+        </div>
+      ))
+    },
+    [expandedItems, getTranslatedName, getTranslatedFileName, pathname, fileParam, router, setActiveFile, onItemClick],
+  )
 
   return (
-    <div className="flex h-full">
+    <div key={forceUpdate} className="flex h-full">
       <div
         className="h-full bg-[#21252b] dark:bg-[#21252b] light:bg-[#f0f0f0] border-r border-[#343a47] dark:border-[#343a47] light:border-[#d4d4d4] overflow-hidden flex flex-col"
         style={isMobile ? { width: "100%" } : { width: `${sidebarWidth}px`, minWidth: "160px", maxWidth: "500px" }}
       >
         <div className="px-4 py-2 text-sm text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] font-medium border-b border-[#343a47] dark:border-[#343a47] light:border-[#d4d4d4] h-[38px] flex items-center z-40 mt-12 md:mt-0">
-          {translations[language].portfolio.explorer}
+          {t("portfolio.explorer")}
         </div>
 
         {/* Main navigation */}
@@ -359,30 +386,6 @@ export default function SidebarNavigation({
               </a>
             ))}
           </div>
-
-          {/* Contact information */}
-          {/*
-          <div className="text-xs text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42]">
-            <div className="flex items-center mb-1">
-              <Mail size={14} className="mr-1 text-[#e5c07b] dark:text-[#e5c07b] light:text-[#c18401]" />
-              <a
-                href={`mailto:${contactInfo.email}`}
-                className="hover:text-[#61afef] dark:hover:text-[#61afef] light:hover:text-[#4078f2] transition-colors truncate"
-              >
-                {contactInfo.email}
-              </a>
-            </div>
-            <div className="flex items-center">
-              <Phone size={14} className="mr-1 text-[#e5c07b] dark:text-[#e5c07b] light:text-[#c18401]" />
-              <a
-                href={`tel:${contactInfo.phone.replace(/\s+/g, "")}`}
-                className="hover:text-[#61afef] dark:hover:text-[#61afef] light:hover:text-[#4078f2] transition-colors"
-              >
-                {contactInfo.phone}
-              </a>
-            </div>
-          </div>
-          */}
         </div>
       </div>
       {!isMobile && <ResizeHandle sidebarWidth={sidebarWidth} setSidebarWidth={setSidebarWidth} />}

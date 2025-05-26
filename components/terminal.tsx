@@ -18,7 +18,7 @@ export default function Terminal() {
   const [isTyping, setIsTyping] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const terminalRef = useRef<HTMLDivElement>(null)
-  const { language, translations } = useLanguage()
+  const { t } = useLanguage()
   const [commandHistory, setCommandHistory] = useState<string[]>([])
   const hasExecutedRef = useRef(false)
 
@@ -37,34 +37,20 @@ export default function Terminal() {
 
   // Personal info
   const getPersonalInfo = useCallback(() => {
-    return language === "en"
-      ? `
-Name: Hong Gil-dong
-Role: Backend Developer
+    return `
+${t("terminal.name")}
+${t("terminal.role")}
 
-I'm a passionate backend developer focused on building robust and scalable systems.
-My expertise includes Node.js, TypeScript, and cloud infrastructure.
-I believe in clean code, thorough testing, and continuous learning.
+${t("terminal.intro")}
+${t("terminal.expertise")}
+${t("terminal.beliefs")}
 
-Currently working on:
-- Microservice architecture optimization
-- Performance tuning for high-traffic applications
-- Contributing to open source projects
+${t("terminal.current.work")}
+${t("terminal.microservice.optimization")}
+${t("terminal.performance.tuning")}
+${t("terminal.opensource.contribution")}
       `
-      : `
-이름: 홍길동
-직무: 백엔드 개발자
-
-저는 견고하고 확장 가능한 시스템을 구축하는 데 집중하는 열정적인 백엔드 개발자입니다.
-제 전문 분야는 Node.js, TypeScript 및 클라우드 인프라입니다.
-저는 깨끗한 코드, 철저한 테스트 및 지속적인 학습을 믿습니다.
-
-현재 작업 중:
-- 마이크로서비스 아키텍처 최적화
-- 고트래픽 애플리케이션을 위한 성능 튜닝
-- 오픈 소스 프로젝트에 기여
-      `
-  }, [language])
+  }, [t])
 
   // Typewriter effect
   const typeWriter = useCallback(async (text: string) => {
@@ -78,29 +64,23 @@ Currently working on:
       for (let j = 0; j < line.length; j++) {
         currentLine += line[j]
 
-        // 함수형 업데이트를 사용하되, 참조 복사를 최소화
         setOutput((prev) => {
-          // 마지막 요소만 변경하므로 전체 배열을 복사할 필요 없음
           const lastIndex = prev.length - 1
           if (lastIndex >= 0 && prev[lastIndex] !== currentLine) {
             const newOutput = [...prev]
             newOutput[lastIndex] = currentLine
             return newOutput
           }
-          return prev // 변경이 필요 없으면 이전 상태 그대로 반환
+          return prev
         })
 
-        // Speed up ASCII art typing, slow down for regular text
         const isAsciiArt = line.includes("|") || line.includes("\\") || line.includes("/") || line.includes("_")
-        // 상태 업데이트 후 약간의 지연을 줌
         await new Promise((resolve) => setTimeout(resolve, isAsciiArt ? 1 : 20))
       }
 
       if (i < lines.length - 1) {
-        // 새 줄 추가 시 불필요한 리렌더링 방지
         setOutput((prev) => {
           const lastLine = prev[prev.length - 1]
-          // 마지막 줄이 비어있지 않을 때만 새 줄 추가
           if (lastLine !== "") {
             return [...prev, ""]
           }
@@ -112,24 +92,17 @@ Currently working on:
     setIsTyping(false)
   }, [])
 
-  // Get placeholder text
-  const getPlaceholderText = useCallback(() => {
-    return language === "en"
-      ? "Type 'help' for commands or use ↑↓ to navigate commands"
-      : "'help' 입력하여 명령어 확인 또는 ↑↓ 키로 명령어 탐색"
-  }, [language])
-
   // Define commands
   const helpCommand = useCallback(async () => {
     const commandDescriptions = [
-      `help - ${translations[language].terminal.helpDesc}`,
-      `whoami - ${translations[language].terminal.whoamiDesc}`,
-      `clear - ${translations[language].terminal.clearDesc}`,
-      `skills - ${translations[language].terminal.skillsDesc}`,
-      `history - ${translations[language].terminal.historyDesc}`,
+      `help - ${t("terminal.help.desc")}`,
+      `whoami - ${t("terminal.whoami.desc")}`,
+      `clear - ${t("terminal.clear.desc")}`,
+      `skills - ${t("terminal.skills.desc")}`,
+      `history - ${t("terminal.history.desc")}`,
     ]
     return commandDescriptions.join("\n")
-  }, [language, translations])
+  }, [t])
 
   const whoamiCommand = useCallback(async () => {
     return asciiArt + getPersonalInfo()
@@ -141,16 +114,15 @@ Currently working on:
   }, [])
 
   const skillsCommand = useCallback(async () => {
-    return language === "en"
-      ? `
-├── Backend
+    return `
+├── ${t("skills.backend")}
 │   ├── Java
 │   ├── Spring/Spring Boot
 │   ├── MySQL
 │   ├── Redis
 │   └── MyBatis, JPA
 │
-└── Infrastructure
+└── ${t("skills.infrastructure")}
     ├── AWS
     ├── Docker/Docker Compose
     ├── Kubernetes
@@ -159,42 +131,17 @@ Currently working on:
         ├── GitHub Actions
         └── Argo CD
 `
-      : `
-├── 백엔드
-│   ├── Java
-│   ├── Spring/Spring Boot
-│   ├── MySQL
-│   ├── Redis
-│   └── MyBatis, JPA
-│
-└── 인프라
-    ├── AWS
-    ├── Docker/Docker Compose
-    ├── Kubernetes
-    └── CI/CD
-        ├── Jenkins
-        ├── GitHub Actions
-        └── Argo CD
-`
-  }, [language])
+  }, [t])
 
   const historyCommand = useCallback(async () => {
-    return language === "en"
-      ? `
-Recent Activity:
-1. 2023-12 ~ Present: Working on microservice architecture optimization
-2. 2023-06 ~ 2023-11: Developed high-performance API gateway
-3. 2022-09 ~ 2023-05: Built scalable backend for e-commerce platform
-4. 2022-01 ~ 2022-08: Implemented CI/CD pipeline for cloud deployment
+    return `
+${t("terminal.recent.activity")}
+${t("terminal.activity.1")}
+${t("terminal.activity.2")}
+${t("terminal.activity.3")}
+${t("terminal.activity.4")}
 `
-      : `
-최근 활동:
-1. 2023-12 ~ 현재: 마이크로서비스 아키텍처 최적화 작업 중
-2. 2023-06 ~ 2023-11: 고성능 API 게이트웨이 개발
-3. 2022-09 ~ 2023-05: 전자상거래 플랫폼용 확장 가능한 백엔드 구축
-4. 2022-01 ~ 2022-08: 클라우드 배포를 위한 CI/CD 파이프라인 구현
-`
-  }, [language])
+  }, [t])
 
   // Execute command
   const executeCommand = useCallback(
@@ -218,7 +165,7 @@ Recent Activity:
           break
         case "clear":
           await clearCommand()
-          return // clear 명령은 출력이 없으므로 여기서 종료
+          return
         case "skills":
           result = await skillsCommand()
           break
@@ -226,38 +173,32 @@ Recent Activity:
           result = await historyCommand()
           break
         default:
-          result = translations[language].terminal.unknownCommand
+          result = t("terminal.unknown.command")
       }
 
       await typeWriter(result)
 
-      // Scroll to bottom
       if (terminalRef.current) {
         terminalRef.current.scrollTop = terminalRef.current.scrollHeight
       }
     },
-    [helpCommand, whoamiCommand, clearCommand, skillsCommand, historyCommand, language, translations, typeWriter],
+    [helpCommand, whoamiCommand, clearCommand, skillsCommand, historyCommand, t, typeWriter],
   )
 
-  // Handle key navigation - cycle through available commands
+  // Handle key navigation
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowUp") {
       e.preventDefault()
-
-      // Cycle through available commands
       const newIndex = commandIndex >= availableCommands.length - 1 ? 0 : commandIndex + 1
       setCommandIndex(newIndex)
       setInput(availableCommands[newIndex])
     } else if (e.key === "ArrowDown") {
       e.preventDefault()
-
       if (commandIndex <= 0) {
-        // If at the beginning or not navigating, go to the end
         const newIndex = availableCommands.length - 1
         setCommandIndex(newIndex)
         setInput(availableCommands[newIndex])
       } else {
-        // Otherwise go to previous command
         const newIndex = commandIndex - 1
         setCommandIndex(newIndex)
         setInput(availableCommands[newIndex])
@@ -320,7 +261,7 @@ Recent Activity:
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           className="bg-transparent border-none outline-none flex-1 font-mono text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42]"
-          placeholder={getPlaceholderText()}
+          placeholder={t("terminal.placeholder")}
           disabled={isTyping}
         />
       </form>
