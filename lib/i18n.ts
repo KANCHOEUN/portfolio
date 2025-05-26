@@ -238,6 +238,7 @@ const ko: TranslationKeys = {
   "resume.view.project.details": "프로젝트 상세보기",
 
   // 프로젝트 내용
+  // PIGREST
   "content.project.one.intro.title": "프로젝트 원 소개",
   "content.project.one.intro.desc": "프로젝트 원에 대한 소개입니다. 프로젝트 개요, 목표 및 주요 기능을 포함합니다.",
   "content.project.one.overview": "개요",
@@ -251,9 +252,10 @@ const ko: TranslationKeys = {
   "content.project.one.frontend": "프론트엔드 (React)",
   "content.project.one.backend": "백엔드 API (Spring Boot)",
   "content.project.one.database": "데이터베이스 (MySQL)",
-  "content.project.two.intro.title": "프로젝트 투 소개",
+  // RE-VERES
+  "content.project.two.intro.title": "RE-VERSE 소개",
   "content.project.two.intro.desc":
-    "프로젝트 투는 React Native로 구축된 모바일 애플리케이션입니다. 건강 추적 및 웰니스에 중점을 둡니다.",
+    "RE-VERSE는 추억을 특별하게 저장하고 공유하는 메타버스 기반 포토북 서비스입니다.",
   "content.project.two.key.features": "주요 기능",
   "content.project.two.activity.tracking": "활동 추적",
   "content.project.two.meal.planning": "식사 계획",
@@ -266,6 +268,7 @@ const ko: TranslationKeys = {
   "content.project.two.mongodb": "MySQL",
   "content.project.two.aws": "AWS",
   "content.project.two.resources.title": "프로젝트 투 리소스",
+  // PARSLEY
   "content.project.three.overview.title": "프로젝트 쓰리 개요",
   "content.project.three.overview.desc": "프로젝트 쓰리는 비즈니스 인텔리전스를 위한 AI 기반 데이터 분석 플랫폼입니다.",
   "content.project.three.problem.statement": "문제 정의",

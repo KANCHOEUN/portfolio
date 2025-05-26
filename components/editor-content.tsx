@@ -290,6 +290,7 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
                   </div>
 
                   <div className="flex items-center my-2 px-1">
+                    {/* TODO: PRIZE */}
                     <Calendar size={16} className="text-[#98c379] dark:text-[#98c379] light:text-[#50a14f] mr-2" />
                     <span className="text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] font-medium">
                       {projectInfo[contentData.projectKey].period}

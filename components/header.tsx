@@ -20,7 +20,7 @@ export default function Header() {
         </Link>
       </div>
       <div className="flex items-center justify-end w-1/3 gap-2">
-        <LanguageToggle />
+        {/* <LanguageToggle /> */}
         <ThemeToggle />
       </div>
     </header>

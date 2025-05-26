@@ -7,19 +7,19 @@ export interface ProjectInfo {
 // 프로젝트 정보 데이터
 export const projectInfo: Record<string, ProjectInfo> = {
   project1: {
-    period: "2023.03 ~ 2023.08",
-    techStack: ["Spring Boot", "JPA", "MySQL", "Github Actions", "AWS S3"],
-    githubUrl: "https://github.com/username/project1",
+    period: "2025.03 ~ 현재 진행중",
+    techStack: ["Spring Boot", "JPA", "MySQL", "Github Actions", "Amazaon S3"],
+    githubUrl: "https://github.com/The-Greatest-Piggy/pigrest-server",
   },
   project2: {
-    period: "2023.09 ~ 2024.02",
-    techStack: ["React Native", "Node.js", "MongoDB", "AWS", "Docker"],
-    githubUrl: "https://github.com/username/project2",
+    period: "2022.10 ~ 2024.11",
+    techStack: ["Spring Boot", "JPA", "QueryDSL", "MySQL", "Amazon EKS", "GitLab CI", "Argo CD"],
+    githubUrl: "https://github.com/KANCHOEUN/re-verse",
   },
   project3: {
-    period: "2024.03 ~ 현재",
-    techStack: ["Python", "TensorFlow", "PostgreSQL", "Kubernetes", "GCP"],
-    githubUrl: "https://github.com/username/project3",
+    period: "2022.07 ~ 2022.08",
+    techStack: ["Spring Boot", "JPA", "MySQL", "Amazon EC2", "Amazon S3", "Docker/Docker Compose", "Redis", "Nginx"],
+    githubUrl: "https://github.com/KANCHOEUN/parsley",
   },
 }
 
