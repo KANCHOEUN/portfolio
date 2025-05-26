@@ -42,15 +42,16 @@ export const metadata: Metadata = {
   formatDetection: {
     telephone: false,
   },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-  },
   // themeColor: [
   //   { media: '(prefers-color-scheme: light)', color: '#ffffff' },
   //   { media: '(prefers-color-scheme: dark)', color: '#000000' },
   // ],
+}
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
 }
 
 export default function RootLayout({
