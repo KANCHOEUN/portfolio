@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import "./globals.css"
 import Header from "@/components/header"
 import { LanguageProvider } from "@/contexts/language-context"
+import { Analytics } from "@vercel/analytics/react"
 
 // core styles shared by all of react-notion-x (required)
 import 'react-notion-x/src/styles.css'
@@ -70,6 +71,7 @@ export default function RootLayout({
       </head>
       <body>
         <LanguageProvider>
+          <Analytics />
           <Header />
           <main className="flex-1">{children}</main>
         </LanguageProvider>
