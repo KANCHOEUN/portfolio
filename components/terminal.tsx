@@ -40,19 +40,19 @@ export default function Terminal() {
     return `
 ${t("terminal.name")}
 ${t("terminal.role")}
-
+      
 ${t("terminal.intro")}
 ${t("terminal.expertise")}
 ${t("terminal.beliefs")}
-
-
+      
+${t("terminal.current.work")}
+${t("terminal.microservice.optimization")}
+${t("terminal.performance.tuning")}
+${t("terminal.opensource.contribution")}
       `
   }, [t])
 
-//   ${t("terminal.current.work")}
-// ${t("terminal.microservice.optimization")}
-// ${t("terminal.performance.tuning")}
-// ${t("terminal.opensource.contribution")}
+
 
   // Typewriter effect
   const typeWriter = useCallback(async (text: string) => {

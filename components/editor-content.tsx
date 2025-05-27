@@ -54,6 +54,14 @@ const blogPosts = [
     url: "https://kanchoeun.github.io/posts/Filter%EC%99%80-Interceptor%EC%97%90%EC%84%9C-Response%EC%9D%98-body%EB%A5%BC-%EC%88%98%EC%A0%95%ED%95%A0-%EC%88%98-%EC%9E%88%EC%9D%84%EA%B9%8C/",
   },
   {
+    id: "filter-exception-handler",
+    title: "Filter에서 발생한 예외는 어떻게 처리할까",
+    description:
+      "GlobalExceptionHandler가 잡지 못하는 예외 처리 방법 (feat. AuthenticationEntryPoint)",
+    image: "https://kanchoeun.github.io/assets/img/posts/jwt-filter-dispatcher-servlet.svg",
+    url: "https://kanchoeun.github.io/posts/Filter%EC%97%90%EC%84%9C-%EB%B0%9C%EC%83%9D%ED%95%9C-%EC%98%88%EC%99%B8%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%B2%98%EB%A6%AC%ED%95%A0%EA%B9%8C/",
+  },
+  {
     id: "index-performance",
     title: "INDEX를 적용하여 성능 개선하기",
     description: "EXPLAIN 명령어로 병목 식별하고, 4만 건 이상의 데이터 성능 46% 향상시키기",

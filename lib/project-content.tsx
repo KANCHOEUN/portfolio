@@ -212,7 +212,7 @@ export const projectContentData = {
 
 // 관련 글 데이터
 export const relatedArticlesData = {
-  related1: ["uuid", "common-response-format", "filter-interceptor-response-body"],
+  related1: ["uuid", "common-response-format", "filter-interceptor-response-body", "filter-exception-handler"],
   related2: ["index-performance", "gitlab-ci", "argo-cd", "hpa-artillery"],
   related3: ["scalable-data-processing", "machine-learning-models", "data-visualization-techniques", "team-structure"],
 }

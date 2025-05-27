@@ -18,68 +18,45 @@ interface TimelineItem {
 export default function ResumePage() {
   const { language } = useLanguage()
   const router = useRouter()
-  const searchParams = useSearchParams()
 
   // All resume data in chronological order (newest first)
   const timelineItems: TimelineItem[] = [
     // Work items
     {
       id: "work-1",
-      title: language === "en" ? "Senior Backend Developer" : "시니어 백엔드 개발자",
-      subtitle: language === "en" ? "Tech Company Inc." : "테크 컴퍼니",
-      date: language === "en" ? "2022 - Present" : "2022 - 현재",
-      description:
-        language === "en" ? "Led the development of microservices architecture" : "마이크로서비스 아키텍처 개발을 주도",
-      type: "work",
-      status: "ongoing",
-    },
-    {
-      id: "work-2",
-      title: language === "en" ? "Backend Developer" : "백엔드 개발자",
-      subtitle: language === "en" ? "Software Solutions Ltd." : "소프트웨어 솔루션즈",
-      date: language === "en" ? "2019 - 2022" : "2019 - 2022",
+      title: language === "en" ? "Junior Backend Developer" : "주니어 백엔드 개발자",
+      subtitle: language === "en" ? "TMAX BI" : "티맥스 비아이",
+      date: language === "en" ? "2023. 07 - 2024. 12" : "2023. 07 - 2024. 12",
       description:
         language === "en"
-          ? "Developed RESTful APIs and implemented CI/CD pipelines"
-          : "RESTful API를 개발하고 CI/CD 파이프라인을 구현",
+          ? "Developed microservices architecture for price policy and inventory modules"
+          : "Java와 MyBatis 기반 가격 정책, 재고 모듈 설계 및 개발",
       type: "work",
       status: "completed",
     },
-    {
-      id: "work-3",
-      title: language === "en" ? "Junior Developer" : "주니어 개발자",
-      subtitle: language === "en" ? "Web Startup" : "웹 스타트업",
-      date: language === "en" ? "2017 - 2019" : "2017 - 2019",
-      description:
-        language === "en"
-          ? "Worked on full-stack web development using Node.js and React"
-          : "Node.js와 React를 사용한 풀스택 웹 개발 작업을 수행",
-      type: "work",
-      status: "completed",
-    },
-
     // Education items
     {
       id: "edu-1",
-      title: language === "en" ? "Master's in Computer Science" : "컴퓨터 과학 석사",
-      subtitle: language === "en" ? "Tech University" : "테크 대학교",
-      date: language === "en" ? "2015 - 2017" : "2015 - 2017",
+      title: language === "en" ? "Samsung Software Academy for Youth 7th" : "삼성 청년 소프트웨어 아카데미 7기",
+      subtitle: language === "en" ? "Samsung Multicampus" : "삼성전자 멀티캠퍼스",
+      date: language === "en" ? "2022 - 2023" : "2022 - 2023",
       description:
         language === "en"
-          ? "Specialized in Distributed Systems and Cloud Computing"
-          : "분산 시스템 및 클라우드 컴퓨팅 전공",
+          ? "Built backend development skills through 1,600 hours of intensive training and hands-on project experience."
+          : "1,600시간 동안의 집중 교육과 실전 프로젝트 경험을 통해 백엔드 개발자로서의 역량 향상",
       type: "education",
       status: "completed",
     },
     {
       id: "edu-2",
       title: language === "en" ? "Bachelor's in Software Engineering" : "소프트웨어 공학 학사",
-      subtitle: language === "en" ? "Engineering College" : "공학 대학",
-      date: language === "en" ? "2011 - 2015" : "2011 - 2015",
+      subtitle: language === "en" ? "Soongsil University" : "숭실대학교 소프트웨어학부",
+      date: language === "en" ? "2017 - 2022" : "2017 - 2022",
       description:
+      // TODO: 내용 추가
         language === "en"
-          ? "Graduated with honors. Participated in multiple hackathons"
-          : "우등으로 졸업. 여러 해커톤에 참가",
+          ? ""
+          : "",
       type: "education",
       status: "completed",
     },
@@ -87,20 +64,20 @@ export default function ResumePage() {
     // Project items
     {
       id: "proj-1",
-      title: language === "en" ? "E-commerce Platform" : "이커머스 플랫폼",
-      subtitle: language === "en" ? "Lead Developer" : "리드 개발자",
-      date: language === "en" ? "2021 - 2022" : "2021 - 2022",
+      title: language === "en" ? "PIGREST: Image-based SNS Platform" : "PIGREST: 이미지 기반 SNS 플랫폼",
+      subtitle: language === "en" ? "Backend Developer" : "백엔드 개발자",
+      date: language === "en" ? "2025. 03 - Present" : "2025. 03 - 현재",
       description:
         language === "en"
           ? "Built a scalable e-commerce platform with microservices architecture"
-          : "마이크로서비스 아키텍처로 확장 가능한 이커머스 플랫폼을 구축",
+          : "마이크로서비스 아키텍처로 핀터레스트 스타일의 SNS 플랫폼 구축",
       type: "projects",
-      status: "completed",
+      status: "ongoing",
       projectLink: "/portfolio?file=intro1",
     },
     {
       id: "proj-2",
-      title: language === "en" ? "Real-time Analytics Dashboard" : "실시간 분석 대시보드",
+      title: language === "en" ? "RE-VERSE: Metaverse-based Photo Album Service" : "RE-VERSE: 메타버스 기반 포토북 서비스",
       subtitle: language === "en" ? "Backend Developer" : "백엔드 개발자",
       date: language === "en" ? "2020" : "2020",
       description:
@@ -113,7 +90,7 @@ export default function ResumePage() {
     },
     {
       id: "proj-3",
-      title: language === "en" ? "Mobile Payment App" : "모바일 결제 앱",
+      title: language === "en" ? "PARSLEY: Online Study Service" : "PARSLEY: 화상 온라인 스터디 서비스",
       subtitle: language === "en" ? "Full-stack Developer" : "풀스택 개발자",
       date: language === "en" ? "2019" : "2019",
       description:
@@ -121,58 +98,129 @@ export default function ResumePage() {
           ? "Created a secure mobile payment application with biometric authentication"
           : "생체 인증을 통한 안전한 모바일 결제 애플리케이션을 개발",
       type: "projects",
-      status: "ongoing",
+      status: "completed",
       projectLink: "/portfolio?file=intro3",
     },
 
     // Certification items
     {
       id: "cert-1",
-      title: language === "en" ? "AWS Certified Solutions Architect" : "AWS 공인 솔루션스 아키텍트",
-      subtitle: language === "en" ? "Amazon Web Services" : "아마존 웹 서비스",
-      date: language === "en" ? "2022" : "2022",
+      title: language === "en" ? "TOPCIT(ICT Competency Index Test) - Level 4" : "TOPCIT(ICT역량지수평가) 수준 4",
+      subtitle: language === "en" ? "IITP" : "정보통신기획평가원",
+      date: language === "en" ? "2021" : "2021",
       description:
         language === "en"
-          ? "Professional certification for designing distributed systems on AWS"
-          : "AWS에서 분산 시스템을 설계하기 위한 전문 자격증",
+          ? ""
+          : "",
       type: "certification",
       status: "completed",
     },
     {
       id: "cert-2",
-      title: language === "en" ? "Certified Kubernetes Administrator" : "공인 쿠버네티스 관리자",
-      subtitle: language === "en" ? "Cloud Native Computing Foundation" : "클라우드 네이티브 컴퓨팅 재단",
+      title: language === "en" ? "Engineer Information Processing" : "정보처리기사",
+      subtitle: language === "en" ? "HRDK" : "한국산업인력공단",
       date: language === "en" ? "2021" : "2021",
       description:
         language === "en"
-          ? "Certification for managing Kubernetes clusters in production environments"
-          : "프로덕션 환경에서 쿠버네티스 클러스터를 관리하기 위한 자격증",
+          ? ""
+          : "",
       type: "certification",
       status: "completed",
     },
-
+    {
+      id: "cert-3",
+      title: language === "en" ? "Craftsman Information Processing" : "정보처리기능사",
+      subtitle: language === "en" ? "HRDK" : "한국산업인력공단",
+      date: language === "en" ? "2020" : "2020",
+      description:
+        language === "en"
+          ? ""
+          : "",
+      type: "certification",
+      status: "completed",
+    },
     // Awards items
     {
       id: "award-1",
-      title: language === "en" ? "Innovation Award" : "혁신상",
-      subtitle: language === "en" ? "Tech Conference 2022" : "테크 컨퍼런스 2022",
-      date: language === "en" ? "2022" : "2022",
+      title: language === "en" ? "Free Topic Project - Innovation Award" : "자율 프로젝트 - 우수상",
+      subtitle: language === "en" ? "Samsung Electronics Co." : "삼성전자주식회사",
+      date: language === "en" ? "2022. 11" : "2022. 11",
       description:
         language === "en"
-          ? "Recognized for innovative approach to solving complex technical challenges"
-          : "복잡한 기술적 과제를 해결하는 혁신적인 접근 방식으로 인정",
+          ? ""
+          : "RE-VERSE 프로젝트로 서울 6반 1등",
       type: "awards",
       status: "completed",
     },
     {
       id: "award-2",
-      title: language === "en" ? "Hackathon Winner" : "해커톤 우승자",
-      subtitle: language === "en" ? "Global Code Fest" : "글로벌 코드 페스트",
-      date: language === "en" ? "2020" : "2020",
+      title: language === "en" ? "" : "공통 프로젝트 (트랙: 웹기술) - 우수상",
+      subtitle: language === "en" ? "Samsung Electronics Co." : "삼성전자주식회사",
+      date: language === "en" ? "2022. 08" : "2022. 08",
       description:
         language === "en"
-          ? "First place in a 48-hour hackathon focused on AI solutions"
-          : "AI 솔루션에 중점을 둔 48시간 해커톤에서 1위를 차지",
+          ? ""
+          : "PARSLEY 프로젝트로 서울 6반 3등",
+      type: "awards",
+      status: "completed",
+    },
+    {
+      id: "award-3",
+      title: language === "en" ? "1학기 성적 우수상" : "1학기 성적 우수상",
+      subtitle: language === "en" ? "Samsung Electronics Co." : "삼성전자주식회사",
+      date: language === "en" ? "2022. 05" : "2022. 05",
+      description:
+        language === "en"
+          ? ""
+          : "1학기 코딩 집중 과정 종합 성적 서울 19반 3등",
+      type: "awards",
+      status: "completed",
+    },
+    {
+      id: "award-4",
+      title: language === "en" ? "제 16회 TOPCIT 정기평가 - 우수상" : "제 16회 TOPCIT 정기평가 - 우수상",
+      subtitle: language === "en" ? "스파르탄SW교육원" : "스파르탄SW교육원",
+      date: language === "en" ? "2021. 12" : "2021. 12",
+      description:
+        language === "en"
+          ? "."
+          : ".",
+      type: "awards",
+      status: "completed",
+    },
+    {
+      id: "award-5",
+      title: language === "en" ? "제 16회 TOPCIT 정기평가 - 특별상" : "제 16회 TOPCIT 정기평가 - 특별상",
+      subtitle: language === "en" ? "" : "IT여성기업인협회",
+      date: language === "en" ? "2021. 12" : "2021. 12",
+      description:
+      language === "en"
+        ? "."
+        : ".",
+      type: "awards",
+      status: "completed",
+    },
+    {
+      id: "award-6",
+      title: language === "en" ? "2020년 하반기 TOPCIT 특별평가 - 장려상" : "2020년 하반기 TOPCIT 특별평가 - 장려상",
+      subtitle: language === "en" ? "스파르탄SW교육원" : "스파르탄SW교육원",
+      date: language === "en" ? "2020. 12" : "2020. 12",
+      description:
+      language === "en"
+        ? "."
+        : ".",
+      type: "awards",
+      status: "completed",
+    },
+    {
+      id: "award-7",
+      title: language === "en" ? "숭실대학교 소프트웨어학부 소프트웨어 공모전 - 대상" : "숭실대학교 소프트웨어학부 소프트웨어 공모전 - 대상",
+      subtitle: language === "en" ? "숭실대학교 소프트웨어학부" : "숭실대학교 소프트웨어학부",
+      date: language === "en" ? "2019. 11" : "2019. 11",
+      description:
+        language === "en"
+          ? ""
+          : "1대 N 간의 텍스트 공유의 불편함을 최소화하는 솔루션",
       type: "awards",
       status: "completed",
     },

@@ -37,15 +37,15 @@ export function Project1DiagramContent() {
     <>
       <section id="architecture" className="mb-6">
         <h2 className="text-xl font-semibold mb-4">아키텍처</h2>
-        <div>여기에 원하는 HTML/컴포넌트/이미지 등</div>
+        {/* <div>여기에 원하는 HTML/컴포넌트/이미지 등</div> */}
       </section>
       <section id="erd" className="mb-6">
-        <h2 className="text-xl font-semibold mb-4">ERD</h2>
-        <img src="/images/project1/erd.png" alt="ERD" />
+        <h2 className="text-xl font-semibold mb-4">ER 다이어그램</h2>
+        {/* <img src="/images/project1/erd.png" alt="ERD" /> */}
       </section>
       <section id="sequence" className="mb-6">
-        <h2 className="text-xl font-semibold mb-4">시퀀스</h2>
-        <div>시퀀스 다이어그램 설명 등 자유롭게</div>
+        <h2 className="text-xl font-semibold mb-4">인증 시퀀스 다이어그램</h2>
+        {/* <div>시퀀스 다이어그램 설명 등 자유롭게</div> */}
       </section>
     </>
   );
@@ -102,7 +102,18 @@ export function Project2DiagramContent() {
         <div>
           <ImageZoom src="/images/posts/re-verse/architecture.png"
               alt="architecture" className="my-4 rounded" width="40%" />
-          보안, 재해복구, 고가용성의 특성을 고려하여 AWS 기반 아키텍처를 설계하였습니다.
+          <b>보안</b>, <b>재해복구</b>, <b>고가용성</b>의 특성을 고려하여 AWS 기반 아키텍처를 설계하였습니다.
+          <br/>
+          <br/>
+          <p>
+            SSAFY에서 이전까지 진행하던 프로젝트들은 EC2 서버만의 public IP만을 제공받았기 때문에, 외부에서의 침입 시도가 여러 번 있었습니다. <br/>
+            이러한 문제를 해결하기 위해 다음과 같은 방법으로 외부에서의 직접적인 접근이 불가능하도록 구성했습니다.<br/>
+            <ul>
+              <li>먼저 VPC에 <b>Internet Gateway</b>(IGW)를 두어, <b>외부 요청은 IGW를 통해서만</b> 들어오도록 하였습니다.</li>
+              <li>Public Subnet에 <b>Application Load Balancer</b>(ALB)를 배치하여, <b>IGW에 들어온 외부 요청은 ALB로 전달</b>하도록 하였습니다.</li>
+              <li>그리고 VPC 내부에서만 통신이 가능한 <b>Private Subnet에</b> 서비스가 배포된 <b>EC2 인스턴스들을 배치</b>하였고, <b>ALB를 통해 접근이 가능</b>하도록 함으로써 보안을 강화하였습니다.</li>
+            </ul>
+          </p>
         </div>
       </section>
       <section id="ci-cd-pipeline" className="mb-6">
@@ -123,12 +134,28 @@ export function Project2DiagramContent() {
 export function Project3InfoContent() {
   return (
     <>
-      <p>PARSLEY는 AI 기반 데이터 분석 플랫폼으로, 대용량 데이터에서 인사이트를 추출합니다.</p>
-      <img src="https://choeun.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F86197a9d-57f5-4082-bdd2-02f078594443%2Freverse.jpg?table=block&id=9ca5725c-9c26-4363-a3d4-bf347059c133&spaceId=5d0a987d-8a0f-4ad2-a579-07d63bd3b542&width=2000&userId=&cache=v2"
-           alt="overview" className="my-4 rounded" width="30%" />
-      <Toggle title="문제 정의">
-        <p>기업들은 대용량 데이터셋에서 의미 있는 인사이트를 효율적으로 추출하는 데 어려움을 겪고 있습니다.</p>
+      <p>PARSLEY는 WebRTC를 활용한 Gamification 기반 화상 온라인 스터디 서비스입니다.</p>
+      <ImageZoom src="/images/posts/parsley/thumbnail.png"
+           alt="overview" className="my-2 rounded" width="100%" />
+      <h2 className="text-xl font-semibold mt-6 mb-4">✏️ 주요 기능</h2>
+      <Toggle title="실시간 화상 채팅 및 화면 동시 공유 가능">
+        <ImageZoom src="/images/posts/parsley/[심플]스터디룸-입장(여러 사용자).gif" alt="enter-studyroom" className="my-2 rounded" width="40%"
+          caption="스터디룸 입장장" />
       </Toggle>
+      {/* TODO: 하나 추가 */}
+      <Toggle title="허브 키우기 및 도감 채우기 등과 같은 게임적인 요소">
+        <ImageZoom src="/images/posts/parsley/[심플]허브심기.gif" alt="planting-herb" className="my-2 rounded" width="40%"
+          caption="허브 심기" />
+        <ImageZoom src="/images/posts/parsley/[심플]스터디룸-수확,랭킹,알림.gif" alt="harveting-herb" className="my-2 rounded" width="40%"
+          caption="허브 수확하기" />
+        <ImageZoom src="/images/posts/parsley/[화려]대표프로필설정.gif" alt="setting-profile" className="my-2 rounded" width="40%"
+          caption="도감 - 대표 프로필 설정" />
+      </Toggle>
+      <Toggle title="전체 사용자의 도감 점수 기준 랭킹 시스템 제공">
+        <ImageZoom src="/images/posts/parsley/[화려]실시간 랭킹 확인.gif" alt="ranking" className="my-2 rounded" width="40%"
+          caption="Redis로 실시간 랭킹 확인" />
+      </Toggle>
+      {/* TODO: 하나 더 추가 */}
     </>
   );
 }
