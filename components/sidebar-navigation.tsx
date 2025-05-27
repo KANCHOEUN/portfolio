@@ -77,7 +77,7 @@ const contactInfo = {
 // Social media links
 const socialLinks = [
   { id: "github", name: "GitHub", url: "https://github.com/KANCHOEUN", icon: Github },
-  { id: "linkedin", name: "LinkedIn", url: "www.linkedin.com/in/hyeeun-cho-307554211", icon: Linkedin },
+  { id: "linkedin", name: "LinkedIn", url: "https://www.linkedin.com/in/hyeeun-cho-307554211", icon: Linkedin },
   { id: "blog", name: "Blog", url: "https://kanchoeun.github.io/", icon: Newspaper },
   { id: "ddo_nonii", name: "Dog", url: "https://www.instagram.com/ddo_noniii/", icon: Dog },
 ]

@@ -9,8 +9,11 @@ import IframeViewer from "./iframe-viewer"
 import { useLanguage } from "@/contexts/language-context"
 import { useSearchParams, useRouter } from "next/navigation"
 import { projectContentData, projectInfo, relatedArticlesData } from "@/lib/project-content"
-import { url } from "inspector"
 import NotionViewer from "./notion-viewer"
+
+import { infoContents, diagramContents } from "./project-content/contents"
+import InfoPageWrapper from "@/components/project-common/InfoPageWrapper"
+import DiagramPageWrapper from "@/components/project-common/DiagramPageWrapper"
 
 interface EditorContentProps {
   activeFile: string | null
@@ -122,23 +125,67 @@ const getProjectIcon = (fileId: string) => {
   return <FileCode size={16} className="text-[#61afef] dark:text-[#61afef] light:text-[#4078f2] flex-shrink-0" />
 }
 
-// 기술 스택 뱃지 컴포넌트
-const TechBadge = ({ tech }: { tech: string }) => (
-  <span className="inline-block bg-[#2c313a] dark:bg-[#2c313a] light:bg-[#eaeaeb] text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] px-3 py-1 rounded-full text-sm mr-2 mb-2">
-    {tech}
-  </span>
-)
+function infoKeyToTitle(projectKey: keyof typeof infoContents) {
+  switch (projectKey) {
+    case "project1": return "Pigrest";
+    case "project2": return "RE-VERSE";
+    case "project3": return "PARSLEY";
+    default: return "";
+  }
+}
+
+function diagramKeyToTitle(projectKey: keyof typeof diagramContents) {
+  switch (projectKey) {
+    case "project1": return "Pigrest 시스템 다이어그램";
+    case "project2": return "RE-VERSE 시스템 다이어그램";
+    case "project3": return "PARSLEY 시스템 아키텍처";
+    default: return "";
+  }
+}
+
+function diagramKeyToDescription(projectKey: keyof typeof diagramContents) {
+  switch (projectKey) {
+    case "project1": return "이 프로젝트의 시스템 구조와 데이터 흐름을 설명합니다.";
+    case "project2": return "RE-VERSE의 시스템 설계와 기술 스택, API 설계를 설명합니다.";
+    case "project3": return "PARSLEY의 시스템 아키텍처와 데이터 흐름, ML 파이프라인을 설명합니다.";
+    default: return "";
+  }
+}
+
+function diagramKeyToToc(projectKey: keyof typeof diagramContents) {
+  switch (projectKey) {
+    case "project1":
+      return [
+        { id: "architecture", label: "아키텍처" },
+        { id: "erd", label: "ERD" },
+        { id: "sequence", label: "시퀀스" },
+      ];
+    case "project2":
+      return [
+        { id: "system-design", label: "시스템 설계" },
+        { id: "ci-cd-pipeline", label: "CI/CD 파이프라인" },
+        { id: "api-design", label: "API 설계" },
+      ];
+    case "project3":
+      return [
+        { id: "high-level", label: "고수준 설계" },
+        { id: "data-flow", label: "데이터 플로우" },
+        { id: "ml-pipeline", label: "ML 파이프라인" },
+      ];
+    default:
+      return [];
+  }
+}
 
 export default function EditorContent({ activeFile, setActiveFile }: EditorContentProps) {
   const { t, language } = useLanguage()
   const searchParams = useSearchParams()
   const router = useRouter()
-  const fileParam = searchParams.get("file")
+  const [fileParam, setFileParam] = useState(searchParams.get("file"))
   const [openTabs, setOpenTabs] = useState<OpenTab[]>([])
   const [activeTab, setActiveTab] = useState<string | null>(null)
   const [selectedBlog, setSelectedBlog] = useState<{ url: string; title: string } | null>(null)
   const [isMobileView, setIsMobileView] = useState(false)
-  const [currentFile, setCurrentFile] = useState<string | null>(null)
   const [forceRender, setForceRender] = useState(0)
   const tabsHeaderRef = useRef<HTMLDivElement>(null)
   const contentAreaRef = useRef<HTMLDivElement>(null)
@@ -161,7 +208,7 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
   )
 
   // 목차 클릭 핸들러
-  const handleTocClick = (id: string) => {
+  const handleToClick = (id: string) => {
     const element = document.getElementById(id)
     if (element) {
       element.scrollIntoView({ behavior: "smooth" })
@@ -219,7 +266,7 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
                 {section.items.map((item: any, index: number) => (
                   <li key={index}>
                     <button
-                      onClick={() => handleTocClick(item.id)}
+                      onClick={() => handleToClick(item.id)}
                       className="text-[#61afef] dark:text-[#61afef] light:text-[#4078f2] hover:text-[#56b6c2] dark:hover:text-[#56b6c2] light:hover:text-[#0184bc] transition-colors text-left"
                     >
                       {index + 1}. {t(item.titleKey)}
@@ -240,6 +287,43 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
   const getFileContent = useCallback(
     (fileId: string): { project: string; content: React.ReactNode } | null => {
       try {
+        // info/diagram 페이지 자동 매핑
+        const infoMatch = fileId.match(/^intro([1-3])$/);
+        const diagramMatch = fileId.match(/^diagram([1-3])$/);
+        if (infoMatch) {
+          const projectKey = `project${infoMatch[1]}` as keyof typeof infoContents;
+          const InfoContent = infoContents[projectKey];
+          const info = projectInfo[projectKey];
+          return {
+            project: t(["project.one", "project.two", "project.three"][parseInt(infoMatch[1], 10) - 1]),
+            content: (
+              <InfoPageWrapper
+                title={infoKeyToTitle(projectKey)}
+                githubUrl={info.githubUrl}
+                period={info.period}
+                techStack={info.techStack}
+              >
+                <InfoContent />
+              </InfoPageWrapper>
+            ),
+          };
+        }
+        if (diagramMatch) {
+          const projectKey = `project${diagramMatch[1]}` as keyof typeof diagramContents;
+          const DiagramContent = diagramContents[projectKey];
+          return {
+            project: t(["project.one", "project.two", "project.three"][parseInt(diagramMatch[1], 10) - 1]),
+            content: (
+              <DiagramPageWrapper
+                title={diagramKeyToTitle(projectKey)}
+                description={diagramKeyToDescription(projectKey)}
+                toc={diagramKeyToToc(projectKey)}
+              >
+                <DiagramContent />
+              </DiagramPageWrapper>
+            ),
+          };
+        }
         // 관련 글 페이지 처리
         if (fileId.includes("related")) {
           const getProjectName = () => {
@@ -270,47 +354,9 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
           project: getProjectName(),
           content: (
             <div className="p-6">
-              {/* 프로젝트 정보 (intro 페이지에만 표시) */}
-              {contentData.projectKey && (
-                <div className="mb-6">
-                  {/* 제목과 GitHub 아이콘을 함께 배치 */}
-                  <div className="flex items-center mb-4">
-                    <h1 className="text-2xl font-bold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mr-3">
-                      {t(contentData.titleKey)}
-                    </h1>
-                    <a
-                      href={projectInfo[contentData.projectKey].githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] hover:text-[#61afef] dark:hover:text-[#61afef] light:hover:text-[#4078f2] transition-colors h-full"
-                      title="GitHub Repository"
-                    >
-                      <Github size={20} className="bottom-0" />
-                    </a>
-                  </div>
-
-                  <div className="flex items-center my-2 px-1">
-                    {/* TODO: PRIZE */}
-                    <Calendar size={16} className="text-[#98c379] dark:text-[#98c379] light:text-[#50a14f] mr-2" />
-                    <span className="text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] font-medium">
-                      {projectInfo[contentData.projectKey].period}
-                    </span>
-                  </div>
-                  <div className="mt-3">
-                    {projectInfo[contentData.projectKey].techStack.map((tech) => (
-                      <TechBadge key={tech} tech={tech} />
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* intro 페이지가 아닌 경우 기본 제목 */}
-              {!contentData.projectKey && (
-                <h1 className="text-2xl font-bold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-4">
-                  {t(contentData.titleKey)}
-                </h1>
-              )}
-
+              <h1 className="text-2xl font-bold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-4">
+                {t(contentData.titleKey)}
+              </h1>
               {/* 콘텐츠 섹션들 */}
               {contentData.sections.map((section, index) => (
                 <div key={index}>{renderContentSection(section)}</div>
@@ -384,36 +430,34 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
 
   // 파일 파라미터 변경 감지
   useEffect(() => {
-    setCurrentFile(fileParam || activeFile)
-  }, [fileParam, activeFile])
+    setFileParam(searchParams.get("file"))
+  }, [searchParams])
 
-  // 파일이 변경될 때 탭 업데이트
+  // 파일이 변경될 때 탭 업데이트 (중복 방지)
   useEffect(() => {
-    if (currentFile && getFileContent(currentFile)) {
-      const existingTabIndex = openTabs.findIndex((tab) => tab.id === currentFile && tab.type === "file")
-
-      if (existingTabIndex === -1) {
-        setOpenTabs((prev) => [
+    if (fileParam && getFileContent(fileParam)) {
+      setOpenTabs((prev) => {
+        if (prev.some((tab) => tab.id === fileParam && tab.type === "file")) {
+          return prev.map((tab) =>
+            tab.id === fileParam && tab.type === "file"
+              ? { ...tab, title: getFilePageName(fileParam) }
+              : tab
+          );
+        }
+        return [
           ...prev,
           {
-            id: currentFile,
-            title: getFilePageName(currentFile),
+            id: fileParam,
+            title: getFilePageName(fileParam),
             type: "file",
-            projectIcon: getProjectIcon(currentFile),
+            projectIcon: getProjectIcon(fileParam),
           },
-        ])
-      } else {
-        // 기존 탭의 제목 업데이트 (언어 변경 시)
-        setOpenTabs((prev) =>
-          prev.map((tab) =>
-            tab.id === currentFile && tab.type === "file" ? { ...tab, title: getFilePageName(currentFile) } : tab,
-          ),
-        )
-      }
-
-      setActiveTab(currentFile)
+        ];
+      });
+      setActiveTab(fileParam);
+      setActiveFile(fileParam);
     }
-  }, [currentFile, getFileContent, getFilePageName])
+  }, [fileParam, getFileContent, getFilePageName]);
 
   // 언어 변경 시 모든 탭 제목 업데이트 및 콘텐츠 강제 리렌더링
   useEffect(() => {
@@ -542,43 +586,60 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
     setSelectedBlog(null)
   }
 
-  // 탭 닫기
+  // 탭 닫기 (openTabs만 변경)
   const handleCloseTab = (tabId: string, e: React.MouseEvent) => {
-    e.stopPropagation()
-
-    setOpenTabs((prev) => prev.filter((tab) => tab.id !== tabId))
-
-    if (activeTab === tabId) {
-      if (openTabs.length > 1) {
-        const tabIndex = openTabs.findIndex((tab) => tab.id === tabId)
-        const newActiveTab = openTabs[tabIndex === 0 ? 1 : tabIndex - 1]
-        setActiveTab(newActiveTab.id)
-
-        if (newActiveTab.type === "file") {
-          setActiveFile(newActiveTab.id)
-        }
-      } else {
-        setActiveTab(null)
-        setActiveFile(null)
-      }
+    e.stopPropagation();
+    if (fileParam === tabId) {
+      router.replace("/portfolio");
+      setFileParam(null);
     }
+    setOpenTabs((prevTabs) => prevTabs.filter((tab) => tab.id !== tabId));
+  };
 
-    if (openTabs.find((tab) => tab.id === tabId)?.type === "file") {
-      if (tabId === currentFile) {
-        setActiveFile(null)
+  // openTabs가 바뀔 때 activeTab, setActiveFile 동기화
+  useEffect(() => {
+    if (openTabs.length > 0) {
+      if (!openTabs.some(tab => tab.id === activeTab)) {
+        const lastTabId = openTabs[openTabs.length - 1].id;
+        setActiveTab(lastTabId);
+        setActiveFile(lastTabId);
+        console.log('[DEBUG] openTabs changed, setActiveTab/setActiveFile:', lastTabId);
       }
+    } else {
+      setActiveTab(null);
+      setActiveFile(null);
+      console.log('[DEBUG] openTabs empty, setActiveTab/setActiveFile null');
     }
-  }
+  }, [openTabs]);
 
-  // 탭 활성화
+  // 탭 클릭, 사이드바 클릭, 탭 추가/제거, activeTab, openTabs, setActiveFile, fileParam 변화 등 주요 지점에 console.log 추가
+
+  useEffect(() => {
+    console.log('[DEBUG] openTabs:', openTabs);
+  }, [openTabs]);
+
+  useEffect(() => {
+    console.log('[DEBUG] activeTab:', activeTab);
+  }, [activeTab]);
+
+  useEffect(() => {
+    console.log('[DEBUG] setActiveFile:', activeFile);
+  }, [activeFile]);
+
+  useEffect(() => {
+    console.log('[DEBUG] fileParam:', fileParam);
+  }, [fileParam]);
+
+  // 탭 클릭 시 fileParam도 router.replace로 동기화
   const handleTabClick = (tabId: string) => {
-    setActiveTab(tabId)
-
-    const tab = openTabs.find((tab) => tab.id === tabId)
-    if (tab?.type === "file") {
-      setActiveFile(tabId)
+    console.log('[DEBUG] handleTabClick:', tabId);
+    setActiveTab(tabId);
+    setActiveFile(tabId);
+    if (fileParam !== tabId) {
+      router.replace(`/portfolio?file=${tabId}`);
+      console.log('[DEBUG] handleTabClick: router.replace', tabId);
     }
-  }
+  };
 
   // 현재 활성 탭 가져오기
   const getActiveTabContent = () => {
