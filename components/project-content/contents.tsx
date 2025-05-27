@@ -60,21 +60,21 @@ export function Project2InfoContent() {
            alt="overview" className="my-2 rounded" width="30%" />
       <h2 className="text-xl font-semibold mt-6 mb-4">✏️ 주요 기능</h2>
       <Toggle title="React Quill 텍스트 에디터를 활용하여 추억들을 다이어리처럼 작성 및 관리">
-        <ImageZoom src="/images/posts/re-verse/나의-아카이브-글-작성하기.gif" alt="quill" className="my-2 rounded" width="40%"
+        <ImageZoom src="/images/posts/re-verse/write-post-at-my-archive.gif" alt="quill" className="my-2 rounded" width="40%"
           caption="텍스트 에디터로 추억 작성하기" />
-        <ImageZoom src="/images/posts/re-verse/친구-아카이브-글-쓰기-보기.gif" alt="quill" className="my-2 rounded" width="40%"
+        <ImageZoom src="/images/posts/re-verse/write-and-view-post-at-friend-archive.gif" alt="quill" className="my-2 rounded" width="40%"
           caption="작성한 추억들 보기기" />
       </Toggle>
       <Toggle title="추억 저장소인 아카이브 별로 추억을 공유하고 싶은 친구들끼리 공유">
-        <ImageZoom src="/images/posts/re-verse/아카이브-친구-초대.gif" alt="archive" className="my-2 rounded" width="40%"
+        <ImageZoom src="/images/posts/re-verse/invite-friend-to-archive.gif" alt="archive" className="my-2 rounded" width="40%"
           caption="아카이브 관리 - 친구에게 공유하기"
         />
-        <ImageZoom src="/images/posts/re-verse/나의-아카이브-친구-초대-추방.gif" alt="archive" className="my-2 rounded" width="40%"
+        <ImageZoom src="/images/posts/re-verse/invite-and-remove-friend-from-archive.gif" alt="archive" className="my-2 rounded" width="40%"
           caption="아카이브 3D 공간 - 친구에게 공유하기/내보내기"
         />
       </Toggle>
       <Toggle title="Three.js 기반 3D 공간에서 WebRTC로 P2P 연결을 통해 친구들과 함께 텍스트와 음성 채팅으로 상호 작용 가능">
-        <ImageZoom src="/images/posts/re-verse/아카이브-설명.gif" alt="3d-chat" className="my-2 rounded" width="40%"
+        <ImageZoom src="/images/posts/re-verse/archive-description.gif" alt="3d-chat" className="my-2 rounded" width="40%"
           caption="RE-VERSE 사용 가이드"/>
         <div className="my-2">
           <video 
@@ -87,9 +87,9 @@ export function Project2InfoContent() {
         <p className="text-sm text-gray-500">아카이브 내 음성 채팅</p>
       </Toggle>
       <Toggle title="그 외 다양한 인터랙션 요소들">
-        <ImageZoom src="/images/posts/re-verse/캐릭터-선택.gif" alt="select-character" className="my-2 rounded" width="40%" />
-        <ImageZoom src="/images/posts/re-verse/개발자-정보.gif" alt="developer-info" className="my-2 rounded" width="40%" />
-        <ImageZoom src="/images/posts/re-verse/지뢰게임.gif" alt="game" className="my-2 rounded" width="40%" />
+        <ImageZoom src="/images/posts/re-verse/select-character.gif" alt="select-character" className="my-2 rounded" width="40%" />
+        <ImageZoom src="/images/posts/re-verse/developer-info.gif" alt="developer-info" className="my-2 rounded" width="40%" />
+        <ImageZoom src="/images/posts/re-verse/mine-game.gif" alt="game" className="my-2 rounded" width="40%" />
       </Toggle>
     </>
   );
@@ -139,20 +139,20 @@ export function Project3InfoContent() {
            alt="overview" className="my-2 rounded" width="100%" />
       <h2 className="text-xl font-semibold mt-6 mb-4">✏️ 주요 기능</h2>
       <Toggle title="실시간 화상 채팅 및 화면 동시 공유 가능">
-        <ImageZoom src="/images/posts/parsley/[심플]스터디룸-입장(여러 사용자).gif" alt="enter-studyroom" className="my-2 rounded" width="40%"
+        <ImageZoom src="/images/posts/parsley/enter-studyroom.gif" alt="enter-studyroom" className="my-2 rounded" width="40%"
           caption="스터디룸 입장장" />
       </Toggle>
       {/* TODO: 하나 추가 */}
       <Toggle title="허브 키우기 및 도감 채우기 등과 같은 게임적인 요소">
-        <ImageZoom src="/images/posts/parsley/[심플]허브심기.gif" alt="planting-herb" className="my-2 rounded" width="40%"
+        <ImageZoom src="/images/posts/parsley/simple-planting-herb.gif" alt="planting-herb" className="my-2 rounded" width="40%"
           caption="허브 심기" />
-        <ImageZoom src="/images/posts/parsley/[심플]스터디룸-수확,랭킹,알림.gif" alt="harveting-herb" className="my-2 rounded" width="40%"
+        <ImageZoom src="/images/posts/parsley/simple-harvest-herb.gif" alt="harveting-herb" className="my-2 rounded" width="40%"
           caption="허브 수확하기" />
-        <ImageZoom src="/images/posts/parsley/[화려]대표프로필설정.gif" alt="setting-profile" className="my-2 rounded" width="40%"
+        <ImageZoom src="/images/posts/parsley/setting-profile.gif" alt="setting-profile" className="my-2 rounded" width="40%"
           caption="도감 - 대표 프로필 설정" />
       </Toggle>
       <Toggle title="전체 사용자의 도감 점수 기준 랭킹 시스템 제공">
-        <ImageZoom src="/images/posts/parsley/[화려]실시간 랭킹 확인.gif" alt="ranking" className="my-2 rounded" width="40%"
+        <ImageZoom src="/images/posts/parsley/check-ranking.gif" alt="ranking" className="my-2 rounded" width="40%"
           caption="Redis로 실시간 랭킹 확인" />
       </Toggle>
       {/* TODO: 하나 더 추가 */}
