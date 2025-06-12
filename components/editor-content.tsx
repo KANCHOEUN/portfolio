@@ -727,7 +727,7 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
           <div className="flex-1 overflow-auto">
             {selectedBlog ? (
               selectedBlog.url.includes("notion.so") ? (
-                  <NotionViewer notionPageId={selectedBlog.url.split("/").pop()?.split("-").pop() || ""} onClose={handleCloseBlogViewer} />
+                <NotionViewer notionPageId={selectedBlog.url.split("/").pop()?.split("-").pop() || ""} onClose={handleCloseBlogViewer} />
               ) : (
                 <IframeViewer url={selectedBlog.url} title={selectedBlog.title} onClose={handleCloseBlogViewer} />
               )
