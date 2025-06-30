@@ -36,14 +36,14 @@ const blogPosts = [
     description:
       "UUID를 도입하게 된 배경과 실제 코드에 어떻게 적용하였는가",
     image: "https://kanchoeun.github.io/assets/img/posts/uuid.png",
-    url: "https://kanchoeun.github.io/posts/UUID-%EC%A0%81%EC%9A%A9%EA%B8%B0/",
+    url: "https://blog.kancho.co/posts/UUID-%EC%A0%81%EC%9A%A9%EA%B8%B0/",
   },
   {
     id: "common-response-format",
     title: "공통 응답 형식 적용기",
     description: "Pigrest 프로젝트에서 정의한 공통 응답 형식과 ResponseBodyAdvice를 적용하지 않은 이유",
     image: "https://kanchoeun.github.io/assets/img/posts/spring-mvc-request-life-cycle.jpg",
-    url: "https://kanchoeun.github.io/posts/%EA%B3%B5%ED%86%B5-%EC%9D%91%EB%8B%B5-%ED%98%95%EC%8B%9D-%EC%A0%81%EC%9A%A9%EA%B8%B0/",
+    url: "https://blog.kancho.co/posts/%EA%B3%B5%ED%86%B5-%EC%9D%91%EB%8B%B5-%ED%98%95%EC%8B%9D-%EC%A0%81%EC%9A%A9%EA%B8%B0/",
   },
   {
     id: "filter-interceptor-response-body",
@@ -51,7 +51,7 @@ const blogPosts = [
     description:
       "Spring MVC Request Lifecycle에서 HttpMessageConverter 톺아보기",
     image: "https://kanchoeun.github.io/assets/img/posts/spring-mvc-request-life-cycle-http-message-converter.svg",
-    url: "https://kanchoeun.github.io/posts/Filter%EC%99%80-Interceptor%EC%97%90%EC%84%9C-Response%EC%9D%98-body%EB%A5%BC-%EC%88%98%EC%A0%95%ED%95%A0-%EC%88%98-%EC%9E%88%EC%9D%84%EA%B9%8C/",
+    url: "https://blog.kancho.co/posts/Filter%EC%99%80-Interceptor%EC%97%90%EC%84%9C-Response%EC%9D%98-body%EB%A5%BC-%EC%88%98%EC%A0%95%ED%95%A0-%EC%88%98-%EC%9E%88%EC%9D%84%EA%B9%8C/",
   },
   {
     id: "filter-exception-handler",
@@ -59,7 +59,7 @@ const blogPosts = [
     description:
       "GlobalExceptionHandler가 잡지 못하는 예외 처리 방법 (feat. AuthenticationEntryPoint)",
     image: "https://kanchoeun.github.io/assets/img/posts/jwt-filter-dispatcher-servlet.svg",
-    url: "https://kanchoeun.github.io/posts/Filter%EC%97%90%EC%84%9C-%EB%B0%9C%EC%83%9D%ED%95%9C-%EC%98%88%EC%99%B8%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%B2%98%EB%A6%AC%ED%95%A0%EA%B9%8C/",
+    url: "https://blog.kancho.co/posts/Filter%EC%97%90%EC%84%9C-%EB%B0%9C%EC%83%9D%ED%95%9C-%EC%98%88%EC%99%B8%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%B2%98%EB%A6%AC%ED%95%A0%EA%B9%8C/",
   },
   {
     id: "index-performance",
