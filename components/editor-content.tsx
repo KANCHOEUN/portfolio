@@ -90,12 +90,12 @@ const blogPosts = [
     url: "https://www.notion.so/HPA-feat-Artillery-1ff9d8968ca3803dacfbef45bb3d84e0",
   },
   {
-    id: "scalable-data-processing",
-    title: "Scalable Data Processing",
+    id: "deploy-to-ec2-apply-https",
+    title: "EC2에 배포 및 HTTPS 적용하기",
     description:
-      "Learn about the scalable data processing techniques used in Project Three for handling large datasets efficiently.",
-    image: "/placeholder.svg?height=200&width=300",
-    url: "https://aws.amazon.com",
+      "EC2에서 Docker Compose로 컨테이너를 관리하고, HTTPS 적용하기",
+    image: "/images/posts/parsley/parsley-architecture.png",
+    url: "https://www.notion.so/choeun/EC2-HTTPS-2269d8968ca381939975ef57e6cc1027",
   },
   {
     id: "machine-learning-models",
@@ -144,8 +144,8 @@ function infoKeyToTitle(projectKey: keyof typeof infoContents) {
 
 function diagramKeyToTitle(projectKey: keyof typeof diagramContents) {
   switch (projectKey) {
-    case "project1": return "Pigrest 시스템 다이어그램";
-    case "project2": return "RE-VERSE 시스템 다이어그램";
+    case "project1": return "Pigrest 시스템 아키텍처";
+    case "project2": return "RE-VERSE 시스템 아키텍처";
     case "project3": return "PARSLEY 시스템 아키텍처";
     default: return "";
   }
@@ -166,7 +166,7 @@ function diagramKeyToToc(projectKey: keyof typeof diagramContents) {
       return [
         { id: "architecture", label: "아키텍처" },
         { id: "erd", label: "ERD" },
-        { id: "sequence", label: "시퀀스" },
+        { id: "sequence", label: "시퀀스 다이어그램" },
       ];
     case "project2":
       return [
@@ -176,9 +176,9 @@ function diagramKeyToToc(projectKey: keyof typeof diagramContents) {
       ];
     case "project3":
       return [
-        { id: "high-level", label: "고수준 설계" },
-        { id: "data-flow", label: "데이터 플로우" },
-        { id: "ml-pipeline", label: "ML 파이프라인" },
+        { id: "architecture", label: "아키텍처" },
+        // { id: "data-flow", label: "ERD" },
+        { id: "sequence-diagram", label: "시퀀스 다이어그램" },
       ];
     default:
       return [];

@@ -6,11 +6,11 @@ export default function Project3Diagram() {
   return (
     <DiagramPageWrapper
       title="PARSLEY 시스템 아키텍처"
-      description="PARSLEY의 시스템 아키텍처와 데이터 흐름, ML 파이프라인을 설명합니다."
+      description="PARSLEY의 시스템 아키텍처와 ERD, 시퀀스 다이어그램을 설명합니다."
       toc={[
-        { id: "high-level", label: "고수준 설계" },
-        { id: "data-flow", label: "데이터 플로우" },
-        { id: "ml-pipeline", label: "ML 파이프라인" },
+        { id: "architecture", label: "아키텍처" },
+        // { id: "er-diagram", label: "ERD" },
+        { id: "sequence-diagram", label: "시퀀스 다이어그램" },
       ]}
     >
       <DiagramContent />

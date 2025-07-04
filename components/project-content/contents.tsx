@@ -105,7 +105,7 @@ export function Project2DiagramContent() {
           <b>보안</b>, <b>재해복구</b>, <b>고가용성</b>의 특성을 고려하여 AWS 기반 아키텍처를 설계하였습니다.
           <br/>
           <br/>
-          <p>
+          <div>
             SSAFY에서 이전까지 진행하던 프로젝트들은 EC2 서버만의 public IP만을 제공받았기 때문에, 외부에서의 침입 시도가 여러 번 있었습니다. <br/>
             이러한 문제를 해결하기 위해 다음과 같은 방법으로 외부에서의 직접적인 접근이 불가능하도록 구성했습니다.<br/>
             <ul>
@@ -113,7 +113,7 @@ export function Project2DiagramContent() {
               <li>Public Subnet에 <b>Application Load Balancer</b>(ALB)를 배치하여, <b>IGW에 들어온 외부 요청은 ALB로 전달</b>하도록 하였습니다.</li>
               <li>그리고 VPC 내부에서만 통신이 가능한 <b>Private Subnet에</b> 서비스가 배포된 <b>EC2 인스턴스들을 배치</b>하였고, <b>ALB를 통해 접근이 가능</b>하도록 함으로써 보안을 강화하였습니다.</li>
             </ul>
-          </p>
+          </div>
         </div>
       </section>
       <section id="ci-cd-pipeline" className="mb-6">
@@ -163,16 +163,26 @@ export function Project3DiagramContent() {
   return (
     <>
       <section id="high-level" className="mb-6">
-        <h2 className="text-xl font-semibold mb-4">고수준 설계</h2>
-        <div>고수준 설계에 대한 자유로운 설명 및 다이어그램</div>
+        <h2 className="text-xl font-semibold mb-4">아키텍처</h2>
+        <div>
+          <ImageZoom src="/images/posts/parsley/parsley-architecture.png" alt="architecture" className="my-4 rounded" width="40%" />
+          <p>
+            
+          </p>
+        </div>
       </section>
-      <section id="data-flow" className="mb-6">
-        <h2 className="text-xl font-semibold mb-4">데이터 플로우</h2>
-        <div>Raw Data → ETL Pipeline → Data Lake → Analysis → Visualization</div>
-      </section>
-      <section id="ml-pipeline" className="mb-6">
-        <h2 className="text-xl font-semibold mb-4">ML 파이프라인</h2>
-        <div>머신러닝 모델 학습 및 배포 파이프라인 설명</div>
+      {/* <section id="er-diagram" className="mb-6">
+        <h2 className="text-xl font-semibold mb-4">ERD</h2>
+        <div>
+          <ImageZoom src="/images/posts/parsley/erd.png" alt="erd" className="my-4 rounded" width="40%" />
+        </div>
+      </section> */}
+      <section id="sequence-diagram" className="mb-6">
+        <h2 className="text-xl font-semibold mb-4">시퀀스 다이어그램</h2>
+        <h3 className="text-lg font-semibold mb-2">랭킹 시스템</h3>
+        <div>
+          <ImageZoom src="/images/posts/parsley/parsley-ranking-sequence-diagram.png" alt="sequence-diagram" className="my-4 rounded" width="40%" />
+        </div>
       </section>
     </>
   );

@@ -214,5 +214,5 @@ export const projectContentData = {
 export const relatedArticlesData = {
   related1: ["uuid", "common-response-format", "filter-interceptor-response-body", "filter-exception-handler"],
   related2: ["index-performance", "gitlab-ci", "argo-cd", "hpa-artillery"],
-  related3: ["scalable-data-processing", "machine-learning-models", "data-visualization-techniques", "team-structure"],
+  related3: ["deploy-to-ec2-apply-https"],
 }

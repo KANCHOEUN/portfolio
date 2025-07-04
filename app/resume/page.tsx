@@ -69,8 +69,8 @@ export default function ResumePage() {
       date: language === "en" ? "2025. 03 - Present" : "2025. 03 - 현재",
       description:
         language === "en"
-          ? "Built a scalable e-commerce platform with microservices architecture"
-          : "마이크로서비스 아키텍처로 핀터레스트 스타일의 SNS 플랫폼 구축",
+          ? ""
+          : "",
       type: "projects",
       status: "ongoing",
       projectLink: "/portfolio?file=intro1",
@@ -82,8 +82,8 @@ export default function ResumePage() {
       date: language === "en" ? "2020" : "2020",
       description:
         language === "en"
-          ? "Developed a real-time analytics system processing millions of events daily"
-          : "일일 수백만 개의 이벤트를 처리하는 실시간 분석 시스템을 개발",
+          ? ""
+          : "",
       type: "projects",
       status: "completed",
       projectLink: "/portfolio?file=intro2",
@@ -95,8 +95,8 @@ export default function ResumePage() {
       date: language === "en" ? "2019" : "2019",
       description:
         language === "en"
-          ? "Created a secure mobile payment application with biometric authentication"
-          : "생체 인증을 통한 안전한 모바일 결제 애플리케이션을 개발",
+          ? ""
+          : "",
       type: "projects",
       status: "completed",
       projectLink: "/portfolio?file=intro3",
