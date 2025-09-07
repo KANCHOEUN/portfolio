@@ -40,7 +40,7 @@ const mainNavigation = [
         isFolder: true,
         children: [
           { id: "intro1", name: "소개", path: "/portfolio?file=intro1" },
-          { id: "diagram1", name: "다이어그램", path: "/portfolio?file=diagram1" },
+          { id: "diagram1", name: "설계 및 구현", path: "/portfolio?file=diagram1" },
           { id: "related1", name: "관련 글", path: "/portfolio?file=related1" },
         ],
       },
@@ -50,7 +50,7 @@ const mainNavigation = [
         isFolder: true,
         children: [
           { id: "intro2", name: "소개", path: "/portfolio?file=intro2" },
-          { id: "diagram2", name: "다이어그램", path: "/portfolio?file=diagram2" },
+          { id: "diagram2", name: "설계 및 구현", path: "/portfolio?file=diagram2" },
           { id: "related2", name: "관련 글", path: "/portfolio?file=related2" },
         ],
       },
@@ -60,7 +60,7 @@ const mainNavigation = [
         isFolder: true,
         children: [
           { id: "intro3", name: "소개", path: "/portfolio?file=intro3" },
-          { id: "diagram3", name: "다이어그램", path: "/portfolio?file=diagram3" },
+          { id: "diagram3", name: "설계 및 구현", path: "/portfolio?file=diagram3" },
           { id: "related3", name: "관련 글", path: "/portfolio?file=related3" },
         ],
       },

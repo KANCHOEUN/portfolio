@@ -9,7 +9,7 @@ interface ImageZoomProps {
   width?: string;
 }
 
-export default function ImageZoom({ src, alt, caption, className = "", width = "40%" }: ImageZoomProps) {
+export default function ImageZoom({ src, alt, caption, className = "" }: ImageZoomProps) {
   const [isZoomed, setIsZoomed] = useState(false);
 
   const handleZoom = (e: React.MouseEvent) => {
@@ -19,15 +19,20 @@ export default function ImageZoom({ src, alt, caption, className = "", width = "
 
   return (
     <>
-      <div className="relative inline-block">
+      <div className="relative inline-block w-full">
         <img
           src={src}
           alt={alt}
           className={`${className} cursor-zoom-in transition-transform duration-200
-            w-full sm:w-[80%] md:w-[70%] lg:w-[70%] xl:w-[45%] 2xl:w-[40%]`}
+            max-w-[90%] sm:max-w-[85%] md:max-w-[80%] lg:max-w-[75%] xl:max-w-[70%] 2xl:max-w-[65%] 
+            max-h-[40vh] sm:max-h-[45vh] md:max-h-[55vh] lg:max-h-[60vh] xl:max-h-[60vh] 2xl:max-h-[50vh]`}
           onClick={handleZoom}
         />
-        {caption && <p className="text-sm text-gray-500 mt-1">{caption}</p>}
+        {caption && (
+          <p className="text-sm text-gray-500 mt-1 max-w-[95%] sm:max-w-[90%] md:max-w-[85%] lg:max-w-[80%] xl:max-w-[75%] 2xl:max-w-[70%]">
+            {caption}
+          </p>
+        )}
       </div>
 
       {isZoomed && (

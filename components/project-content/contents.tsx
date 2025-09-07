@@ -24,7 +24,7 @@ export function Project1InfoContent() {
            alt="thumbnail" className="my-4 rounded" width="30%" />
       <h2 className="text-xl font-semibold mt-6 mb-4">✏️ 주요 기능</h2>
       <Todo status="done" description="Spring Security와 JWT 기반 로그인, 회원가입"/>
-      <Todo status="done" description="나만의 프로필을 꾸미고, 관심 있는 사람들 팔로우로 소통"/>
+      <Todo status="in-progress" description="나만의 프로필을 꾸미고, 관심 있는 사람들 팔로우로 소통"/>
       <Todo status="in-progress" description="마음에 드는 이미지들을 핀으로 저장하고, 주제별로 나만의 보드를 만들어 관리"/>
       <Todo status="ready" description="팔로우한 친구들의 새로운 핀들을 실시간으로 받아보고, 좋아요 및 댓글 작성"/>
       <Todo status="ready" description="핀이나 보드를 친구들과 공유하며 텍스트 채팅"/>
@@ -36,16 +36,31 @@ export function Project1DiagramContent() {
   return (
     <>
       <section id="architecture" className="mb-6">
-        <h2 className="text-xl font-semibold mb-4">아키텍처</h2>
-        {/* <div>여기에 원하는 HTML/컴포넌트/이미지 등</div> */}
+        <h2 className="text-xl font-semibold mb-4">실시간 자동 저장 시스템</h2>
+        <ImageZoom src="/images/posts/pigrest/auto-save-sequence.svg" alt="auto-save-sequence" className="my-4 rounded" width="100%" 
+        caption="Publish한 적 없는 게시글에 대한 자동 저장 시스템의 시퀀스 다이어그램"/>
+        <br/>
+        <br/>
+        <div>
+        자동 저장 기능은 사용자가 입력할 때마다 수시로 API를 호출하므로 DB 부하가 급격히 증가할 수 있다고 판단하여,
+        임시 저장(draft) 단계에 <b>Write Behind</b> 전략을 적용했습니다.
+        <br/>
+        Draft 데이터는 Redis Hash에 우선 저장하고, Spring Scheduler가 <b>주기적으로 DB에 비동기로 반영</b>합니다.
+        <br/>
+        초기에는 `draft:*`로 key 스캔 방식(O(N))을 사용했으나,
+        TTL이 만료되기 전까지는 이미 DB에 동기화된 데이터도 <b>중복으로 반영</b>하고 있는 문제가 있었습니다.
+        이를 개선하기 위해 <b>최신 업데이트된 데이터의 key를 기록하는 Set</b>을 두어, 스케줄러가 필요한 데이터만 <b>O(1)</b>로 확인할 수 있게 하였고, 반영 이후 즉시 제거하도록 설계하였습니다.
+        <br/>
+        또한 <b>Cache Aside</b> 전략을 적용하여 사용자가 실시간으로 최신 데이터를 확인할 수 있고, 다른 기기에서도 작업을 이어나갈 수 있도록 하였습니다.
+        <br/>
+        임시 저장된 데이터는 <b>TTL로 관리</b>하였고, 게시물을 발행(publish)하는 시점에는 Redis에 저장된 데이터를 모두 삭제하여 메모리를 효율적으로 관리하였습니다.
+        </div>
       </section>
       <section id="erd" className="mb-6">
-        <h2 className="text-xl font-semibold mb-4">ER 다이어그램</h2>
-        {/* <img src="/images/project1/erd.png" alt="ERD" /> */}
+        <h2 className="text-xl font-semibold mb-4">JWT 기반 인증 시스템</h2>
       </section>
       <section id="sequence" className="mb-6">
-        <h2 className="text-xl font-semibold mb-4">인증 시퀀스 다이어그램</h2>
-        {/* <div>시퀀스 다이어그램 설명 등 자유롭게</div> */}
+        <h2 className="text-xl font-semibold mb-4">UUID 기반 설계</h2>
       </section>
     </>
   );

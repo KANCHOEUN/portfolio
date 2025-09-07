@@ -10,7 +10,7 @@ const projects = [
     name: "Pigrest",
     pages: [
       { id: "intro1", name: "소개", type: "file" },
-      { id: "diagram1", name: "다이어그램", type: "file" },
+      { id: "diagram1", name: "핵심 구현 사항", type: "file" },
       { id: "related1", name: "관련 글", type: "file" },
     ],
   },
@@ -19,7 +19,7 @@ const projects = [
     name: "RE-VERSE",
     pages: [
       { id: "intro2", name: "소개", type: "file" },
-      { id: "diagram2", name: "다이어그램", type: "file" },
+      { id: "diagram2", name: "핵심 구현 사항", type: "file" },
       { id: "related2", name: "관련 글", type: "file" },
     ],
   },
@@ -28,7 +28,7 @@ const projects = [
     name: "PARSLEY",
     pages: [
       { id: "intro3", name: "소개", type: "file" },
-      { id: "diagram3", name: "다이어그램", type: "file" },
+      { id: "diagram3", name: "핵심 구현 사항", type: "file" },
       { id: "related3", name: "관련 글", type: "file" },
     ],
   },

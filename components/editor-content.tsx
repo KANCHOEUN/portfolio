@@ -144,18 +144,18 @@ function infoKeyToTitle(projectKey: keyof typeof infoContents) {
 
 function diagramKeyToTitle(projectKey: keyof typeof diagramContents) {
   switch (projectKey) {
-    case "project1": return "Pigrest 시스템 아키텍처";
-    case "project2": return "RE-VERSE 시스템 아키텍처";
-    case "project3": return "PARSLEY 시스템 아키텍처";
+    case "project1": return "Pigrest 설계 및 구현";
+    case "project2": return "RE-VERSE 설계 및 구현";
+    case "project3": return "PARSLEY 설계 및 구현";
     default: return "";
   }
 }
 
 function diagramKeyToDescription(projectKey: keyof typeof diagramContents) {
   switch (projectKey) {
-    case "project1": return "이 프로젝트의 시스템 구조와 데이터 흐름을 설명합니다.";
-    case "project2": return "RE-VERSE의 시스템 설계와 기술 스택, API 설계를 설명합니다.";
-    case "project3": return "PARSLEY의 시스템 아키텍처와 데이터 흐름, ML 파이프라인을 설명합니다.";
+    case "project1": return "Pigrest 프로젝트를 진행하면서 고민했던 점과 설계 및 구현 내용을 설명합니다.";
+    case "project2": return "RE-VERSE 시스템 아키텍처를 어떻게 설계했는지, 그리고 CI/CD 파이프라인을 어떻게 구축했는지 설명합니다.";
+    case "project3": return "PARSLEY의 시스템 아키텍처와 랭킹 시스템을 어떻게 설계했는지 설명합니다.";
     default: return "";
   }
 }
@@ -164,9 +164,9 @@ function diagramKeyToToc(projectKey: keyof typeof diagramContents) {
   switch (projectKey) {
     case "project1":
       return [
-        { id: "architecture", label: "아키텍처" },
-        { id: "erd", label: "ERD" },
-        { id: "sequence", label: "시퀀스 다이어그램" },
+        { id: "auto-save-system", label: "실시간 자동 저장 시스템" },
+        { id: "spring-security-jwt", label: "JWT 기반 인증 시스템" },
+        { id: "uuid", label: "UUID 기반 설계" },
       ];
     case "project2":
       return [
@@ -177,7 +177,6 @@ function diagramKeyToToc(projectKey: keyof typeof diagramContents) {
     case "project3":
       return [
         { id: "architecture", label: "아키텍처" },
-        // { id: "data-flow", label: "ERD" },
         { id: "sequence-diagram", label: "시퀀스 다이어그램" },
       ];
     default:

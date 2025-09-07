@@ -185,7 +185,7 @@ const ko: TranslationKeys = {
   "project.two": "RE-VERSE",
   "project.three": "PARSLEY",
   "project.intro": "소개",
-  "project.diagram": "다이어그램",
+  "project.diagram": "설계 및 구현",
   "project.related": "관련 글",
 
   // 스킬
@@ -244,9 +244,9 @@ const ko: TranslationKeys = {
   "content.project.one.overview": "개요",
   "content.project.one.overview.desc":
     "프로젝트 원은 사용자가 작업을 효율적으로 관리할 수 있도록 도와주는 웹 애플리케이션입니다.",
-  "content.project.one.diagram.title": "프로젝트 원 다이어그램",
+  "content.project.one.diagram.title": "프로젝트 원 핵심 구현 사항",
   "content.project.one.diagram.desc":
-    "이 페이지에는 프로젝트 원의 아키텍처 다이어그램과 플로우 차트가 포함되어 있습니다.",
+    "이 페이지에는 프로젝트 원의 핵심 구현 사항과 아키텍처가 포함되어 있습니다.",
   "content.project.one.architecture": "아키텍처",
   "content.project.one.architecture.desc": "애플리케이션은 다음 구성 요소를 가진 마이크로서비스 아키텍처를 따릅니다:",
   "content.project.one.frontend": "프론트엔드 (React)",
@@ -260,7 +260,7 @@ const ko: TranslationKeys = {
   "content.project.two.activity.tracking": "활동 추적",
   "content.project.two.meal.planning": "식사 계획",
   "content.project.two.sleep.analysis": "수면 분석",
-  "content.project.two.architecture.title": "프로젝트 투 아키텍처",
+  "content.project.two.architecture.title": "프로젝트 투 핵심 구현 사항",
   "content.project.two.system.design": "시스템 설계",
   "content.project.two.tech.stack": "기술 스택",
   "content.project.two.react.native": "React Native",
@@ -274,7 +274,7 @@ const ko: TranslationKeys = {
   "content.project.three.problem.statement": "문제 정의",
   "content.project.three.problem.desc":
     "기업들은 대용량 데이터셋에서 의미 있는 인사이트를 효율적으로 추출하는 데 어려움을 겪고 있습니다.",
-  "content.project.three.architecture.title": "프로젝트 쓰리 시스템 아키텍처",
+  "content.project.three.architecture.title": "프로젝트 쓰리 핵심 구현 사항",
   "content.project.three.high.level.design": "고수준 설계",
   "content.project.three.data.collection": "데이터 수집 계층",
   "content.project.three.processing.engine": "처리 엔진",

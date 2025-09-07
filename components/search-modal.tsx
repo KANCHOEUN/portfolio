@@ -15,13 +15,13 @@ const allPages = [
   { id: "portfolio", name: "Portfolio", path: "/portfolio" },
   // Add project pages
   { id: "project1-intro", name: "Pigrest - 소개", path: "/portfolio?file=intro1" },
-  { id: "project1-diagram", name: "Pigrest - 다이어그램", path: "/portfolio?file=diagram1" },
+  { id: "project1-diagram", name: "Pigrest - 설계 및 구현", path: "/portfolio?file=diagram1" },
   { id: "project1-related", name: "Pigrest - 관련 글", path: "/portfolio?file=related1" },
   { id: "project2-intro", name: "RE-VERSE - 소개", path: "/portfolio?file=intro2" },
-  { id: "project2-diagram", name: "RE-VERSE - 다이어그램", path: "/portfolio?file=diagram2" },
+  { id: "project2-diagram", name: "RE-VERSE - 설계 및 구현", path: "/portfolio?file=diagram2" },
   { id: "project2-related", name: "RE-VERSE - 관련 글", path: "/portfolio?file=related2" },
   { id: "project3-intro", name: "PARSLEY - 소개", path: "/portfolio?file=intro3" },
-  { id: "project3-diagram", name: "PARSLEY - 다이어그램", path: "/portfolio?file=diagram3" },
+  { id: "project3-diagram", name: "PARSLEY - 설계 및 구현", path: "/portfolio?file=diagram3" },
   { id: "project3-related", name: "PARSLEY - 관련 글", path: "/portfolio?file=related3" },
 ]
 
