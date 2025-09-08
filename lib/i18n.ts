@@ -170,9 +170,9 @@ const ko: TranslationKeys = {
   "terminal.opensource.contribution": "- AWS EKS, VPC, ELB를 활용한 클라우드 인프라 구축",
   "terminal.recent.activity": "최근 활동:",
   "terminal.activity.1": "1. 2025-05 ~ 현재: [개인] 포트폴리오 사이트 구현 중",
-  "terminal.activity.2": "2. 2025-03 ~ 현재: [개인] Pigrest 프로젝트 진행 중",
-  "terminal.activity.3": "3. 2023-07 ~ 2024-12: [티맥스비아이] FOCUS 서비스 - 가격 정책 모듈 설계 및 구현",
-  "terminal.activity.4": "4. 2022-01 ~ 2022-12: [삼성청년SW아카데미] RE-VERSE와 PARSLEY 프로젝트 진행",
+  "terminal.activity.2": "2. 2025-04 ~ 현재: [개인] Pigrest 프로젝트 진행 중",
+  "terminal.activity.3": "3. 2023-07 ~ 2024-12: [티맥스비아이] FOCUS 서비스 - 가격 정책, 재고 모듈 설계 및 구현",
+  "terminal.activity.4": "4. 2022-01 ~ 2022-12: [삼성청년SW아카데미] RE-VERSE & PARSLEY 프로젝트 진행",
   "terminal.placeholder": "'help' 입력하여 명령어 확인 또는 ↑↓ 키로 명령어 탐색",
 
   // 포트폴리오
@@ -335,7 +335,7 @@ const en: TranslationKeys = {
   "project.two": "RE-VERSE",
   "project.three": "PARSLEY",
   "project.intro": "Introduction",
-  "project.diagram": "Diagram",
+  "project.diagram": "Design & Implementation",
   "project.related": "Related Articles",
 
   // 스킬

@@ -218,7 +218,7 @@ export default function SidebarNavigation({
   const getFileIcon = (fileName: string, item: any) => {
     if (fileName.includes("소개")) {
       return <Info size={16} className="text-[#61afef] dark:text-[#61afef] light:text-[#4078f2] flex-shrink-0" />
-    } else if (fileName.includes("다이어그램")) {
+    } else if (fileName.includes("설계 및 구현")) {
       return <GitBranch size={16} className="text-[#c678dd] dark:text-[#c678dd] light:text-[#a626a4] flex-shrink-0" />
     } else if (fileName.includes("관련 글")) {
       return <BookOpen size={16} className="text-[#98c379] dark:text-[#98c379] light:text-[#50a14f] flex-shrink-0" />
