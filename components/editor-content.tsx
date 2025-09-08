@@ -78,7 +78,7 @@ const blogPosts = [
   {
     id: "argo-cd",
     title: "Argo CD 파이프라인 구축하기",
-    description: "Comprehensive documentation for the Health API used in Project Two, with examples and use cases.",
+    description: "Argo CD 파이프라인 구축 방법 기록",
     image: "https://choeun.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8c234292-e9a8-4fa0-a3c3-1766fdefae60%2FUntitled.png?table=block&id=1ff9d896-8ca3-8113-a2f6-ed66966fa453&spaceId=5d0a987d-8a0f-4ad2-a579-07d63bd3b542&width=2000&userId=&cache=v2",
     url: "https://www.notion.so/choeun/Argo-CD-1ff9d8968ca3800da11fc2224537449c",
   },
@@ -166,13 +166,13 @@ function diagramKeyToToc(projectKey: keyof typeof diagramContents) {
       return [
         { id: "auto-save-system", label: "실시간 자동 저장 시스템" },
         { id: "spring-security-jwt", label: "JWT 기반 인증 시스템" },
-        { id: "uuid", label: "UUID 기반 설계" },
+        { id: "uuid", label: "UUID 기반 Primary Key 설계" },
+        { id: "ci-cd-pipeline", label: "CI/CD 파이프라인"}
       ];
     case "project2":
       return [
         { id: "system-design", label: "시스템 설계" },
         { id: "ci-cd-pipeline", label: "CI/CD 파이프라인" },
-        { id: "api-design", label: "API 설계" },
       ];
     case "project3":
       return [
@@ -435,6 +435,20 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
     }
   }, [])
 
+  // 커스텀 이벤트 처리 (블로그 포스트 열기)
+  useEffect(() => {
+    const handleOpenBlogPost = (event: CustomEvent) => {
+      const { id } = event.detail
+      openBlogPostById(id)
+    }
+
+    window.addEventListener('openBlogPost', handleOpenBlogPost as EventListener)
+
+    return () => {
+      window.removeEventListener('openBlogPost', handleOpenBlogPost as EventListener)
+    }
+  }, [])
+
   // 파일 파라미터 변경 감지
   useEffect(() => {
     setFileParam(searchParams.get("file"))
@@ -591,6 +605,14 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
   // 블로그 뷰어 닫기
   const handleCloseBlogViewer = () => {
     setSelectedBlog(null)
+  }
+
+  // 블로그 포스트 ID로 직접 열기
+  const openBlogPostById = (postId: string) => {
+    const post = blogPosts.find(p => p.id === postId)
+    if (post) {
+      setSelectedBlog({ url: post.url, title: post.title })
+    }
   }
 
   // 탭 닫기 (openTabs만 변경)

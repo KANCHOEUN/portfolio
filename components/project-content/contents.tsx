@@ -42,25 +42,41 @@ export function Project1DiagramContent() {
         <br/>
         <br/>
         <div>
-        자동 저장 기능은 사용자가 입력할 때마다 수시로 API를 호출하므로 DB 부하가 급격히 증가할 수 있다고 판단하여,
-        임시 저장(draft) 단계에 <b>Write Behind</b> 전략을 적용했습니다.
+        사용자 입력 시 발생하는 DB 부하를 줄이기 위해 Write Behind 전략을 적용한 자동 저장 시스템을 구현하였습니다.
         <br/>
-        Draft 데이터는 Redis Hash에 우선 저장하고, Spring Scheduler가 <b>주기적으로 DB에 비동기로 반영</b>합니다.
+        입력한 데이터는 <b>Redis Hash에 임시 저장(draft)</b>되며, Spring Scheduler를 통해 <b>주기적으로 DB에 비동기 반영</b>됩니다.
+        초기에는 `draft:*` 패턴으로 key 스캔(<b>O(N)</b>)을 사용했으나, 중복 동기화 문제를 해결하기 위해 
+        <b> 최신 업데이트된 데이터의 key를 기록하는 Set</b>을 추가하여, <b>O(1)</b>로 효율적으로 처리하도록 개선했습니다.
         <br/>
-        초기에는 `draft:*`로 key 스캔 방식(O(N))을 사용했으나,
-        TTL이 만료되기 전까지는 이미 DB에 동기화된 데이터도 <b>중복으로 반영</b>하고 있는 문제가 있었습니다.
-        이를 개선하기 위해 <b>최신 업데이트된 데이터의 key를 기록하는 Set</b>을 두어, 스케줄러가 필요한 데이터만 <b>O(1)</b>로 확인할 수 있게 하였고, 반영 이후 즉시 제거하도록 설계하였습니다.
+        <b>Cache Aside</b> 전략을 통해 실시간 데이터 조회와 다중 기기 간 작업 연속성을 보장했으며, <b>TTL을 활용</b>하여 임시 데이터의 생명 주기를 관리했습니다.
         <br/>
-        또한 <b>Cache Aside</b> 전략을 적용하여 사용자가 실시간으로 최신 데이터를 확인할 수 있고, 다른 기기에서도 작업을 이어나갈 수 있도록 하였습니다.
-        <br/>
-        임시 저장된 데이터는 <b>TTL로 관리</b>하였고, 게시물을 발행(publish)하는 시점에는 Redis에 저장된 데이터를 모두 삭제하여 메모리를 효율적으로 관리하였습니다.
+        게시물 발행(publish) 시 Redis에 저장된 데이터를 즉시 삭제하여 메모리 효율성을 높였습니다.
         </div>
       </section>
       <section id="erd" className="mb-6">
-        <h2 className="text-xl font-semibold mb-4">JWT 기반 인증 시스템</h2>
+        <h2 className="text-xl font-semibold mb-4">Spring Security 기반 JWT 인증 시스템</h2>
       </section>
       <section id="sequence" className="mb-6">
-        <h2 className="text-xl font-semibold mb-4">UUID 기반 설계</h2>
+        <h2 className="text-xl font-semibold mb-4">UUID 기반 Primary Key 설계</h2>
+        <button 
+          onClick={() => window.dispatchEvent(new CustomEvent('openBlogPost', { detail: { id: 'uuid' } }))}
+          className="text-[#61afef] dark:text-[#61afef] light:text-[#4078f2] hover:text-[#56b6c2] dark:hover:text-[#56b6c2] light:hover:text-[#0184bc] transition-colors underline mb-2"
+        >
+          블로그 글에서 자세히 보기
+        </button>
+        <div>Auto Increment 기반 ID의 보안 취약점을 해결하기 위해 UUID v7을 도입하였습니다.
+          UUID를 BINARY(16) 형태로 저장하여 1억개 데이터 기준 약 2GB의 저장 공간을 절약했으며, 시간 기반 UUID v7로 B-Tree 인덱스 성능을 최적화하여 쿼리 효율성을 개선했습니다.</div>
+      </section>
+      <section id="ci-cd-pipeline" className="mb-6">
+        <h2 className="text-xl font-semibold mb-4">CI/CD 파이프라인</h2>
+        <ImageZoom src="/images/posts/pigrest/ci-cd-pipeline.png" alt="ci-cd-pipeline" className="my-4 rounded" width="40%" />
+        <div>
+          개발 과정에서 수동 배포로 인한 휴먼 에러와 배포 시간 지연 문제를 해결하기 위해 Github Actions과 Docker를 활용한 자동화 파이프라인을 구축했습니다.
+          <br/>
+          Pull Request 시 자동으로 빌드와 테스트를 수행하여 코드 품질을 보장하였고, main 브랜치 push 시 Docker 이미지를 빌드하여 AWS ECR에 저장하였습니다.
+          <br/>
+          이후, EC2에서 Docker Compose로 MySQL, Redis, 애플리케이션을 오케스트레이션하며, 환경별 설정을 분리하여 안정적인 배포 환경을 구성했습니다.
+        </div>
       </section>
     </>
   );
@@ -135,11 +151,6 @@ export function Project2DiagramContent() {
         <h2 className="text-xl font-semibold mb-4">CI/CD 파이프라인 구조</h2>
         <ImageZoom src="/images/posts/re-verse/ci-cd-pipeline.png"
               alt="ci-cd-pipeline" className="my-4 rounded" width="40%" />
-        <p>CI/CD 파이프라인은 소스 코드 변경 시 자동으로 테스트, 빌드, 배포를 수행하여 빠른 피드백을 제공합니다.</p>
-      </section>
-      <section id="api-design" className="mb-6">
-        <h2 className="text-xl font-semibold mb-4">API 설계</h2>
-        <div>RESTful API 설계 및 엔드포인트 구조 설명</div>
       </section>
     </>
   );
