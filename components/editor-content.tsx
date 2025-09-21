@@ -62,6 +62,14 @@ const blogPosts = [
     url: "https://blog.kancho.co/posts/Filter%EC%97%90%EC%84%9C-%EB%B0%9C%EC%83%9D%ED%95%9C-%EC%98%88%EC%99%B8%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%B2%98%EB%A6%AC%ED%95%A0%EA%B9%8C/",
   },
   {
+    id: "cache-ttl-autosave-system",
+    title: "캐시와 TTL로 효율적인 자동 저장 시스템 만들기",
+    description:
+      "Write-Behind & Cache Aside 패턴과 TTL 관리로 초안 자동 저장 최적화하기",
+    image: "https://about.kancho.co/images/posts/pigrest/auto-save-sequence.svg",
+    url: "https://blog.kancho.co/posts/%EC%BA%90%EC%8B%9C%EC%99%80-TTL%EB%A1%9C-%ED%9A%A8%EC%9C%A8%EC%A0%81%EC%9D%B8-%EC%9E%90%EB%8F%99-%EC%A0%80%EC%9E%A5-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EB%A7%8C%EB%93%A4%EA%B8%B0/",
+  },
+  {
     id: "index-performance",
     title: "INDEX를 적용하여 성능 개선하기",
     description: "EXPLAIN 명령어로 병목 식별하고, 4만 건 이상의 데이터 성능 46% 향상시키기",
@@ -164,8 +172,8 @@ function diagramKeyToToc(projectKey: keyof typeof diagramContents) {
   switch (projectKey) {
     case "project1":
       return [
-        { id: "auto-save-system", label: "실시간 자동 저장 시스템" },
-        { id: "spring-security-jwt", label: "JWT 기반 인증 시스템" },
+        { id: "auto-save-system", label: "게시물 초안 자동 저장 시스템" },
+        // { id: "spring-security-jwt", label: "JWT 기반 인증 시스템" },
         { id: "uuid", label: "UUID 기반 Primary Key 설계" },
         { id: "ci-cd-pipeline", label: "CI/CD 파이프라인"}
       ];

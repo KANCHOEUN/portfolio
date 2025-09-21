@@ -36,7 +36,13 @@ export function Project1DiagramContent() {
   return (
     <>
       <section id="architecture" className="mb-6">
-        <h2 className="text-xl font-semibold mb-4">실시간 자동 저장 시스템</h2>
+        <h2 className="text-xl font-semibold mb-4">게시물 초안 자동 저장 시스템</h2>
+        <button 
+          onClick={() => window.dispatchEvent(new CustomEvent('openBlogPost', { detail: { id: 'cache-ttl-autosave-system' } }))}
+          className="text-[#61afef] dark:text-[#61afef] light:text-[#4078f2] hover:text-[#56b6c2] dark:hover:text-[#56b6c2] light:hover:text-[#0184bc] transition-colors underline mb-2"
+        >
+          블로그 글에서 자세히 보기
+        </button>
         <ImageZoom src="/images/posts/pigrest/auto-save-sequence.svg" alt="auto-save-sequence" className="my-4 rounded" width="100%" 
         caption="Publish한 적 없는 게시글에 대한 자동 저장 시스템의 시퀀스 다이어그램"/>
         <br/>
@@ -46,16 +52,16 @@ export function Project1DiagramContent() {
         <br/>
         입력한 데이터는 <b>Redis Hash에 임시 저장(draft)</b>되며, Spring Scheduler를 통해 <b>주기적으로 DB에 비동기 반영</b>됩니다.
         초기 `draft:*` 패턴으로 전체 key를 스캔하는 방식에서 <b>최신 업데이트된 데이터의 key를 관리하는 Set</b> 기반 방식으로 개선하여,
-        <b>중복 동기화를 방지</b>하고 시간 복잡도를 O(N)에서 <b>O(1)로 최적화</b>했습니다. 
+        <b> 중복 동기화를 방지</b>하고 시간 복잡도를 O(N)에서 <b>O(1)로 최적화</b>했습니다. 
         <br/>
         <b>Cache Aside</b> 전략을 통해 실시간 데이터 조회와 다중 기기 간 작업 연속성을 보장했으며, <b>TTL을 활용</b>하여 임시 데이터의 생명 주기를 관리했습니다.
         <br/>
         게시물 발행(publish) 시 Redis에 저장된 데이터를 즉시 삭제하여 메모리 효율성을 높였습니다.
         </div>
       </section>
-      <section id="erd" className="mb-6">
+      {/* <section id="erd" className="mb-6">
         <h2 className="text-xl font-semibold mb-4">Spring Security 기반 JWT 인증 시스템</h2>
-      </section>
+      </section> */}
       <section id="sequence" className="mb-6">
         <h2 className="text-xl font-semibold mb-4">UUID 기반 Primary Key 설계</h2>
         <button 
