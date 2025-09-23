@@ -21,7 +21,7 @@ export function Project1InfoContent() {
     <>
       <p>Pigrest는 이미지 기반의 콘텐츠(핀)를 보드에 저장하고, 주제별로 공유할 수 있는 Pinterest 스타일의 SNS 플랫폼입니다.</p>
       <ImageZoom src="/images/posts/pigrest/thumbnail.png"
-           alt="thumbnail" className="my-4 rounded" width="30%" />
+           alt="thumbnail" className="my-4 rounded" />
       <h2 className="text-xl font-semibold mt-6 mb-4">✏️ 주요 기능</h2>
       <Todo status="done" description="Spring Security와 JWT 기반 로그인, 회원가입"/>
       <Todo status="in-progress" description="나만의 프로필을 꾸미고, 관심 있는 사람들 팔로우로 소통"/>
@@ -43,7 +43,7 @@ export function Project1DiagramContent() {
         >
           블로그 글에서 자세히 보기
         </button>
-        <ImageZoom src="/images/posts/pigrest/auto-save-sequence.svg" alt="auto-save-sequence" className="my-4 rounded" width="100%" 
+        <ImageZoom src="/images/posts/pigrest/auto-save-sequence.svg" alt="auto-save-sequence" className="my-4 rounded"
         caption="Publish한 적 없는 게시글에 대한 자동 저장 시스템의 시퀀스 다이어그램"/>
         <br/>
         <br/>
@@ -62,7 +62,7 @@ export function Project1DiagramContent() {
       {/* <section id="erd" className="mb-6">
         <h2 className="text-xl font-semibold mb-4">Spring Security 기반 JWT 인증 시스템</h2>
       </section> */}
-      <section id="sequence" className="mb-6">
+      <section id="uuid" className="mb-6">
         <h2 className="text-xl font-semibold mb-4">UUID 기반 Primary Key 설계</h2>
         <button 
           onClick={() => window.dispatchEvent(new CustomEvent('openBlogPost', { detail: { id: 'uuid' } }))}
@@ -75,7 +75,7 @@ export function Project1DiagramContent() {
       </section>
       <section id="ci-cd-pipeline" className="mb-6">
         <h2 className="text-xl font-semibold mb-4">CI/CD 파이프라인</h2>
-        <ImageZoom src="/images/posts/pigrest/ci-cd-pipeline.png" alt="ci-cd-pipeline" className="my-4 rounded" width="40%" />
+        <ImageZoom src="/images/posts/pigrest/ci-cd-pipeline.png" alt="ci-cd-pipeline" className="my-4 rounded" />
         <div>
           개발 과정에서 수동 배포로 인한 휴먼 에러와 배포 시간 지연 문제를 해결하기 위해 Github Actions과 Docker를 활용한 자동화 파이프라인을 구축했습니다.
           <br/>
@@ -94,24 +94,24 @@ export function Project2InfoContent() {
     <>
       <p>RE-VERSE는 추억을 특별하게 저장하고 공유하는 메타버스 기반 포토북 서비스입니다.</p>
       <ImageZoom src="/images/posts/re-verse/thumbnail.jpg"
-           alt="overview" className="my-2 rounded" width="30%" />
+           alt="overview" className="my-2 rounded" />
       <h2 className="text-xl font-semibold mt-6 mb-4">✏️ 주요 기능</h2>
       <Toggle title="React Quill 텍스트 에디터를 활용하여 추억들을 다이어리처럼 작성 및 관리">
-        <ImageZoom src="/images/posts/re-verse/write-post-at-my-archive.gif" alt="quill" className="my-2 rounded" width="40%"
+        <ImageZoom src="/images/posts/re-verse/write-post-at-my-archive.gif" alt="quill" className="my-2 rounded"
           caption="텍스트 에디터로 추억 작성하기" />
-        <ImageZoom src="/images/posts/re-verse/write-and-view-post-at-friend-archive.gif" alt="quill" className="my-2 rounded" width="40%"
+        <ImageZoom src="/images/posts/re-verse/write-and-view-post-at-friend-archive.gif" alt="quill" className="my-2 rounded"
           caption="작성한 추억들 보기기" />
       </Toggle>
       <Toggle title="추억 저장소인 아카이브 별로 추억을 공유하고 싶은 친구들끼리 공유">
-        <ImageZoom src="/images/posts/re-verse/invite-friend-to-archive.gif" alt="archive" className="my-2 rounded" width="40%"
+        <ImageZoom src="/images/posts/re-verse/invite-friend-to-archive.gif" alt="archive" className="my-2 rounded"
           caption="아카이브 관리 - 친구에게 공유하기"
         />
-        <ImageZoom src="/images/posts/re-verse/invite-and-remove-friend-from-archive.gif" alt="archive" className="my-2 rounded" width="40%"
+        <ImageZoom src="/images/posts/re-verse/invite-and-remove-friend-from-archive.gif" alt="archive" className="my-2 rounded"
           caption="아카이브 3D 공간 - 친구에게 공유하기/내보내기"
         />
       </Toggle>
       <Toggle title="Three.js 기반 3D 공간에서 WebRTC로 P2P 연결을 통해 친구들과 함께 텍스트와 음성 채팅으로 상호 작용 가능">
-        <ImageZoom src="/images/posts/re-verse/archive-description.gif" alt="3d-chat" className="my-2 rounded" width="40%"
+        <ImageZoom src="/images/posts/re-verse/archive-description.gif" alt="3d-chat" className="my-2 rounded"
           caption="RE-VERSE 사용 가이드"/>
         <div className="my-2">
           <video 
@@ -124,9 +124,9 @@ export function Project2InfoContent() {
         <p className="text-sm text-gray-500">아카이브 내 음성 채팅</p>
       </Toggle>
       <Toggle title="그 외 다양한 인터랙션 요소들">
-        <ImageZoom src="/images/posts/re-verse/select-character.gif" alt="select-character" className="my-2 rounded" width="40%" />
-        <ImageZoom src="/images/posts/re-verse/developer-info.gif" alt="developer-info" className="my-2 rounded" width="40%" />
-        <ImageZoom src="/images/posts/re-verse/mine-game.gif" alt="game" className="my-2 rounded" width="40%" />
+        <ImageZoom src="/images/posts/re-verse/select-character.gif" alt="select-character" className="my-2 rounded" />
+        <ImageZoom src="/images/posts/re-verse/developer-info.gif" alt="developer-info" className="my-2 rounded" />
+        <ImageZoom src="/images/posts/re-verse/mine-game.gif" alt="game" className="my-2 rounded" />
       </Toggle>
     </>
   );
@@ -138,7 +138,7 @@ export function Project2DiagramContent() {
         <h2 className="text-xl font-semibold mb-4">아키텍처 설계</h2>
         <div>
           <ImageZoom src="/images/posts/re-verse/architecture.png"
-              alt="architecture" className="my-4 rounded" width="40%" />
+              alt="architecture" className="my-4 rounded" />
           <b>보안</b>, <b>재해복구</b>, <b>고가용성</b>의 특성을 고려하여 AWS 기반 아키텍처를 설계하였습니다.
           <br/>
           <br/>
@@ -156,7 +156,7 @@ export function Project2DiagramContent() {
       <section id="ci-cd-pipeline" className="mb-6">
         <h2 className="text-xl font-semibold mb-4">CI/CD 파이프라인 구조</h2>
         <ImageZoom src="/images/posts/re-verse/ci-cd-pipeline.png"
-              alt="ci-cd-pipeline" className="my-4 rounded" width="40%" />
+              alt="ci-cd-pipeline" className="my-4 rounded" />
       </section>
     </>
   );
@@ -168,23 +168,23 @@ export function Project3InfoContent() {
     <>
       <p>PARSLEY는 WebRTC를 활용한 Gamification 기반 화상 온라인 스터디 서비스입니다.</p>
       <ImageZoom src="/images/posts/parsley/thumbnail.png"
-           alt="overview" className="my-2 rounded" width="100%" />
+           alt="overview" className="my-2 rounded" />
       <h2 className="text-xl font-semibold mt-6 mb-4">✏️ 주요 기능</h2>
       <Toggle title="실시간 화상 채팅 및 화면 동시 공유 가능">
-        <ImageZoom src="/images/posts/parsley/enter-studyroom.gif" alt="enter-studyroom" className="my-2 rounded" width="40%"
+        <ImageZoom src="/images/posts/parsley/enter-studyroom.gif" alt="enter-studyroom" className="my-2 rounded"
           caption="스터디룸 입장장" />
       </Toggle>
       {/* TODO: 하나 추가 */}
       <Toggle title="허브 키우기 및 도감 채우기 등과 같은 게임적인 요소">
-        <ImageZoom src="/images/posts/parsley/simple-planting-herb.gif" alt="planting-herb" className="my-2 rounded" width="40%"
+        <ImageZoom src="/images/posts/parsley/simple-planting-herb.gif" alt="planting-herb" className="my-2 rounded"
           caption="허브 심기" />
-        <ImageZoom src="/images/posts/parsley/simple-harvest-herb.gif" alt="harveting-herb" className="my-2 rounded" width="40%"
+        <ImageZoom src="/images/posts/parsley/simple-harvest-herb.gif" alt="harveting-herb" className="my-2 rounded"
           caption="허브 수확하기" />
-        <ImageZoom src="/images/posts/parsley/setting-profile.gif" alt="setting-profile" className="my-2 rounded" width="40%"
+        <ImageZoom src="/images/posts/parsley/setting-profile.gif" alt="setting-profile" className="my-2 rounded"
           caption="도감 - 대표 프로필 설정" />
       </Toggle>
       <Toggle title="전체 사용자의 도감 점수 기준 랭킹 시스템 제공">
-        <ImageZoom src="/images/posts/parsley/check-ranking.gif" alt="ranking" className="my-2 rounded" width="40%"
+        <ImageZoom src="/images/posts/parsley/check-ranking.gif" alt="ranking" className="my-2 rounded"
           caption="Redis로 실시간 랭킹 확인" />
       </Toggle>
       {/* TODO: 하나 더 추가 */}
@@ -197,7 +197,7 @@ export function Project3DiagramContent() {
       <section id="high-level" className="mb-6">
         <h2 className="text-xl font-semibold mb-4">아키텍처</h2>
         <div>
-          <ImageZoom src="/images/posts/parsley/parsley-architecture.png" alt="architecture" className="my-4 rounded" width="40%" />
+          <ImageZoom src="/images/posts/parsley/parsley-architecture.png" alt="architecture" className="my-4 rounded" />
           <p>
             
           </p>
@@ -206,14 +206,14 @@ export function Project3DiagramContent() {
       {/* <section id="er-diagram" className="mb-6">
         <h2 className="text-xl font-semibold mb-4">ERD</h2>
         <div>
-          <ImageZoom src="/images/posts/parsley/erd.png" alt="erd" className="my-4 rounded" width="40%" />
+          <ImageZoom src="/images/posts/parsley/erd.png" alt="erd" className="my-4 rounded" />
         </div>
       </section> */}
       <section id="sequence-diagram" className="mb-6">
         <h2 className="text-xl font-semibold mb-4">시퀀스 다이어그램</h2>
         <h3 className="text-lg font-semibold mb-2">랭킹 시스템</h3>
         <div>
-          <ImageZoom src="/images/posts/parsley/parsley-ranking-sequence-diagram.png" alt="sequence-diagram" className="my-4 rounded" width="40%" />
+          <ImageZoom src="/images/posts/parsley/parsley-ranking-sequence-diagram.png" alt="sequence-diagram" className="my-4 rounded" />
         </div>
       </section>
     </>
