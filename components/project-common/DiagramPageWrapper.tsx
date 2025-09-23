@@ -25,7 +25,7 @@ export default function DiagramPageWrapper({
 
 
   return (
-    <div className="p-6">
+    <div className="p-6 max-w-5xl w-full mx-auto">
         <h1 className="text-2xl font-bold mb-4">{title}</h1>
         <p className="mb-4">{description}</p>
         <div key="toc" className="mb-6 p-4 bg-[#2c313a] dark:bg-[#2c313a] light:bg-[#eaeaeb] rounded">

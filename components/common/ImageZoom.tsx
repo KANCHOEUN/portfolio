@@ -23,10 +23,13 @@ export default function ImageZoom({ src, alt, caption, className = "" }: ImageZo
         <img
           src={src}
           alt={alt}
-          className={`${className} cursor-zoom-in transition-transform duration-200
-            max-w-[90%] sm:max-w-[85%] md:max-w-[80%] lg:max-w-[75%] xl:max-w-[70%] 2xl:max-w-[65%] 
-            max-h-[40vh] sm:max-h-[45vh] md:max-h-[55vh] lg:max-h-[60vh] xl:max-h-[60vh] 2xl:max-h-[50vh]`}
-          onClick={handleZoom}
+          // className={`${className} cursor-zoom-in transition-transform duration-200
+          //   max-w-[90%] sm:max-w-[85%] md:max-w-[80%] lg:max-w-[75%] xl:max-w-[70%] 2xl:max-w-[65%] 
+          //   max-h-[40vh] sm:max-h-[45vh] md:max-h-[55vh] lg:max-h-[60vh] xl:max-h-[60vh] 2xl:max-h-[50vh]`}
+            className={`${className} cursor-zoom-in transition-transform duration-200
+            max-w-[80%] md:max-w-[75%] 2xl:max-w-[65%] 
+            max-h-[40vh] md:max-h-[45vh]  2xl:max-h-[50vh]`}
+            onClick={handleZoom}
         />
         {caption && (
           <p className="text-sm text-gray-500 mt-1 max-w-[95%] sm:max-w-[90%] md:max-w-[85%] lg:max-w-[80%] xl:max-w-[75%] 2xl:max-w-[70%]">

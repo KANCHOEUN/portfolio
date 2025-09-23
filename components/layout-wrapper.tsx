@@ -73,7 +73,7 @@ export default function LayoutWrapper({ children, activeFile, setActiveFile }: L
         <div className={`flex-1 ${isMobile && showSidebar ? "hidden" : "block"} overflow-hidden flex flex-col`}>
           <div className="flex-1 overflow-auto bg-[#282c34] dark:bg-[#282c34] light:bg-white">
             <div className="min-h-full flex flex-col h-full">
-              <div className="flex-grow">{children}</div>
+              <div className="flex-grow overflow-y-hidden">{children}</div>
               <Footer />
             </div>
           </div>

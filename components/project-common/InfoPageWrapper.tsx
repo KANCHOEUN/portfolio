@@ -14,7 +14,7 @@ export default function InfoPageWrapper({
     children: React.ReactNode;
 }) {
     return (
-        <div className="p-6">
+        <div className="p-6 max-w-5xl w-full mx-auto">
             <div className="flex items-center mb-4">
                 <h1 className="text-2xl font-bold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mr-3">{title}</h1>
                 <a href={githubUrl} target="_blank" rel="noopener noreferrer"
