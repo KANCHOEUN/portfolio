@@ -82,7 +82,7 @@ export function Project1DiagramContent() {
           <br/>
           Pull Request 시 자동으로 빌드와 테스트를 수행하여 코드 품질을 보장하였고, main 브랜치 push 시 Docker 이미지를 빌드하여 AWS ECR에 저장하였습니다.
           <br/>
-          이후, EC2에서 Docker Compose로 MySQL, Redis, 애플리케이션을 오케스트레이션하며, 환경별 설정을 분리하여 안정적인 배포 환경을 구성했습니다.
+          이후, EC2에서 Docker Compose로 MySQL, Redis, 애플리케이션을 오케스트레이션하며 Infrastructure as Code(IaC) 방식을 적용하여 선언적이고 안정적인 배포 환경을 구성했습니다.
         </div>
       </section>
     </>
