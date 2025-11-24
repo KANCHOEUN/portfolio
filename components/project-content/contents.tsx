@@ -221,14 +221,53 @@ export function Project3DiagramContent() {
   );
 }
 
+// --- Project 4 ---
+export function Project4InfoContent() {
+  return <>
+  <p>Mockly는 실제 Google Play Store에 출시를 목표로 개발하고 있는 AI 기반 모의 면접 플랫폼입니다.</p>
+  {/* <ImageZoom src="/images/posts/mockly/thumbnail.png" */}
+           {/* alt="overview" className="my-2 rounded" /> */}
+  <h2 className="text-xl font-semibold mt-6 mb-4">✏️ 주요 기능</h2>
+  <Todo status="done" description="모바일 환경을 고려한 OAuth 2.1 표준을 따른 Google Social Login 제공"/>
+      <Todo status="in-progress" description=""/>
+      <Todo status="ready" description=""/>
+      <Todo status="ready" description=""/>
+      <Todo status="ready" description=""/>
+  </>;
+}
+export function Project4DiagramContent() {
+  return <>
+  <section id="mockly-login" className="mb-6">
+    <h2 className="text-xl font-semibold mb-4">OAuth 2.1 기반 구글 소셜 로그인</h2>
+    <div>
+      <ImageZoom src="/images/posts/mockly/mockly-login.png" alt="mockly-login" className="my-4 rounded" />
+    </div>
+  </section>
+  <section id="mockly-refresh-rotation" className="mb-6">
+    <h2 className="text-xl font-semibold mb-4">토큰 재발급 - Refresh Token Rotation 적용</h2>
+    <div>
+      <ImageZoom src="/images/posts/mockly/mockly-refresh-rotation.png" alt="mockly-refresh-rotation" className="my-4 rounded" />
+    </div>
+  </section>
+  <section id="mockly-logout" className="mb-6">
+    <h2 className="text-xl font-semibold mb-4">로그아웃 - Blacklist 기반 토큰 무효화</h2>
+    <div>
+      <ImageZoom src="/images/posts/mockly/mockly-logout.png" alt="mockly-logout" className="my-4 rounded" />
+    </div>
+  </section>
+  </>;
+}
+
 // 매핑 객체
 export const infoContents = {
   project1: Project1InfoContent,
   project2: Project2InfoContent,
   project3: Project3InfoContent,
+  project4: Project4InfoContent,
 };
 export const diagramContents = {
   project1: Project1DiagramContent,
   project2: Project2DiagramContent,
   project3: Project3DiagramContent,
+  project4: Project4DiagramContent,
 }; 

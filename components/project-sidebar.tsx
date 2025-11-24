@@ -6,6 +6,15 @@ import { ChevronDown, ChevronRight, Folder, FileText } from "lucide-react"
 // Sample project data
 const projects = [
   {
+    id: "project4",
+    name: "Mockly",
+    pages: [
+      { id: "intro4", name: "소개", type: "file" },
+      { id: "diagram4", name: "핵심 구현 사항", type: "file" },
+      { id: "related4", name: "관련 글", type: "file" },
+    ],
+  },
+  {
     id: "project1",
     name: "Pigrest",
     pages: [

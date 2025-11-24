@@ -63,10 +63,23 @@ export default function ResumePage() {
 
     // Project items
     {
+      id: "proj-4",
+      title: language === "en" ? "Mockly: AI-based Mock Interview Platform" : "Mockly: AI 기반 모의 면접 플랫폼",
+      subtitle: language === "en" ? "Backend Engineer" : "백엔드 개발자",
+      date: language === "en" ? "2025. 11 - Present" : "2025. 11 - 현재",
+      description:
+        language === "en"
+          ? ""
+          : "",
+      type: "projects",
+      status: "completed",
+      projectLink: "/portfolio?file=intro4",
+    },
+    {
       id: "proj-1",
       title: language === "en" ? "PIGREST: Image-based SNS Platform" : "PIGREST: 이미지 기반 SNS 플랫폼",
       subtitle: language === "en" ? "Backend Developer" : "백엔드 개발자",
-      date: language === "en" ? "2025. 03 - Present" : "2025. 03 - 현재",
+      date: language === "en" ? "2025. 05 - Stopped" : "2025. 05 - 잠정 중단",
       description:
         language === "en"
           ? ""
@@ -75,6 +88,7 @@ export default function ResumePage() {
       status: "ongoing",
       projectLink: "/portfolio?file=intro1",
     },
+
     {
       id: "proj-2",
       title: language === "en" ? "RE-VERSE: Metaverse-based Photo Album Service" : "RE-VERSE: 메타버스 기반 포토북 서비스",

@@ -7,7 +7,7 @@ export interface ProjectInfo {
 // 프로젝트 정보 데이터
 export const projectInfo: Record<string, ProjectInfo> = {
   project1: {
-    period: "2025.03 ~ 현재 진행중",
+    period: "2025.05 ~ 잠정 중단",
     techStack: ["Spring Boot", "JPA", "MySQL", "Github Actions", "Amazaon S3"],
     githubUrl: "https://github.com/The-Greatest-Piggy/pigrest-server",
   },
@@ -20,6 +20,11 @@ export const projectInfo: Record<string, ProjectInfo> = {
     period: "2022.07 ~ 2022.08",
     techStack: ["Spring Boot", "JPA", "MySQL", "Amazon EC2", "Amazon S3", "Docker/Docker Compose", "Redis", "Nginx"],
     githubUrl: "https://github.com/KANCHOEUN/parsley",
+  },
+  project4: {
+    period: "2025.11 ~ 현재 진행중",
+    techStack: ["Spring AI", "Spring Boot", "PostgreSQL", "Redis", "OpenAI", "Docker/Docker Compose", "Github Actions"],
+    githubUrl: "https://github.com/Mockly-Company/mockly-server",
   },
 }
 
@@ -208,6 +213,69 @@ export const projectContentData = {
       },
     ],
   },
+  intro4: {
+    projectKey: "project4" as keyof typeof projectInfo,
+    titleKey: "content.project.four.intro.title",
+    sections: [
+      {
+        type: "description",
+        contentKey: "content.project.four.intro.desc",
+      },
+      {
+        type: "section",
+        titleKey: "content.project.four.core.features",
+        contentKey: null,
+      },
+      {
+        type: "list",
+        items: [
+          "content.project.four.feature.contract",
+          "content.project.four.feature.mock",
+          "content.project.four.feature.analytics",
+        ],
+      },
+    ],
+  },
+  diagram4: {
+    titleKey: "content.project.four.design.title",
+    hasToc: true,
+    sections: [
+      {
+        type: "description",
+        contentKey: "content.project.four.design.desc",
+      },
+      {
+        type: "toc",
+        items: [
+          { id: "contract-testing", titleKey: "content.project.four.contract.testing" },
+          { id: "mock-server-orchestration", titleKey: "content.project.four.mock.orchestration" },
+          { id: "observability", titleKey: "content.project.four.observability" },
+        ],
+      },
+      {
+        type: "section",
+        id: "contract-testing",
+        titleKey: "content.project.four.contract.testing",
+        contentKey: "content.project.four.contract.testing.desc",
+      },
+      {
+        type: "section",
+        id: "mock-server-orchestration",
+        titleKey: "content.project.four.mock.orchestration",
+        contentKey: "content.project.four.mock.orchestration.desc",
+      },
+      {
+        type: "section",
+        id: "observability",
+        titleKey: "content.project.four.observability",
+        contentKey: "content.project.four.observability.desc",
+      },
+      {
+        type: "code",
+        content: "Contract Repo → CI Pipeline → Ephemeral Mock Runtime → Observability Stack",
+      },
+    ],
+  },
 }
 
 // 관련 글 데이터
@@ -215,4 +283,5 @@ export const relatedArticlesData = {
   related1: ["uuid", "common-response-format", "filter-interceptor-response-body", "filter-exception-handler", "cache-ttl-autosave-system"],
   related2: ["index-performance", "gitlab-ci", "argo-cd", "hpa-artillery"],
   related3: ["deploy-to-ec2-apply-https"],
+  related4: [] as string[],
 }

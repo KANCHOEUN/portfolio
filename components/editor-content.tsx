@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState, useEffect, useRef, useCallback } from "react"
-import { FileCode, X, PiggyBankIcon as Pig, Fish, Leaf, ExternalLink, Calendar, Github, List } from "lucide-react"
+import { FileCode, X, PiggyBankIcon as Pig, Fish, Leaf, Bot, ExternalLink, Calendar, Github, List } from "lucide-react"
 import BlogCard from "./blog-card"
 import IframeViewer from "./iframe-viewer"
 import { useLanguage } from "@/contexts/language-context"
@@ -129,6 +129,8 @@ const blogPosts = [
   },
 ]
 
+const projectTranslationKeys = ["project.one", "project.two", "project.three", "project.four"] as const
+
 // 프로젝트 아이콘 매핑
 const getProjectIcon = (fileId: string) => {
   if (fileId.includes("1")) {
@@ -137,6 +139,8 @@ const getProjectIcon = (fileId: string) => {
     return <Fish size={16} className="text-[#61afef] dark:text-[#61afef] light:text-[#4078f2] flex-shrink-0" />
   } else if (fileId.includes("3")) {
     return <Leaf size={16} className="text-[#98c379] dark:text-[#98c379] light:text-[#50a14f] flex-shrink-0" />
+  } else if (fileId.includes("4")) {
+    return <Bot size={16} className="text-[#c678dd] dark:text-[#c678dd] light:text-[#a626a4] flex-shrink-0" />
   }
   return <FileCode size={16} className="text-[#61afef] dark:text-[#61afef] light:text-[#4078f2] flex-shrink-0" />
 }
@@ -146,6 +150,7 @@ function infoKeyToTitle(projectKey: keyof typeof infoContents) {
     case "project1": return "Pigrest";
     case "project2": return "RE-VERSE";
     case "project3": return "PARSLEY";
+    case "project4": return "Mockly";
     default: return "";
   }
 }
@@ -155,6 +160,7 @@ function diagramKeyToTitle(projectKey: keyof typeof diagramContents) {
     case "project1": return "Pigrest 설계 및 구현";
     case "project2": return "RE-VERSE 설계 및 구현";
     case "project3": return "PARSLEY 설계 및 구현";
+    case "project4": return "Mockly 설계 및 구현";
     default: return "";
   }
 }
@@ -164,6 +170,7 @@ function diagramKeyToDescription(projectKey: keyof typeof diagramContents) {
     case "project1": return "Pigrest 프로젝트를 진행하면서 고민했던 점과 설계 및 구현 내용을 설명합니다.";
     case "project2": return "RE-VERSE 시스템 아키텍처를 어떻게 설계했는지, 그리고 CI/CD 파이프라인을 어떻게 구축했는지 설명합니다.";
     case "project3": return "PARSLEY의 시스템 아키텍처와 랭킹 시스템을 어떻게 설계했는지 설명합니다.";
+    case "project4": return "";
     default: return "";
   }
 }
@@ -186,6 +193,12 @@ function diagramKeyToToc(projectKey: keyof typeof diagramContents) {
       return [
         { id: "architecture", label: "아키텍처" },
         { id: "sequence-diagram", label: "시퀀스 다이어그램" },
+      ];
+    case "project4":
+      return [
+        { id: "mockly-login", label: "OAuth 2.1 기반 구글 소셜 로그인" },
+        { id: "mockly-refresh-rotation", label: "토큰 재발급 - Refresh Token Rotation 적용" },
+        { id: "mockly-logout", label: "로그아웃 - Blacklist 기반 토큰 무효화" },
       ];
     default:
       return [];
@@ -303,14 +316,16 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
     (fileId: string): { project: string; content: React.ReactNode } | null => {
       try {
         // info/diagram 페이지 자동 매핑
-        const infoMatch = fileId.match(/^intro([1-3])$/);
-        const diagramMatch = fileId.match(/^diagram([1-3])$/);
+        const infoMatch = fileId.match(/^intro([1-4])$/);
+        const diagramMatch = fileId.match(/^diagram([1-4])$/);
         if (infoMatch) {
           const projectKey = `project${infoMatch[1]}` as keyof typeof infoContents;
           const InfoContent = infoContents[projectKey];
+          const projectIndex = parseInt(infoMatch[1], 10) - 1;
+          const projectTranslationKey = projectTranslationKeys[projectIndex] || "project.one";
           const info = projectInfo[projectKey];
           return {
-            project: t(["project.one", "project.two", "project.three"][parseInt(infoMatch[1], 10) - 1]),
+            project: t(projectTranslationKey),
             content: (
               <InfoPageWrapper
                 title={infoKeyToTitle(projectKey)}
@@ -326,8 +341,10 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
         if (diagramMatch) {
           const projectKey = `project${diagramMatch[1]}` as keyof typeof diagramContents;
           const DiagramContent = diagramContents[projectKey];
+          const projectIndex = parseInt(diagramMatch[1], 10) - 1;
+          const projectTranslationKey = projectTranslationKeys[projectIndex] || "project.one";
           return {
-            project: t(["project.one", "project.two", "project.three"][parseInt(diagramMatch[1], 10) - 1]),
+            project: t(projectTranslationKey),
             content: (
               <DiagramPageWrapper
                 title={diagramKeyToTitle(projectKey)}
@@ -345,6 +362,7 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
             if (fileId.includes("1")) return t("project.one")
             if (fileId.includes("2")) return t("project.two")
             if (fileId.includes("3")) return t("project.three")
+            if (fileId.includes("4")) return t("project.four")
             return "Project"
           }
 
@@ -362,6 +380,7 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
           if (fileId.includes("1")) return t("project.one")
           if (fileId.includes("2")) return t("project.two")
           if (fileId.includes("3")) return t("project.three")
+          if (fileId.includes("4")) return t("project.four")
           return "Project"
         }
 
@@ -400,6 +419,7 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
           if (fileId.includes("1")) return t("project.one")
           if (fileId.includes("2")) return t("project.two")
           if (fileId.includes("3")) return t("project.three")
+          if (fileId.includes("4")) return t("project.four")
         } catch (error) {
           console.warn("Translation error for project name:", fileId, error)
         }

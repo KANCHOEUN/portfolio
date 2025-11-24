@@ -14,6 +14,9 @@ const allPages = [
   { id: "resume", name: "Resume", path: "/resume" },
   { id: "portfolio", name: "Portfolio", path: "/portfolio" },
   // Add project pages
+  { id: "project4-intro", name: "Mockly - 소개", path: "/portfolio?file=intro4" },
+  { id: "project4-diagram", name: "Mockly - 설계 및 구현", path: "/portfolio?file=diagram4" },
+  { id: "project4-related", name: "Mockly - 관련 글", path: "/portfolio?file=related4" },
   { id: "project1-intro", name: "Pigrest - 소개", path: "/portfolio?file=intro1" },
   { id: "project1-diagram", name: "Pigrest - 설계 및 구현", path: "/portfolio?file=diagram1" },
   { id: "project1-related", name: "Pigrest - 관련 글", path: "/portfolio?file=related1" },

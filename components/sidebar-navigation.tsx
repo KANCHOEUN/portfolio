@@ -20,6 +20,7 @@ import {
   PiggyBankIcon as Pig,
   Fish,
   Leaf,
+  Bot,
 } from "lucide-react"
 import ResizeHandle from "./resize-handle"
 import { useLanguage } from "@/contexts/language-context"
@@ -34,6 +35,16 @@ const mainNavigation = [
     path: "/portfolio",
     isFolder: true,
     children: [
+      {
+        id: "project4",
+        name: "Mockly",
+        isFolder: true,
+        children: [
+          { id: "intro4", name: "소개", path: "/portfolio?file=intro4" },
+          { id: "diagram4", name: "설계 및 구현", path: "/portfolio?file=diagram4" },
+          { id: "related4", name: "관련 글", path: "/portfolio?file=related4" },
+        ],
+      },
       {
         id: "project1",
         name: "Pigrest",
@@ -329,6 +340,8 @@ export default function SidebarNavigation({
                   <Fish size={16} className="text-[#61afef] dark:text-[#61afef] light:text-[#4078f2] flex-shrink-0" />
                 ) : item.id === "project3" ? (
                   <Leaf size={16} className="text-[#98c379] dark:text-[#98c379] light:text-[#50a14f] flex-shrink-0" />
+                ) : item.id === "project4" ? (
+                  <Bot size={16} className="text-[#c678dd] dark:text-[#c678dd] light:text-[#a626a4] flex-shrink-0" />
                 ) : (
                   <Folder size={16} className="text-[#e5c07b] dark:text-[#e5c07b] light:text-[#c18401] flex-shrink-0" />
                 )}

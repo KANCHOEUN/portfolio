@@ -41,6 +41,7 @@ export interface TranslationKeys {
   "project.one": string
   "project.two": string
   "project.three": string
+  "project.four": string
   "project.intro": string
   "project.diagram": string
   "project.related": string
@@ -140,6 +141,20 @@ export interface TranslationKeys {
   "content.project.two.api.design.desc": string
   "content.project.three.ml.pipeline": string
   "content.project.three.ml.pipeline.desc": string
+  "content.project.four.intro.title": string
+  "content.project.four.intro.desc": string
+  "content.project.four.core.features": string
+  "content.project.four.feature.contract": string
+  "content.project.four.feature.mock": string
+  "content.project.four.feature.analytics": string
+  "content.project.four.design.title": string
+  "content.project.four.design.desc": string
+  "content.project.four.contract.testing": string
+  "content.project.four.contract.testing.desc": string
+  "content.project.four.mock.orchestration": string
+  "content.project.four.mock.orchestration.desc": string
+  "content.project.four.observability": string
+  "content.project.four.observability.desc": string
 
   // 공통
   "common.copyright": string
@@ -184,6 +199,7 @@ const ko: TranslationKeys = {
   "project.one": "Pigrest",
   "project.two": "RE-VERSE",
   "project.three": "PARSLEY",
+  "project.four": "Mockly",
   "project.intro": "소개",
   "project.diagram": "설계 및 구현",
   "project.related": "관련 글",
@@ -290,6 +306,20 @@ const ko: TranslationKeys = {
   "content.project.two.api.design.desc": "RESTful API 설계 및 엔드포인�� 구조입니다.",
   "content.project.three.ml.pipeline": "ML 파이프라인",
   "content.project.three.ml.pipeline.desc": "머신러닝 모델 학습 및 배포 파이프라인입니다.",
+  "content.project.four.intro.title": "Mockly 소개",
+  "content.project.four.intro.desc": "Mockly는 백엔드 API가 준비되기 전에도 팀이 동일한 계약 기반으로 UI를 개발하고 테스트할 수 있도록 돕는 협업형 Mock 플랫폼입니다.",
+  "content.project.four.core.features": "핵심 기능",
+  "content.project.four.feature.contract": "OpenAPI 계약 버전 관리와 자동 호환성 검증",
+  "content.project.four.feature.mock": "팀별 샌드박스를 위한 에피머럴 Mock 서버 제공",
+  "content.project.four.feature.analytics": "모킹된 호출 데이터를 활용한 품질/경험 지표 대시보드",
+  "content.project.four.design.title": "Mockly 설계 및 구현",
+  "content.project.four.design.desc": "계약 검증부터 Mock 서버 오케스트레이션, 관측까지의 엔드 투 엔드 흐름을 정리했습니다.",
+  "content.project.four.contract.testing": "Consumer-Driven Contract 파이프라인",
+  "content.project.four.contract.testing.desc": "CI에서 Spectral 규칙과 커스텀 밸리데이터로 계약 변경을 검증하고, 아티팩트 레지스트리에 버전별로 배포합니다.",
+  "content.project.four.mock.orchestration": "에피머럴 Mock 서버 오케스트레이션",
+  "content.project.four.mock.orchestration.desc": "Argo Workflows와 Knative를 이용해 계약 변경 시마다 90초 내에 새로운 Mock Runtime을 만들고, Redis Stream으로 트래픽을 샤딩합니다.",
+  "content.project.four.observability": "Observability & 품질 모니터링",
+  "content.project.four.observability.desc": "OpenTelemetry 기반으로 호출 추적을 수집하고, Grafana/Loki/Jaeger 대시보드에서 SLA를 모니터링합니다.",
 
   // 공통
   "common.copyright": "© 2025 Hia. CC BY 4.0 라이센스 적용",
@@ -334,6 +364,7 @@ const en: TranslationKeys = {
   "project.one": "Pigrest",
   "project.two": "RE-VERSE",
   "project.three": "PARSLEY",
+  "project.four": "Mockly",
   "project.intro": "Introduction",
   "project.diagram": "Design & Implementation",
   "project.related": "Related Articles",
@@ -439,6 +470,20 @@ const en: TranslationKeys = {
   "content.project.two.api.design.desc": "RESTful API design and endpoint structure.",
   "content.project.three.ml.pipeline": "ML Pipeline",
   "content.project.three.ml.pipeline.desc": "Machine learning model training and deployment pipeline.",
+  "content.project.four.intro.title": "Introducing Mockly",
+  "content.project.four.intro.desc": "Mockly is a collaboration platform that lets teams ship UI work against contract-first mock APIs before the real backend is available.",
+  "content.project.four.core.features": "Key Capabilities",
+  "content.project.four.feature.contract": "Versioned OpenAPI contract management with compatibility checks",
+  "content.project.four.feature.mock": "Ephemeral mock servers that isolate sandbox traffic per squad",
+  "content.project.four.feature.analytics": "Experience analytics dashboards sourced from mock traffic",
+  "content.project.four.design.title": "Mockly Design & Implementation",
+  "content.project.four.design.desc": "An end-to-end look at contract validation, mock orchestration, and observability.",
+  "content.project.four.contract.testing": "Consumer-Driven Contract Pipeline",
+  "content.project.four.contract.testing.desc": "CI validates contract deltas with Spectral and custom linters, then publishes immutable artifacts.",
+  "content.project.four.mock.orchestration": "Ephemeral Mock Server Orchestration",
+  "content.project.four.mock.orchestration.desc": "Argo Workflows and Knative spin up new runtimes per change while Redis Streams shard traffic.",
+  "content.project.four.observability": "Observability & Quality Monitoring",
+  "content.project.four.observability.desc": "OpenTelemetry traces feed Grafana/Loki/Jaeger dashboards that enforce SLA alerts.",
 
   // 공통
   "common.copyright": "© 2025 Hia. Licensed under CC BY 4.0",
