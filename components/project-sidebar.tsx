@@ -2,46 +2,7 @@
 
 import { useState } from "react"
 import { ChevronDown, ChevronRight, Folder, FileText } from "lucide-react"
-
-// Sample project data
-const projects = [
-  {
-    id: "project4",
-    name: "Mockly",
-    pages: [
-      { id: "intro4", name: "소개", type: "file" },
-      { id: "diagram4", name: "핵심 구현 사항", type: "file" },
-      { id: "related4", name: "관련 글", type: "file" },
-    ],
-  },
-  {
-    id: "project1",
-    name: "Pigrest",
-    pages: [
-      { id: "intro1", name: "소개", type: "file" },
-      { id: "diagram1", name: "핵심 구현 사항", type: "file" },
-      { id: "related1", name: "관련 글", type: "file" },
-    ],
-  },
-  {
-    id: "project2",
-    name: "RE-VERSE",
-    pages: [
-      { id: "intro2", name: "소개", type: "file" },
-      { id: "diagram2", name: "핵심 구현 사항", type: "file" },
-      { id: "related2", name: "관련 글", type: "file" },
-    ],
-  },
-  {
-    id: "project3",
-    name: "PARSLEY",
-    pages: [
-      { id: "intro3", name: "소개", type: "file" },
-      { id: "diagram3", name: "핵심 구현 사항", type: "file" },
-      { id: "related3", name: "관련 글", type: "file" },
-    ],
-  },
-]
+import { projects } from "@/data/projects"
 
 interface ProjectSidebarProps {
   setActiveFile: (fileId: string) => void

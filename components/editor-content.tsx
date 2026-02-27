@@ -8,12 +8,14 @@ import BlogCard from "./blog-card"
 import IframeViewer from "./iframe-viewer"
 import { useLanguage } from "@/contexts/language-context"
 import { useSearchParams, useRouter } from "next/navigation"
-import { projectContentData, projectInfo, relatedArticlesData } from "@/lib/project-content"
+import { projectContentData } from "@/lib/project-content"
 import NotionViewer from "./notion-viewer"
 
-import { infoContents, diagramContents } from "./project-content/contents"
+import { infoContents, diagramContents } from "./project-content"
 import InfoPageWrapper from "@/components/project-common/InfoPageWrapper"
 import DiagramPageWrapper from "@/components/project-common/DiagramPageWrapper"
+
+import { getProjectById, getBlogPostById } from "@/data/projects"
 
 interface EditorContentProps {
   activeFile: string | null
@@ -27,107 +29,6 @@ interface OpenTab {
   url?: string
   projectIcon?: React.ReactNode
 }
-
-// Sample blog posts data with real URLs
-const blogPosts = [
-  {
-    id: "uuid",
-    title: "UUID 적용기",
-    description:
-      "UUID를 도입하게 된 배경과 실제 코드에 어떻게 적용하였는가",
-    image: "https://kanchoeun.github.io/assets/img/posts/uuid.png",
-    url: "https://blog.kancho.co/posts/UUID-%EC%A0%81%EC%9A%A9%EA%B8%B0/",
-  },
-  {
-    id: "common-response-format",
-    title: "공통 응답 형식 적용기",
-    description: "Pigrest 프로젝트에서 정의한 공통 응답 형식과 ResponseBodyAdvice를 적용하지 않은 이유",
-    image: "https://kanchoeun.github.io/assets/img/posts/spring-mvc-request-life-cycle.jpg",
-    url: "https://blog.kancho.co/posts/%EA%B3%B5%ED%86%B5-%EC%9D%91%EB%8B%B5-%ED%98%95%EC%8B%9D-%EC%A0%81%EC%9A%A9%EA%B8%B0/",
-  },
-  {
-    id: "filter-interceptor-response-body",
-    title: "Filter와 Interceptor에서 Response의 body를 수정할 수 있을까",
-    description:
-      "Spring MVC Request Lifecycle에서 HttpMessageConverter 톺아보기",
-    image: "https://kanchoeun.github.io/assets/img/posts/spring-mvc-request-life-cycle-http-message-converter.svg",
-    url: "https://blog.kancho.co/posts/Filter%EC%99%80-Interceptor%EC%97%90%EC%84%9C-Response%EC%9D%98-body%EB%A5%BC-%EC%88%98%EC%A0%95%ED%95%A0-%EC%88%98-%EC%9E%88%EC%9D%84%EA%B9%8C/",
-  },
-  {
-    id: "filter-exception-handler",
-    title: "Filter에서 발생한 예외는 어떻게 처리할까",
-    description:
-      "GlobalExceptionHandler가 잡지 못하는 예외 처리 방법 (feat. AuthenticationEntryPoint)",
-    image: "https://kanchoeun.github.io/assets/img/posts/jwt-filter-dispatcher-servlet.svg",
-    url: "https://blog.kancho.co/posts/Filter%EC%97%90%EC%84%9C-%EB%B0%9C%EC%83%9D%ED%95%9C-%EC%98%88%EC%99%B8%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%B2%98%EB%A6%AC%ED%95%A0%EA%B9%8C/",
-  },
-  {
-    id: "cache-ttl-autosave-system",
-    title: "캐시와 TTL로 효율적인 자동 저장 시스템 만들기",
-    description:
-      "Write-Behind & Cache Aside 패턴과 TTL 관리로 초안 자동 저장 최적화하기",
-    image: "https://about.kancho.co/images/posts/pigrest/auto-save-sequence.svg",
-    url: "https://blog.kancho.co/posts/%EC%BA%90%EC%8B%9C%EC%99%80-TTL%EB%A1%9C-%ED%9A%A8%EC%9C%A8%EC%A0%81%EC%9D%B8-%EC%9E%90%EB%8F%99-%EC%A0%80%EC%9E%A5-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EB%A7%8C%EB%93%A4%EA%B8%B0/",
-  },
-  {
-    id: "index-performance",
-    title: "INDEX를 적용하여 성능 개선하기",
-    description: "EXPLAIN 명령어로 병목 식별하고, 4만 건 이상의 데이터 성능 46% 향상시키기",
-    image: "https://re-verse.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F95a5f1ad-4464-4a33-b743-c773a2133990%2FUntitled.png?table=block&id=49792335-1313-46ea-94d5-af47b7b4d885&spaceId=1dc760ff-98aa-4cb3-b846-75e0be268835&width=2000&userId=&cache=v2",
-    url: "https://www.notion.so/choeun/INDEX-1ff9d8968ca3801d82acf4679a919f8f",
-  },
-  {
-    id: "gitlab-ci",
-    title: "GitLab CI 파이프라인 구축하기",
-    description: "GitLab CI 파이프라인을 구축 방법 및 발생한 이슈들 기록",
-    image: "https://choeun.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fc535450d-5e96-4e1f-b8e6-a7b95b3eec87%2FUntitled.png?table=block&id=1ff9d896-8ca3-815f-9c36-e294bbb66ef6&spaceId=5d0a987d-8a0f-4ad2-a579-07d63bd3b542&width=2000&userId=&cache=v2",
-    url: "https://www.notion.so/choeun/GitLab-CI-1ff9d8968ca380169aa2d223996b4f6d",
-  },
-  {
-    id: "argo-cd",
-    title: "Argo CD 파이프라인 구축하기",
-    description: "Argo CD 파이프라인 구축 방법 기록",
-    image: "https://choeun.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8c234292-e9a8-4fa0-a3c3-1766fdefae60%2FUntitled.png?table=block&id=1ff9d896-8ca3-8113-a2f6-ed66966fa453&spaceId=5d0a987d-8a0f-4ad2-a579-07d63bd3b542&width=2000&userId=&cache=v2",
-    url: "https://www.notion.so/choeun/Argo-CD-1ff9d8968ca3800da11fc2224537449c",
-  },
-  {
-    id: "hpa-artillery",
-    title: "HPA 적용 테스트 (feat.Artillery)",
-    description: "서버에 부하를 줘서 Horizontal Pod Autoscaler를 테스트해보자",
-    image: "https://choeun.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8171808e-639c-4cf6-9afa-b6813eaeecce%2FUntitled.png?table=block&id=1ff9d896-8ca3-8114-a9a4-d7131ce0b81e&spaceId=5d0a987d-8a0f-4ad2-a579-07d63bd3b542&width=2000&userId=&cache=v2",
-    url: "https://www.notion.so/HPA-feat-Artillery-1ff9d8968ca3803dacfbef45bb3d84e0",
-  },
-  {
-    id: "deploy-to-ec2-apply-https",
-    title: "EC2에 배포 및 HTTPS 적용하기",
-    description:
-      "EC2에서 Docker Compose로 컨테이너를 관리하고, HTTPS 적용하기",
-    image: "/images/posts/parsley/parsley-architecture.png",
-    url: "https://www.notion.so/choeun/EC2-HTTPS-2269d8968ca381939975ef57e6cc1027",
-  },
-  {
-    id: "machine-learning-models",
-    title: "Machine Learning Models",
-    description: "An overview of the machine learning models implemented in Project Three for predictive analytics.",
-    image: "/placeholder.svg?height=200&width=300",
-    url: "https://tensorflow.org",
-  },
-  {
-    id: "data-visualization-techniques",
-    title: "Data Visualization Techniques",
-    description: "How we created intuitive data visualizations to help users understand complex datasets at a glance.",
-    image: "/placeholder.svg?height=200&width=300",
-    url: "https://d3js.org",
-  },
-  {
-    id: "team-structure",
-    title: "Team Structure and Collaboration",
-    description:
-      "How our cross-functional team of data scientists, engineers, and designers collaborated to build Project Three.",
-    image: "/placeholder.svg?height=200&width=300",
-    url: "https://github.com/features/issues",
-  },
-]
 
 const projectTranslationKeys = ["project.one", "project.two", "project.three", "project.four"] as const
 
@@ -145,24 +46,9 @@ const getProjectIcon = (fileId: string) => {
   return <FileCode size={16} className="text-[#61afef] dark:text-[#61afef] light:text-[#4078f2] flex-shrink-0" />
 }
 
-function infoKeyToTitle(projectKey: keyof typeof infoContents) {
-  switch (projectKey) {
-    case "project1": return "Pigrest";
-    case "project2": return "RE-VERSE";
-    case "project3": return "PARSLEY";
-    case "project4": return "Mockly";
-    default: return "";
-  }
-}
-
-function diagramKeyToTitle(projectKey: keyof typeof diagramContents) {
-  switch (projectKey) {
-    case "project1": return "Pigrest 설계 및 구현";
-    case "project2": return "RE-VERSE 설계 및 구현";
-    case "project3": return "PARSLEY 설계 및 구현";
-    case "project4": return "Mockly 설계 및 구현";
-    default: return "";
-  }
+function getDiagramTitle(projectKey: string): string {
+  const project = getProjectById(projectKey);
+  return project ? `${project.name} 설계 및 구현` : "";
 }
 
 function diagramKeyToDescription(projectKey: keyof typeof diagramContents) {
@@ -323,15 +209,16 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
           const InfoContent = infoContents[projectKey];
           const projectIndex = parseInt(infoMatch[1], 10) - 1;
           const projectTranslationKey = projectTranslationKeys[projectIndex] || "project.one";
-          const info = projectInfo[projectKey];
+          const project = getProjectById(projectKey);
+          if (!project) return null;
           return {
             project: t(projectTranslationKey),
             content: (
               <InfoPageWrapper
-                title={infoKeyToTitle(projectKey)}
-                githubUrl={info.githubUrl}
-                period={info.period}
-                techStack={info.techStack}
+                title={project.name}
+                githubUrl={project.githubUrl}
+                period={project.period}
+                techStack={project.techStack}
               >
                 <InfoContent />
               </InfoPageWrapper>
@@ -343,11 +230,12 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
           const DiagramContent = diagramContents[projectKey];
           const projectIndex = parseInt(diagramMatch[1], 10) - 1;
           const projectTranslationKey = projectTranslationKeys[projectIndex] || "project.one";
+          const project = getProjectById(projectKey);
           return {
             project: t(projectTranslationKey),
             content: (
               <DiagramPageWrapper
-                title={diagramKeyToTitle(projectKey)}
+                title={getDiagramTitle(projectKey)}
                 description={diagramKeyToDescription(projectKey)}
                 toc={diagramKeyToToc(projectKey)}
               >
@@ -409,12 +297,13 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
   // 관련 글 목록 렌더링 - language를 의존성에 추가
   const renderRelatedArticles = useCallback(
     (fileId: string) => {
-      const articleIds = relatedArticlesData[fileId as keyof typeof relatedArticlesData] || []
-      const filteredPosts = blogPosts.filter((post) => articleIds.includes(post.id))
+      // fileId가 "related1", "related2" 등의 형태이므로 projectId 추출
+      const projectNum = fileId.replace("related", "");
+      const projectKey = `project${projectNum}`;
+      const project = getProjectById(projectKey);
+      const relatedPosts = project?.relatedPosts || [];
 
-      console.log(filteredPosts);
-
-      const getProjectName = () => {
+      const getProjectNameForRelated = () => {
         try {
           if (fileId.includes("1")) return t("project.one")
           if (fileId.includes("2")) return t("project.two")
@@ -429,10 +318,10 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
       return (
         <div className="p-6">
           <h1 className="text-2xl font-bold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-8">
-            {getProjectName()} {t("project.related")}
+            {getProjectNameForRelated()} {t("project.related")}
           </h1>
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
-            {filteredPosts.map((post) => (
+            {relatedPosts.map((post) => (
               <BlogCard
                 key={post.id}
                 title={post.title}
@@ -443,7 +332,7 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
               />
             ))}
           </div>
-        </div> 
+        </div>
       )
     },
     [t, language], // language 의존성 추가
@@ -637,7 +526,7 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
 
   // 블로그 포스트 ID로 직접 열기
   const openBlogPostById = (postId: string) => {
-    const post = blogPosts.find(p => p.id === postId)
+    const post = getBlogPostById(postId)
     if (post) {
       setSelectedBlog({ url: post.url, title: post.title })
     }
