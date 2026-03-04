@@ -104,6 +104,15 @@ body {
   display: none;
 }
 
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 .file-tab {
   padding-left: 1rem;
   padding-right: 1rem;

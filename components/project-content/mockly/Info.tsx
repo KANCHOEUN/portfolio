@@ -1,11 +1,24 @@
 import Todo from "../common/Todo";
+import ScreenshotCarousel from "../common/ScreenshotCarousel";
+
+const screenshots = [
+  { src: "/images/projects/mockly/mockly-1-home.png", alt: "홈 화면" },
+  { src: "/images/projects/mockly/mockly-2-plan-list.png", alt: "플랜 목록" },
+  { src: "/images/projects/mockly/mockly-6-change-plan.png", alt: "플랜 변경" },
+  { src: "/images/projects/mockly/mockly-3-interview-home.png", alt: "면접 홈" },
+  { src: "/images/projects/mockly/mockly-4-interview.png", alt: "면접 진행" },
+  { src: "/images/projects/mockly/mockly-5-feedback.png", alt: "피드백" },
+  { src: "/images/projects/mockly/mockly-7-payment-method.png", alt: "결제 수단" },
+];
 
 export default function MocklyInfo() {
   return (
     <>
-      <p>
+      <ScreenshotCarousel images={screenshots} />
+      <p className="mt-2 bt-3">
         Mockly는 AI 면접관과 모의 면접을 연습할 수 있는 구독형 모바일 플랫폼입니다.
       </p>
+      
       <h2 className="text-xl font-semibold mt-6 mb-4">주요 기능</h2>
 
       <Todo

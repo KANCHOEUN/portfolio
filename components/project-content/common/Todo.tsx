@@ -10,7 +10,7 @@ interface TodoProps {
 }
 
 export default function Todo({ status, description, children }: TodoProps) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   return (
     <div className="mb-2">
