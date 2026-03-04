@@ -10,14 +10,44 @@ export default function MocklyInfo() {
 
       <Todo
         status="done"
-        description="모바일 환경을 고려한 OAuth 2.1 표준을 따른 Google Social Login"
+        description="모바일 환경을 고려한 OAuth 2.1 기반 Google Social Login"
       >
         <ul className="text-sm list-disc pl-4 space-y-1">
-          <li>모바일 환경에서 client secret 없이 안전한 인증을 위해 PKCE 적용</li>
-          <li>Refresh Token Rotation과 Redis Blacklist로 토큰 탈취 대응</li>
-          <li>멀티 디바이스 세션 관리 (최대 2대, 디바이스 정보 추적)</li>
+          <li>PKCE 및 Refresh Token Rotation을 적용한 토큰 탈취 대응 설계</li>
         </ul>
       </Todo>
+
+      <Todo
+        status="done"
+        description="PortOne 기반 구독 및 결제 시스템"
+      >
+        <ul className="text-sm list-disc pl-4 space-y-1">
+          <li>Billing Key 기반 정기 결제 및 Webhook 기반 결제/구독 상태 동기화</li>
+          <li>외부 API 연동 트랜잭션 정합성 보장을 위해 Transactional Outbox 패턴 적용</li>
+          <li>미납(연체) 7일 경과 시 구독 자동 만료 스케줄러 구현</li>
+        </ul>
+      </Todo>
+
+      <Todo
+        status="in-progress"
+        description="AI 면접관 기반 모의 면접 서비스"
+      >
+        <ul className="text-sm list-disc pl-4 space-y-1">
+          <li>Spring AI로 LLM 연동 및 구조화된 피드백 생성 (BeanOutputConverter)</li>
+          <li>구독 플랜별 질문 개수 제한 및 일일 쿼터 관리</li>
+          <li>가변적인 피드백 카테고리를 JSONB로 저장</li>
+        </ul>
+      </Todo>
+
+      {/* <Todo
+        status="ready"
+        description="PGVector 기반 이력서 맞춤 면접 (Phase 2)"
+      >
+        <ul className="text-sm list-disc pl-4 space-y-1">
+          <li>이력서 임베딩 → 벡터 유사도 검색으로 맞춤 질문 생성 (RAG)</li>
+          <li>Pro 플랜 전용 프리미엄 기능</li>
+        </ul>
+      </Todo> */}
 
     </>
   );
