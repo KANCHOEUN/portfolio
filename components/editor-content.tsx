@@ -82,9 +82,12 @@ function diagramKeyToToc(projectKey: keyof typeof diagramContents) {
       ];
     case "project4":
       return [
-        { id: "mockly-login", label: "OAuth 2.1 기반 구글 소셜 로그인" },
-        { id: "mockly-refresh-rotation", label: "토큰 재발급 - Refresh Token Rotation 적용" },
-        { id: "mockly-logout", label: "로그아웃 - Blacklist 기반 토큰 무효화" },
+        { id: "mockly-data-consistency", label: "Data Consistency", depth: 1 },
+        { id: "mockly-transactional-outbox", label: "Transactional Outbox 패턴", depth: 2 },
+        { id: "mockly-authentication", label: "Authentication", depth: 1 },
+        { id: "mockly-login", label: "OAuth 2.1 기반 구글 소셜 로그인", depth: 2 },
+        { id: "mockly-refresh-rotation", label: "토큰 재발급 - Refresh Token Rotation 적용", depth: 2 },
+        { id: "mockly-logout", label: "로그아웃 - Blacklist 기반 토큰 무효화", depth: 2 },
       ];
     default:
       return [];

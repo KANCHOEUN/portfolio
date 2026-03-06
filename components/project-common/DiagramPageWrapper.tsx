@@ -10,7 +10,7 @@ export default function DiagramPageWrapper({
 }: {
   title: string;
   description: string;
-  toc: { id: string; label: string }[];
+  toc: { id: string; label: string; depth?: number }[];
   children: React.ReactNode;
 }) {
     const { t, language } = useLanguage()
@@ -38,9 +38,9 @@ export default function DiagramPageWrapper({
                     <li key={index}>
                         <button
                         onClick={() => handleTocClick(item.id)}
-                        className="text-[#61afef] dark:text-[#61afef] light:text-[#4078f2] hover:text-[#56b6c2] dark:hover:text-[#56b6c2] light:hover:text-[#0184bc] transition-colors text-left"
+                        className={`text-[#61afef] dark:text-[#61afef] light:text-[#4078f2] hover:text-[#56b6c2] dark:hover:text-[#56b6c2] light:hover:text-[#0184bc] transition-colors text-left${item.depth === 2 ? " pl-4 text-sm opacity-80" : ""}`}
                         >
-                        {index + 1}. {t(item.label)}
+                        {t(item.label)}
                         </button>
                     </li>
                     ))}
