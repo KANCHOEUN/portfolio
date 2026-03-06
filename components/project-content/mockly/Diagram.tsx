@@ -7,7 +7,7 @@ export default function MocklyDiagram() {
       <section id="mockly-data-consistency" className="mb-8">
         <h2 className="text-2xl font-bold mb-6">Data Consistency</h2>
         <section id="mockly-transactional-outbox" className="mb-6">
-          <h3 className="text-xl font-semibold mb-4">Transactional Outbox 패턴</h3>
+          <h3 className="text-xl font-semibold mb-4">결제 후 스케줄 예약하기: Transactional Outbox 패턴 적용</h3>
           <ImageZoom
             src="/images/projects/mockly/mockly-transactional-outbox-diagram.png"
             alt="mockly-transactional-outbox"
@@ -54,7 +54,7 @@ export default function MocklyDiagram() {
         </section>
         <section id="mockly-refresh-rotation" className="mb-6">
           <h3 className="text-xl font-semibold mb-4">
-            토큰 재발급 - Refresh Token Rotation 적용
+            토큰 재발급: Refresh Token Rotation 적용
           </h3>
           <div>
             <ImageZoom
@@ -66,7 +66,7 @@ export default function MocklyDiagram() {
         </section>
         <section id="mockly-logout" className="mb-6">
           <h3 className="text-xl font-semibold mb-4">
-            로그아웃 - Blacklist 기반 토큰 무효화
+            로그아웃: Blacklist 기반 토큰 무효화
           </h3>
           <div>
             <ImageZoom

@@ -61,38 +61,6 @@ function diagramKeyToDescription(projectKey: keyof typeof diagramContents) {
   }
 }
 
-function diagramKeyToToc(projectKey: keyof typeof diagramContents) {
-  switch (projectKey) {
-    case "project1":
-      return [
-        { id: "auto-save-system", label: "게시물 초안 자동 저장 시스템" },
-        // { id: "spring-security-jwt", label: "JWT 기반 인증 시스템" },
-        { id: "uuid", label: "UUID 기반 Primary Key 설계" },
-        { id: "ci-cd-pipeline", label: "CI/CD 파이프라인"}
-      ];
-    case "project2":
-      return [
-        { id: "system-design", label: "시스템 설계" },
-        { id: "ci-cd-pipeline", label: "CI/CD 파이프라인" },
-      ];
-    case "project3":
-      return [
-        { id: "architecture", label: "아키텍처" },
-        { id: "sequence-diagram", label: "시퀀스 다이어그램" },
-      ];
-    case "project4":
-      return [
-        { id: "mockly-data-consistency", label: "Data Consistency", depth: 1 },
-        { id: "mockly-transactional-outbox", label: "Transactional Outbox 패턴", depth: 2 },
-        { id: "mockly-authentication", label: "Authentication", depth: 1 },
-        { id: "mockly-login", label: "OAuth 2.1 기반 구글 소셜 로그인", depth: 2 },
-        { id: "mockly-refresh-rotation", label: "토큰 재발급 - Refresh Token Rotation 적용", depth: 2 },
-        { id: "mockly-logout", label: "로그아웃 - Blacklist 기반 토큰 무효화", depth: 2 },
-      ];
-    default:
-      return [];
-  }
-}
 
 export default function EditorContent({ activeFile, setActiveFile }: EditorContentProps) {
   const { t, language } = useLanguage()
@@ -240,7 +208,6 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
               <DiagramPageWrapper
                 title={getDiagramTitle(projectKey)}
                 description={diagramKeyToDescription(projectKey)}
-                toc={diagramKeyToToc(projectKey)}
               >
                 <DiagramContent />
               </DiagramPageWrapper>
@@ -323,7 +290,7 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
           <h1 className="text-2xl font-bold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-8">
             {getProjectNameForRelated()} {t("project.related")}
           </h1>
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
+          <div className={`grid gap-4 ${selectedBlog ? "grid-cols-1 xl:grid-cols-2" : "grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"}`}>
             {relatedPosts.map((post) => (
               <BlogCard
                 key={post.id}
