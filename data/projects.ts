@@ -27,7 +27,7 @@ export const projects: ProjectMeta[] = [
         id: "multiple-security-filter-chain",
         title: "요청마다 다른 SecurityFilterChain을 적용해보자",
         description: "Spring Security의 Multiple SecurityFilterChain 적용 중 JWT 인증 필터가 계속 실행되던 원인과 해결 방법 정리",
-        image: "",
+        image: "https://blog.kancho.co/assets/img/posts/spring-security-chain-architecture-2.png",
         url: "https://blog.kancho.co/posts/%EC%9A%94%EC%B2%AD%EB%A7%88%EB%8B%A4-%EB%8B%A4%EB%A5%B8-SecurityFilterChain%EC%9D%84-%EC%A0%81%EC%9A%A9%ED%95%B4%EB%B3%B4%EC%9E%90/",
       },
       {
