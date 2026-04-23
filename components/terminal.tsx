@@ -42,7 +42,6 @@ ${t("terminal.name")}
 ${t("terminal.role")}
       
 ${t("terminal.intro")}
-${t("terminal.expertise")}
 ${t("terminal.beliefs")}
       
 ${t("terminal.current.work")}
@@ -121,7 +120,7 @@ ${t("terminal.opensource.contribution")}
 ├── ${t("skills.backend")}
 │   ├── Java
 │   ├── Spring/Spring Boot
-│   ├── MySQL
+│   ├── MySQL, PostgreSQL
 │   ├── Redis
 │   └── MyBatis, JPA
 │
@@ -144,6 +143,7 @@ ${t("terminal.activity.1")}
 ${t("terminal.activity.2")}
 ${t("terminal.activity.3")}
 ${t("terminal.activity.4")}
+${t("terminal.activity.5")}
       
 `
   }, [t])
