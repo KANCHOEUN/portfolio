@@ -36,6 +36,13 @@ export const projects: ProjectMeta[] = [
         description: "외부 시스템 연동이 포함된 트랜잭션에서 데이터 정합성 확보하기",
         image: "https://blog.kancho.co/assets/img/posts/event-sequence-diagram.png",
         url: "https://blog.kancho.co/posts/Transactional-Outbox-%ED%8C%A8%ED%84%B4-%EB%8F%84%EC%9E%85%EA%B8%B0-%EA%B2%B0%EC%A0%9C-%ED%9B%84-%EC%8A%A4%EC%BC%80%EC%A4%84-%EC%98%88%EC%95%BD%ED%95%98%EA%B8%B0/",
+      },
+      {
+        id: "llm-position-importance",
+        title: "왜 LLM은 내 지시를 따르지 않았을까 - 위치의 중요성",
+        description: "지시가 잘 반영되지 않고 위치가 영향을 준 이유 (feat. Attention Dilution과 Position Bias)",
+        image: "/images/posts/mockly/llm-position-importance.png",
+        url: "https://blog.kancho.co/posts/%EC%99%9C-LLM%EC%9D%80-%EB%82%B4-%EC%A7%80%EC%8B%9C%EB%A5%BC-%EB%94%B0%EB%A5%B4%EC%A7%80-%EC%95%8A%EC%95%98%EC%9D%84%EA%B9%8C-%EC%9C%84%EC%B9%98%EC%9D%98-%EC%A4%91%EC%9A%94%EC%84%B1/",
       }
     ],
   },
