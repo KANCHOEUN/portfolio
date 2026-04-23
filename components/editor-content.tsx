@@ -168,7 +168,50 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
     [t, language], // language 의존성 추가
   )
 
-  // 파일 콘텐츠 생성 - language를 의존성에 추가
+  // 관련 글 목록 렌더링
+  const renderRelatedArticles = useCallback(
+    (fileId: string) => {
+      const projectNum = fileId.replace("related", "");
+      const projectKey = `project${projectNum}`;
+      const project = getProjectById(projectKey);
+      const relatedPosts = project?.relatedPosts || [];
+
+      const getProjectNameForRelated = () => {
+        try {
+          if (fileId.includes("1")) return t("project.one")
+          if (fileId.includes("2")) return t("project.two")
+          if (fileId.includes("3")) return t("project.three")
+          if (fileId.includes("4")) return t("project.four")
+        } catch (error) {
+          console.warn("Translation error for project name:", fileId, error)
+        }
+        return "Project"
+      }
+
+      return (
+        <div className="p-6">
+          <h1 className="text-2xl font-bold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-8">
+            {getProjectNameForRelated()} {t("project.related")}
+          </h1>
+          <div className={`grid gap-4 ${selectedBlog ? "grid-cols-1 xl:grid-cols-2" : "grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"}`}>
+            {relatedPosts.map((post) => (
+              <BlogCard
+                key={post.id}
+                title={post.title}
+                description={post.description}
+                image={post.image}
+                url={post.url}
+                onClick={(url, title) => handleBlogCardClick(url, title)}
+              />
+            ))}
+          </div>
+        </div>
+      )
+    },
+    [t, language, selectedBlog],
+  )
+
+  // 파일 콘텐츠 생성
   const getFileContent = useCallback(
     (fileId: string): { project: string; content: React.ReactNode } | null => {
       try {
@@ -261,51 +304,7 @@ export default function EditorContent({ activeFile, setActiveFile }: EditorConte
         return null
       }
     },
-    [t, language, renderContentSection], // language와 renderContentSection 의존성 추가
-  )
-
-  // 관련 글 목록 렌더링 - language를 의존성에 추가
-  const renderRelatedArticles = useCallback(
-    (fileId: string) => {
-      // fileId가 "related1", "related2" 등의 형태이므로 projectId 추출
-      const projectNum = fileId.replace("related", "");
-      const projectKey = `project${projectNum}`;
-      const project = getProjectById(projectKey);
-      const relatedPosts = project?.relatedPosts || [];
-
-      const getProjectNameForRelated = () => {
-        try {
-          if (fileId.includes("1")) return t("project.one")
-          if (fileId.includes("2")) return t("project.two")
-          if (fileId.includes("3")) return t("project.three")
-          if (fileId.includes("4")) return t("project.four")
-        } catch (error) {
-          console.warn("Translation error for project name:", fileId, error)
-        }
-        return "Project"
-      }
-
-      return (
-        <div className="p-6">
-          <h1 className="text-2xl font-bold text-[#abb2bf] dark:text-[#abb2bf] light:text-[#383a42] mb-8">
-            {getProjectNameForRelated()} {t("project.related")}
-          </h1>
-          <div className={`grid gap-4 ${selectedBlog ? "grid-cols-1 xl:grid-cols-2" : "grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"}`}>
-            {relatedPosts.map((post) => (
-              <BlogCard
-                key={post.id}
-                title={post.title}
-                description={post.description}
-                image={post.image}
-                url={post.url}
-                onClick={(url, title) => handleBlogCardClick(url, title)}
-              />
-            ))}
-          </div>
-        </div>
-      )
-    },
-    [t, language], // language 의존성 추가
+    [t, language, renderContentSection, renderRelatedArticles],
   )
 
   // 화면 크기 감지
