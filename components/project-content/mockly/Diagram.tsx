@@ -40,7 +40,7 @@ export default function MocklyDiagram() {
       </section>
       <section id="mockly-authentication" className="mb-8">
         <h2 className="text-2xl font-bold mb-6">Authentication</h2>
-        <section id="mockly-login" className="mb-6">
+        {/* <section id="mockly-login" className="mb-6">
           <h3 className="text-xl font-semibold mb-4">
             OAuth 2.1 기반 구글 소셜 로그인
           </h3>
@@ -51,7 +51,7 @@ export default function MocklyDiagram() {
               className="my-4 rounded"
             />
           </div>
-        </section>
+        </section> */}
         <section id="mockly-refresh-rotation" className="mb-6">
           <h3 className="text-xl font-semibold mb-4">
             토큰 재발급: Refresh Token Rotation 적용
@@ -63,6 +63,8 @@ export default function MocklyDiagram() {
               className="my-4 rounded"
             />
           </div>
+          <p className="mb-2">OAuth 2.1에서 권장하는 Refresh Token Rotation 방식을 적용하여, access token 재발급 시 refresh token도 함께 갱신하도록 구성하였습니다.</p>
+          <p className="mb-2">또한 refresh token 재발급 시 Device ID를 함께 검증하여, 다른 디바이스에서 탈취된 토큰이 재사용되는 위험을 줄였습니다.</p>
         </section>
         <section id="mockly-logout" className="mb-6">
           <h3 className="text-xl font-semibold mb-4">
@@ -75,6 +77,9 @@ export default function MocklyDiagram() {
               className="my-4 rounded"
             />
           </div>
+          <p className="mb-2">JWT 기반 access token은 서버의 저장소에서 별도로 관리하지 않기 때문에, 로그아웃 이후에도 만료 전까지는 유효할 수 있습니다.</p>
+          <p className="mb-2">이를 보완하기 위해 로그아웃 시 access token을 Redis 블랙리스트에 저장하고, TTL을 토큰의 남은 만료 시간과 동일하게 설정하여 불필요한 메모리 사용을 줄였습니다.</p>
+          <p className="mb-2">또한 refresh token을 함께 삭제하여 추가적인 access token 재발급을 방지하였습니다.</p>
         </section>
       </section>
     </>

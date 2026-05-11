@@ -46,22 +46,13 @@ export default function MocklyInfo() {
         description="AI 면접관 기반 모의 면접 서비스"
       >
         <ul className="text-sm list-disc pl-4 space-y-1">
-          <li>Spring AI로 LLM 연동 및 구조화된 피드백 생성 (BeanOutputConverter)</li>
+          <li>Spring AI로 LLM 연동 및 구조화된 피드백 생성 (Native Structured Output)</li>
           <li>구독 플랜별 질문 개수 제한 및 일일 쿼터 관리</li>
           <li>가변적인 피드백 카테고리를 JSONB로 저장</li>
+          <li>SSE(Server-Sent Events) 기반 면접 질문 실시간 스트리밍</li>
+          <li>AI 응답 지연으로 인한 성능 이슈로 k6 기반 부하 테스트 및 구조 개선 진행</li>
         </ul>
       </Todo>
-
-      {/* <Todo
-        status="ready"
-        description="PGVector 기반 이력서 맞춤 면접 (Phase 2)"
-      >
-        <ul className="text-sm list-disc pl-4 space-y-1">
-          <li>이력서 임베딩 → 벡터 유사도 검색으로 맞춤 질문 생성 (RAG)</li>
-          <li>Pro 플랜 전용 프리미엄 기능</li>
-        </ul>
-      </Todo> */}
-
     </>
   );
 }
