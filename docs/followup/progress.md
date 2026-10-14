@@ -15,3 +15,8 @@
 - Final review: single P2 test coverage finding; mounted-switch regression and mutation RED address it. No other concrete production defect found.
 
 - Final local verification: npm test10, typecheck, lint, restored production build and live Notion integration pass; combined browser suite27 pass/3 intentional skips after deterministic sidebar-helper readiness fix. Production audit0 confirmed again; tracked/new text has no credential signatures.
+
+- Release code committed/published: caf0d54acb005b041969fb7aa744e92630124fcd. Vercel success; GitHub Actions run38625713932 success. Public desktop/mobile smoke passes real Notion API200 with5 code blocks, MP4 playback, optimized images, both themes and navigation; no uncaught page errors. Stale URL credential returned401; existing credential helper succeeded, and origin URL was sanitized.
+- Task3: simulated public before/after medians captured. Font timing changes Lantern critical graph; independent primary-source review explains modeled LCP regression. Actual DevTools-throttled before medians complete, after medians in progress. Higher initial font bytes are explicitly reported.
+
+- Tasks1–5 complete: both production methods measured3 runs per route/viewport; actual mobile portfolio LCP16741.551→3847.080ms, CLS0.471526→0.006824. About LCP2194.989→2106.686ms, but SpeedIndex4443→5748ms and higher initial font bytes remain openly documented. Final documentation update includes completed before/after medians and release evidence; application source remains identical to the verified code commit.
