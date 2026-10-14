@@ -1,35 +1,52 @@
+import { useOpenArticle } from "@/contexts/article-viewer-context";
 import ImageZoom from "@/components/common/ImageZoom";
 import { BookOpen } from "lucide-react";
 
 export default function MocklyDiagram() {
+  const openArticle = useOpenArticle();
   return (
     <>
       <section id="mockly-data-consistency" className="mb-8">
-        <h2 className="text-2xl font-bold mb-6">Data Consistency</h2>
+        <h2 className="text-2xl font-bold mb-6">데이터 정합성</h2>
         <section id="mockly-transactional-outbox" className="mb-6">
-          <h3 className="text-xl font-semibold mb-4">결제 후 스케줄 예약하기: Transactional Outbox 패턴 적용</h3>
+          <h3 className="text-xl font-semibold mb-4">
+            결제 후 스케줄 예약하기: Transactional Outbox 패턴 적용
+          </h3>
           <ImageZoom
             src="/images/projects/mockly/mockly-transactional-outbox-diagram.png"
             alt="mockly-transactional-outbox"
             className="my-4 rounded"
           />
-          <p className="mb-2">Mockly는 구독 기반 서비스이며 결제 처리는 외부 결제 API를 통해 수행합니다.</p>
-          <p className="mb-2">결제가 완료되면 결제 정보와 구독 상태를 <u>내부 DB에 반영</u>하고, 동시에 외부 API를 호출하여 <u>다음 결제 예약</u>과 같은 후속 작업을 수행해야 합니다.</p>
-          <p className="mb-2">하지만 외부 API 호출과 내부 DB 상태 변경은 하나의 트랜잭션으로 묶을 수 없기 때문에 한쪽만 성공하는 데이터 정합성 문제가 발생할 수 있습니다.</p>
-          <p className="mb-2">해당 문제를 해결하기 위해 도메인 상태 변경과 함께 Outbox 테이블에 이벤트를 기록하고, 이후 Scheduler가 Outbox 테이블을 조회하여 미처리 이벤트를 재시도하도록 구성하였습니다.</p>
-          <div className="mt-4 flex gap-3 border-l-4 border-[#61afef] bg-[#61afef]/10 rounded-r px-4 py-3 text-sm">
-            <BookOpen size={16} className="text-[#61afef] flex-shrink-0 mt-0.5" />
+          <p className="mb-2">
+            Mockly는 구독 기반 서비스이며 결제 처리는 외부 결제 API를 통해
+            수행합니다.
+          </p>
+          <p className="mb-2">
+            결제가 완료되면 결제 정보와 구독 상태를 <u>내부 DB에 반영</u>하고,
+            동시에 외부 API를 호출하여 <u>다음 결제 예약</u>과 같은 후속 작업을
+            수행해야 합니다.
+          </p>
+          <p className="mb-2">
+            하지만 외부 API 호출과 내부 DB 상태 변경은 하나의 트랜잭션으로 묶을
+            수 없기 때문에 한쪽만 성공하는 데이터 정합성 문제가 발생할 수
+            있습니다.
+          </p>
+          <p className="mb-2">
+            해당 문제를 해결하기 위해 도메인 상태 변경과 함께 Outbox 테이블에
+            이벤트를 기록하고, 커밋 이후 별도 트랜잭션에서 스케줄 예약을 즉시
+            시도합니다. 실패하면 Scheduler가 Outbox 테이블을 조회하여 미처리
+            이벤트를 재시도하도록 구성하였습니다.
+          </p>
+          <div className="mt-4 flex gap-3 border-l-4 border-[var(--blue)] bg-[var(--blue)]/10 rounded-r px-4 py-3 text-sm">
+            <BookOpen
+              size={16}
+              className="text-[var(--blue)] flex-shrink-0 mt-0.5"
+            />
             <p>
               자세한 설계 과정은{" "}
               <button
-                onClick={() =>
-                  window.dispatchEvent(
-                    new CustomEvent("openBlogPost", {
-                      detail: { id: "transactional-outbox-payment" },
-                    })
-                  )
-                }
-                className="text-[#61afef] hover:text-[#56b6c2] transition-colors underline"
+                onClick={() => openArticle("transactional-outbox-payment")}
+                className="text-[var(--blue)] hover:text-[var(--cyan)] transition-colors underline"
               >
                 Transactional Outbox 패턴 도입기; 결제 후 스케줄 예약하기
               </button>{" "}
@@ -38,8 +55,23 @@ export default function MocklyDiagram() {
           </div>
         </section>
       </section>
+      <section id="mockly-async-feedback" className="mb-8">
+        <h2 className="text-2xl font-bold mb-6">
+          비동기 피드백 생성과 트랜잭션 분리
+        </h2>
+        <p className="mb-2">
+          피드백 요청 상태를 저장한 뒤, 커밋 이후 별도 실행기에서 AI 호출을
+          수행합니다. 외부 AI 응답을 기다리는 동안 DB 트랜잭션을 유지하지 않도록
+          구성했습니다.
+        </p>
+        <p className="mb-2">
+          생성 상태 변경과 결과 저장은 각각 짧은 트랜잭션으로 처리하며, SSE로
+          피드백 진행 상태를 전달합니다. 일시적 실패에는 재시도를 적용하고, 오래
+          정체된 작업은 복구 스케줄러가 다시 요청합니다.
+        </p>
+      </section>
       <section id="mockly-authentication" className="mb-8">
-        <h2 className="text-2xl font-bold mb-6">Authentication</h2>
+        <h2 className="text-2xl font-bold mb-6">인증</h2>
         {/* <section id="mockly-login" className="mb-6">
           <h3 className="text-xl font-semibold mb-4">
             OAuth 2.1 기반 구글 소셜 로그인
@@ -63,8 +95,15 @@ export default function MocklyDiagram() {
               className="my-4 rounded"
             />
           </div>
-          <p className="mb-2">OAuth 2.1에서 권장하는 Refresh Token Rotation 방식을 적용하여, access token 재발급 시 refresh token도 함께 갱신하도록 구성하였습니다.</p>
-          <p className="mb-2">또한 refresh token 재발급 시 Device ID를 함께 검증하여, 다른 디바이스에서 탈취된 토큰이 재사용되는 위험을 줄였습니다.</p>
+          <p className="mb-2">
+            OAuth 2.1에서 권장하는 Refresh Token Rotation 방식을 적용하여,
+            access token 재발급 시 refresh token도 함께 갱신하도록
+            구성하였습니다.
+          </p>
+          <p className="mb-2">
+            또한 refresh token 재발급 시 Device ID를 함께 검증하여, 다른
+            디바이스에서 탈취된 토큰이 재사용되는 위험을 줄였습니다.
+          </p>
         </section>
         <section id="mockly-logout" className="mb-6">
           <h3 className="text-xl font-semibold mb-4">
@@ -77,9 +116,19 @@ export default function MocklyDiagram() {
               className="my-4 rounded"
             />
           </div>
-          <p className="mb-2">JWT 기반 access token은 서버의 저장소에서 별도로 관리하지 않기 때문에, 로그아웃 이후에도 만료 전까지는 유효할 수 있습니다.</p>
-          <p className="mb-2">이를 보완하기 위해 로그아웃 시 access token을 Redis 블랙리스트에 저장하고, TTL을 토큰의 남은 만료 시간과 동일하게 설정하여 불필요한 메모리 사용을 줄였습니다.</p>
-          <p className="mb-2">또한 refresh token을 함께 삭제하여 추가적인 access token 재발급을 방지하였습니다.</p>
+          <p className="mb-2">
+            JWT 기반 access token은 서버의 저장소에서 별도로 관리하지 않기
+            때문에, 로그아웃 이후에도 만료 전까지는 유효할 수 있습니다.
+          </p>
+          <p className="mb-2">
+            이를 보완하기 위해 로그아웃 시 access token을 Redis 블랙리스트에
+            저장하고, TTL을 토큰의 남은 만료 시간과 동일하게 설정하여 불필요한
+            메모리 사용을 줄였습니다.
+          </p>
+          <p className="mb-2">
+            또한 refresh token을 함께 삭제하여 추가적인 access token 재발급을
+            방지하였습니다.
+          </p>
         </section>
       </section>
     </>

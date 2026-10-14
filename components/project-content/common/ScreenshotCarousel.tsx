@@ -1,12 +1,16 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import Image from "next/image";
+import { imageDimensions } from "@/data/image-dimensions";
 
 interface ScreenshotCarouselProps {
   images: { src: string; alt: string }[];
 }
 
-export default function ScreenshotCarousel({ images }: ScreenshotCarouselProps) {
+export default function ScreenshotCarousel({
+  images,
+}: ScreenshotCarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [atEnd, setAtEnd] = useState(false);
   const dragStart = useRef<{ x: number; scrollLeft: number } | null>(null);
@@ -21,7 +25,12 @@ export default function ScreenshotCarousel({ images }: ScreenshotCarouselProps) 
 
     check();
     el.addEventListener("scroll", check);
-    return () => el.removeEventListener("scroll", check);
+    const observer = new ResizeObserver(check);
+    observer.observe(el);
+    return () => {
+      el.removeEventListener("scroll", check);
+      observer.disconnect();
+    };
   }, []);
 
   const onMouseDown = (e: React.MouseEvent) => {
@@ -62,7 +71,10 @@ export default function ScreenshotCarousel({ images }: ScreenshotCarouselProps) 
             className="shrink-0 snap-start rounded overflow-hidden border"
             style={{ width: 180 }}
           >
-            <img
+            <Image
+              width={imageDimensions[image.src]?.width || 360}
+              height={imageDimensions[image.src]?.height || 780}
+              sizes="180px"
               src={image.src}
               alt={image.alt}
               className="w-full h-auto object-cover"
@@ -75,7 +87,8 @@ export default function ScreenshotCarousel({ images }: ScreenshotCarouselProps) 
       <div
         className="pointer-events-none absolute right-0 top-0 bottom-2 w-16 transition-opacity duration-300"
         style={{
-          background: "linear-gradient(to right, transparent, var(--background))",
+          background:
+            "linear-gradient(to right, transparent, var(--background))",
           opacity: atEnd ? 0 : 1,
         }}
       />

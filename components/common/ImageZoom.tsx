@@ -1,6 +1,9 @@
-import { useState } from 'react';
-import { ZoomOut } from 'lucide-react';
-
+"use client";
+import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
+import Image from "next/image";
+import { X } from "lucide-react";
+import { imageDimensions } from "@/data/image-dimensions";
 interface ImageZoomProps {
   src: string;
   alt: string;
@@ -8,56 +11,82 @@ interface ImageZoomProps {
   className?: string;
   width?: string;
 }
-
-export default function ImageZoom({ src, alt, caption, className = "" }: ImageZoomProps) {
-  const [isZoomed, setIsZoomed] = useState(false);
-
-  const handleZoom = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setIsZoomed(!isZoomed);
-  };
-
+export default function ImageZoom({
+  src,
+  alt,
+  caption,
+  className = "",
+}: ImageZoomProps) {
+  const [zoomed, setZoomed] = useState(false);
+  const trigger = useRef<HTMLButtonElement>(null);
+  const dialog = useRef<HTMLDialogElement>(null);
+  const dimensions = imageDimensions[src] ?? { width: 1200, height: 800 };
+  useEffect(() => {
+    if (!zoomed) return;
+    const modal = dialog.current;
+    const opener = trigger.current;
+    modal?.showModal();
+    return () => {
+      modal?.close();
+      opener?.focus();
+    };
+  }, [zoomed]);
   return (
-    <>
-      <div className="relative inline-block w-full">
-        <img
+    <figure className={className}>
+      <button
+        ref={trigger}
+        onClick={() => setZoomed(true)}
+        aria-label={`${alt} 이미지 확대`}
+        className="block cursor-zoom-in max-w-[80%] md:max-w-[75%] 2xl:max-w-[65%]"
+      >
+        <Image
           src={src}
           alt={alt}
-          // className={`${className} cursor-zoom-in transition-transform duration-200
-          //   max-w-[90%] sm:max-w-[85%] md:max-w-[80%] lg:max-w-[75%] xl:max-w-[70%] 2xl:max-w-[65%] 
-          //   max-h-[40vh] sm:max-h-[45vh] md:max-h-[55vh] lg:max-h-[60vh] xl:max-h-[60vh] 2xl:max-h-[50vh]`}
-            className={`${className} cursor-zoom-in transition-transform duration-200
-            max-w-[80%] md:max-w-[75%] 2xl:max-w-[65%] 
-            max-h-[40vh] md:max-h-[45vh]  2xl:max-h-[50vh]`}
-            onClick={handleZoom}
+          width={dimensions.width}
+          height={dimensions.height}
+          sizes="(max-width: 767px) 80vw, 65vw"
+          unoptimized={!src.startsWith("/") || src.endsWith(".svg")}
+          className="w-auto h-auto max-h-[45vh] object-contain rounded"
         />
-        {caption && (
-          <p className="text-sm text-gray-500 mt-1 max-w-[95%] sm:max-w-[90%] md:max-w-[85%] lg:max-w-[80%] xl:max-w-[75%] 2xl:max-w-[70%]">
-            {caption}
-          </p>
-        )}
-      </div>
-
-      {isZoomed && (
-        <div
-          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center"
-          onClick={handleZoom}
-        >
-          <div className="relative w-[95vw] h-[95vh] sm:w-[90vw] sm:h-[90vh] md:w-[80vw] md:h-[80vh] lg:w-[70vw] lg:h-[70vh]">
-            <img
-              src={src}
-              alt={alt}
-              className="w-full h-full object-contain cursor-zoom-out"
-            />
-            <button
-              className="absolute top-4 right-4 bg-black/50 rounded-full p-2 hover:bg-black/70 transition-colors"
-              onClick={handleZoom}
-            >
-              <ZoomOut className="w-6 h-6 text-white" />
-            </button>
-          </div>
-        </div>
+      </button>
+      {caption && (
+        <figcaption className="text-sm text-[var(--muted)] mt-1">
+          {caption}
+        </figcaption>
       )}
-    </>
+      {zoomed &&
+        createPortal(
+          <dialog
+            ref={dialog}
+            aria-label={`${alt} 확대 이미지`}
+            className="image-dialog"
+            onCancel={() => setZoomed(false)}
+            onClose={() => setZoomed(false)}
+            onClick={(event) => {
+              if (event.target === event.currentTarget) setZoomed(false);
+            }}
+          >
+            <div className="relative">
+              <Image
+                src={src}
+                alt={alt}
+                width={dimensions.width}
+                height={dimensions.height}
+                unoptimized
+                className="w-auto h-auto max-w-[90vw] max-h-[90dvh] object-contain"
+              />
+              <button
+                autoFocus
+                aria-label="확대 이미지 닫기"
+                className="absolute top-2 right-2 rounded-full bg-black/60 text-white p-2"
+                onClick={() => setZoomed(false)}
+              >
+                <X size={24} />
+              </button>
+            </div>
+          </dialog>,
+          document.body,
+        )}
+    </figure>
   );
-} 
+}

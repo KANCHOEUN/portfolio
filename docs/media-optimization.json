@@ -1,0 +1,159 @@
+{
+  "originalBytes": 330380208,
+  "optimizedBytes": 5001773,
+  "reductionPercent": 98.49,
+  "assets": [
+    {
+      "src": "/images/posts/parsley/check-ranking.gif",
+      "video": "/images/posts/parsley/check-ranking.mp4",
+      "poster": "/images/posts/parsley/check-ranking.webp",
+      "originalBytes": 5834229,
+      "optimizedBytes": 519376,
+      "width": 1280,
+      "height": 672,
+      "duration": 70.933333,
+      "originalDuration": 70.91
+    },
+    {
+      "src": "/images/posts/parsley/enter-studyroom.gif",
+      "video": "/images/posts/parsley/enter-studyroom.mp4",
+      "poster": "/images/posts/parsley/enter-studyroom.webp",
+      "originalBytes": 179846886,
+      "optimizedBytes": 476445,
+      "width": 1280,
+      "height": 900,
+      "duration": 21.266667,
+      "originalDuration": 21.24
+    },
+    {
+      "src": "/images/posts/parsley/setting-profile.gif",
+      "video": "/images/posts/parsley/setting-profile.mp4",
+      "poster": "/images/posts/parsley/setting-profile.webp",
+      "originalBytes": 2550750,
+      "optimizedBytes": 281093,
+      "width": 1280,
+      "height": 900,
+      "duration": 8.933333,
+      "originalDuration": 8.95
+    },
+    {
+      "src": "/images/posts/parsley/simple-harvest-herb.gif",
+      "video": "/images/posts/parsley/simple-harvest-herb.mp4",
+      "poster": "/images/posts/parsley/simple-harvest-herb.webp",
+      "originalBytes": 6497062,
+      "optimizedBytes": 440992,
+      "width": 1280,
+      "height": 900,
+      "duration": 21.133333,
+      "originalDuration": 21.11
+    },
+    {
+      "src": "/images/posts/parsley/simple-planting-herb.gif",
+      "video": "/images/posts/parsley/simple-planting-herb.mp4",
+      "poster": "/images/posts/parsley/simple-planting-herb.webp",
+      "originalBytes": 2401609,
+      "optimizedBytes": 139955,
+      "width": 1280,
+      "height": 900,
+      "duration": 5.4,
+      "originalDuration": 5.41
+    },
+    {
+      "src": "/images/posts/re-verse/archive-description.gif",
+      "video": "/images/posts/re-verse/archive-description.mp4",
+      "poster": "/images/posts/re-verse/archive-description.webp",
+      "originalBytes": 7640089,
+      "optimizedBytes": 308798,
+      "width": 1280,
+      "height": 842,
+      "duration": 3.733333,
+      "originalDuration": 3.71
+    },
+    {
+      "src": "/images/posts/re-verse/developer-info.gif",
+      "video": "/images/posts/re-verse/developer-info.mp4",
+      "poster": "/images/posts/re-verse/developer-info.webp",
+      "originalBytes": 13904649,
+      "optimizedBytes": 439312,
+      "width": 1280,
+      "height": 846,
+      "duration": 19.266667,
+      "originalDuration": 19.28
+    },
+    {
+      "src": "/images/posts/re-verse/invite-and-remove-friend-from-archive.gif",
+      "video": "/images/posts/re-verse/invite-and-remove-friend-from-archive.mp4",
+      "poster": "/images/posts/re-verse/invite-and-remove-friend-from-archive.webp",
+      "originalBytes": 8350071,
+      "optimizedBytes": 337834,
+      "width": 1280,
+      "height": 842,
+      "duration": 11.6,
+      "originalDuration": 11.59
+    },
+    {
+      "src": "/images/posts/re-verse/invite-friend-to-archive.gif",
+      "video": "/images/posts/re-verse/invite-friend-to-archive.mp4",
+      "poster": "/images/posts/re-verse/invite-friend-to-archive.webp",
+      "originalBytes": 1173500,
+      "optimizedBytes": 107541,
+      "width": 1280,
+      "height": 832,
+      "duration": 7.733333,
+      "originalDuration": 7.7
+    },
+    {
+      "src": "/images/posts/re-verse/mine-game.gif",
+      "video": "/images/posts/re-verse/mine-game.mp4",
+      "poster": "/images/posts/re-verse/mine-game.webp",
+      "originalBytes": 3240045,
+      "optimizedBytes": 194198,
+      "width": 1280,
+      "height": 830,
+      "duration": 6.466667,
+      "originalDuration": 6.48
+    },
+    {
+      "src": "/images/posts/re-verse/select-character.gif",
+      "video": "/images/posts/re-verse/select-character.mp4",
+      "poster": "/images/posts/re-verse/select-character.webp",
+      "originalBytes": 16078177,
+      "optimizedBytes": 223981,
+      "width": 1280,
+      "height": 832,
+      "duration": 16.733333,
+      "originalDuration": 16.73
+    },
+    {
+      "src": "/images/posts/re-verse/write-and-view-post-at-friend-archive.gif",
+      "video": "/images/posts/re-verse/write-and-view-post-at-friend-archive.mp4",
+      "poster": "/images/posts/re-verse/write-and-view-post-at-friend-archive.webp",
+      "originalBytes": 24301849,
+      "optimizedBytes": 407545,
+      "width": 1280,
+      "height": 842,
+      "duration": 8,
+      "originalDuration": 7.97
+    },
+    {
+      "src": "/images/posts/re-verse/write-post-at-my-archive.gif",
+      "video": "/images/posts/re-verse/write-post-at-my-archive.mp4",
+      "poster": "/images/posts/re-verse/write-post-at-my-archive.webp",
+      "originalBytes": 58561292,
+      "optimizedBytes": 1124703,
+      "width": 1280,
+      "height": 842,
+      "duration": 36.933333,
+      "originalDuration": 36.92
+    }
+  ],
+  "unchangedVideos": [
+    {
+      "path": "public/images/posts/re-verse/아카이브-음성-채팅.mp4",
+      "bytes": 4473917
+    }
+  ],
+  "allDemoOriginalBytes": 334854125,
+  "allDemoOptimizedBytes": 9475690,
+  "allDemoReductionPercent": 97.17
+}

@@ -2,645 +2,257 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+@font-face {
+  font-family: Pretendard;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/Pretendard-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: Pretendard;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/Pretendard-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: Pretendard;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/Pretendard-SemiBold.woff2") format("woff2");
+}
+@font-face {
+  font-family: Pretendard;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/Pretendard-Bold.woff2") format("woff2");
+}
+:root,
+.dark {
+  color-scheme: dark;
   --background: #282c34;
+  --surface: #21252b;
+  --elevated: #2c313a;
   --foreground: #abb2bf;
+  --muted: #8790a1;
+  --border: #3e4451;
   --red: #e06c75;
   --green: #98c379;
   --yellow: #e5c07b;
   --blue: #61afef;
   --purple: #c678dd;
   --cyan: #56b6c2;
-  --border: #3e4451;
 }
-
-@font-face {
-  font-family: "Pretendard";
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/Pretendard-Regular.otf") format("otf");
+.light {
+  color-scheme: light;
+  --background: #fafafa;
+  --surface: #f0f0f0;
+  --elevated: #eaeaeb;
+  --foreground: #383a42;
+  --muted: #646b78;
+  --border: #d4d4d4;
+  --red: #e45649;
+  --green: #427f3e;
+  --yellow: #946300;
+  --blue: #3068cc;
+  --purple: #a626a4;
+  --cyan: #0184bc;
 }
-
-@font-face {
-  font-family: "Pretendard";
-  font-weight: 500;
-  font-display: swap;
-  src: url("/fonts/Pretendard-Medium.otf") format("otf");
-}
-
-@font-face {
-  font-family: "Pretendard";
-  font-weight: 600;
-  font-display: swap;
-  src: url("/fonts/Pretendard-SemiBold.otf") format("otf");
-}
-
-@font-face {
-  font-family: "Pretendard";
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/Pretendard-Bold.otf") format("otf");
-}
-
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: "Pretendard", system-ui, sans-serif;
+  font-family: Pretendard, system-ui, sans-serif;
 }
-
-.dark {
-  --background: #282c34;
-  --foreground: #abb2bf;
-  --red: #e06c75;
-  --green: #98c379;
-  --yellow: #e5c07b;
-  --blue: #61afef;
-  --purple: #c678dd;
-  --cyan: #56b6c2;
-  --border: #3e4451;
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
 }
-
-.light {
-  --background: #fafafa;
-  --foreground: #383a42;
-  --red: #e45649;
-  --green: #50a14f;
-  --yellow: #c18401;
-  --blue: #4078f2;
-  --purple: #a626a4;
-  --cyan: #0184bc;
-  --border: #e5e5e5;
+button:disabled {
+  opacity: 0.6;
 }
-
-/* Custom scrollbar styles */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
 ::-webkit-scrollbar-thumb {
-  background: rgba(107, 113, 125, 0.5);
+  background: var(--muted);
   border-radius: 4px;
 }
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(107, 113, 125, 0.7);
-}
-
-.light ::-webkit-scrollbar-thumb {
-  background: rgba(150, 150, 150, 0.5);
-}
-
-.light ::-webkit-scrollbar-thumb:hover {
-  background: rgba(150, 150, 150, 0.7);
-}
-
-/* Hide scrollbar arrows */
-::-webkit-scrollbar-button {
-  display: none;
-}
-
 .scrollbar-hide {
   scrollbar-width: none;
-  -ms-overflow-style: none;
 }
-
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
-
-.file-tab {
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  border-right-width: 1px;
+.site-header {
+  height: 48px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  height: 38px;
-  border-right: 1px solid #343a47;
+  justify-content: space-between;
+  padding: 0 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
 }
-
-.light .file-tab {
-  border-right: 1px solid #d4d4d4;
-}
-
-.folder {
+.workspace-layout {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.375rem 0.5rem;
-  cursor: pointer;
-  white-space: nowrap;
+  height: calc(100dvh - 48px);
+  position: relative;
+  overflow: hidden;
 }
-
-.folder:hover {
-  background-color: #2c313a;
+.workspace-main {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
-
-.light .folder:hover {
-  background-color: #eaeaeb;
+.workspace-main[hidden] {
+  display: none;
 }
-
+.workspace-content {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  position: relative;
+}
+.sidebar {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  overflow: hidden;
+}
+.folder,
 .file {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.375rem 0.5rem;
-  padding-left: 1.5rem;
-  cursor: pointer;
-  position: relative;
+  gap: 8px;
+  padding: 6px 8px;
+  text-align: left;
   white-space: nowrap;
 }
-
-.file:hover {
-  background-color: #2c313a;
+.file {
+  padding-left: 24px;
 }
-
-.light .file:hover {
-  background-color: #eaeaeb;
+.folder:hover,
+.file:hover,
+.active-file,
+.file[aria-current="page"] {
+  background: var(--elevated);
 }
-
-.active-file {
-  background-color: #2c313a;
-}
-
-.light .active-file {
-  background-color: #eaeaeb;
-}
-
-.line-number {
-  color: #636d83;
-  text-align: right;
-  padding-right: 1rem;
-  user-select: none;
-}
-
-.light .line-number {
-  color: #999;
-}
-
-/* Hierarchy lines */
-.project-container {
-  position: relative;
-}
-
 .files-container {
-  position: relative;
-  padding-left: 0.5rem;
-  border-left: 1px solid #3e4451;
-  margin-left: 0.75rem;
+  padding-left: 8px;
+  border-left: 1px solid var(--border);
+  margin-left: 12px;
 }
-
-.light .files-container {
-  border-left: 1px solid #d4d4d4;
-}
-
-/* Mobile styles */
-@media (max-width: 767px) {
-  .file-tab {
-    height: 44px; /* Slightly taller on mobile for better touch targets */
-  }
-}
-
-/* Fix light mode */
-html.light {
-  background-color: #fafafa !important;
-}
-
-html.light body {
-  background-color: #fafafa !important;
-  color: #383a42 !important;
-}
-
-html.light .bg-\[\#282c34\] {
-  background-color: #fafafa !important;
-}
-
-html.light .bg-\[\#21252b\] {
-  background-color: #f0f0f0 !important;
-}
-
-html.light .text-\[\#abb2bf\] {
-  color: #383a42 !important;
-}
-
-html.light .border-\[\#181a1f\] {
-  border-color: #d4d4d4 !important;
-}
-
-html.light .border-\[\#343a47\] {
-  border-color: #d4d4d4 !important;
-}
-
-/* Fix light mode divider colors */
-html.light .border-\[\#343a47\],
-html.light .border-\[\#181a1f\] {
-  border-color: #d4d4d4 !important;
-}
-
-/* Make sure the resize handle has the correct color in light mode */
-html.light .bg-\[\#343a47\] {
-  background-color: #d4d4d4 !important;
-}
-
-/* Add text truncation */
-.truncate {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* Input field at bottom */
-.terminal-input {
-  position: sticky;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-}
-
-/* Content padding for scrollbar - 수정된 부분 */
-.content-padding {
-  padding: 1.5rem;
+.editor-layout {
+  display: flex;
   height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
+  min-height: 0;
+  position: relative;
 }
-
-/* Terminal styles */
+.editor-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.editor-content {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+.tabs-header {
+  display: flex;
+  flex-shrink: 0;
+  overflow-x: auto;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  min-height: 38px;
+  scrollbar-width: thin;
+}
+.file-tab {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  border-right: 1px solid var(--border);
+  border-bottom: 2px solid transparent;
+}
+.active-tab {
+  border-bottom-color: var(--blue);
+}
+.viewer-header {
+  height: 38px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.article-viewer {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  min-width: 0;
+  min-height: 0;
+  border-left: 1px solid var(--border);
+  background: var(--background);
+}
+.image-dialog {
+  padding: 0;
+  background: transparent;
+  color: white;
+  max-width: 95vw;
+  max-height: 95dvh;
+  border: none;
+}
+.image-dialog::backdrop {
+  background: rgb(0 0 0 / 0.8);
+}
 .terminal-container {
   font-family: Consolas, Menlo, monospace;
   line-height: 1.5;
-  height: 100%;
-  padding: 1rem;
-  overflow: auto;
 }
-
-.terminal-output {
-  min-height: 20px;
-}
-
-.terminal-input-form {
-  display: flex;
-  align-items: center;
-}
-
-/* ASCII art styles */
-.ascii-art {
-  font-family: Consolas, Menlo, monospace;
-  white-space: pre;
-  display: inline-block;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 20px 0;
-  line-height: 1.2;
-}
-
-/* Git graph styles */
-.git-graph {
-  position: relative;
-  padding-left: 1rem;
-}
-
+.git-graph-container,
+.branch-section,
+.branch-item,
 .git-branch {
   position: relative;
 }
-
-/* 브랜치 라인 위치 고정을 위한 새로운 클래스 */
+.git-branch {
+  min-width: 64px;
+}
 .fixed-branch-line {
   position: absolute;
-  z-index: 10;
-}
-
-/* Git graph styles */
-.git-graph-container {
-  position: relative;
-}
-
-.branch-section {
-  position: relative;
-  margin-bottom: 2rem;
-}
-
-.branch-item {
-  position: relative;
-}
-
-/* 모바일 및 작은 화면에서의 스타일 개선 */
-@media (max-width: 640px) {
-  * {
-  }
-}
-
-/* 브랜치 라인 위치 고정을 위한 클래스 - 모든 화면 크기에서 동일하게 적용 */
-.git-branch {
-  position: relative;
-  min-width: 80px; /* 모든 화면에서 동일한 최소 너비 */
-}
-
-/* Add these specific light mode overrides at the end of the file */
-
-/* Fix light mode for branch items in resume page */
-html.light .bg-\[\#2c313a\] {
-  background-color: #f0f0f0 !important;
-}
-
-html.light .text-\[\#abb2bf\] {
-  color: #383a42 !important;
-}
-
-html.light .text-\[\#98c379\] {
-  color: #50a14f !important;
-}
-
-html.light .text-\[\#61afef\] {
-  color: #4078f2 !important;
-}
-
-/* Blog viewer transitions */
-.blog-viewer-enter {
-  transform: translateX(100%);
-}
-
-.blog-viewer-enter-active {
-  transform: translateX(0);
-  transition: transform 0.3s ease-in-out;
-}
-
-.blog-viewer-exit {
-  transform: translateX(0);
-}
-
-.blog-viewer-exit-active {
-  transform: translateX(100%);
-  transition: transform 0.3s ease-in-out;
-}
-
-/* Prose light mode overrides */
-html.light .prose-invert {
-  --tw-prose-body: #383a42;
-  --tw-prose-headings: #c18401;
-  --tw-prose-lead: #383a42;
-  --tw-prose-links: #4078f2;
-  --tw-prose-bold: #383a42;
-  --tw-prose-counters: #383a42;
-  --tw-prose-bullets: #383a42;
-  --tw-prose-hr: #d4d4d4;
-  --tw-prose-quotes: #383a42;
-  --tw-prose-quote-borders: #d4d4d4;
-  --tw-prose-captions: #383a42;
-  --tw-prose-code: #50a14f;
-  --tw-prose-pre-code: #50a14f;
-  --tw-prose-pre-bg: #eaeaeb;
-  --tw-prose-th-borders: #d4d4d4;
-  --tw-prose-td-borders: #d4d4d4;
-}
-
-/* Add these styles at the end of the file */
-
-/* Iframe viewer transitions */
-.iframe-viewer-enter {
-  transform: translateX(100%);
-}
-
-.iframe-viewer-enter-active {
-  transform: translateX(0);
-  transition: transform 0.3s ease-in-out;
-}
-
-.iframe-viewer-exit {
-  transform: translateX(0);
-}
-
-.iframe-viewer-exit-active {
-  transform: translateX(100%);
-  transition: transform 0.3s ease-in-out;
-}
-
-/* Fix iframe border in light mode */
-html.light iframe {
-  border: 1px solid #d4d4d4;
-}
-
-/* Split view styles */
-.split-view {
-  display: flex;
-  height: 100%;
-}
-
-.split-view-left,
-.split-view-right {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  transition: width 0.3s ease-in-out;
-}
-
-.split-view-content {
-  flex: 1;
-  overflow: auto;
-}
-
-/* 높이 관련 수정 */
-.h-full {
-  height: 100% !important;
-}
-
-/* 컨텐츠 영역이 전체 높이를 차지하도록 */
-.flex-1 {
-  flex: 1 1 0% !important;
-}
-
-/* iframe 컨테이너 스타일 */
-.iframe-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-/* 탭 헤더 스타일 개선 - 수정된 부분 */
-.tabs-header {
-  display: flex;
-  overflow-x: auto;
-  overflow-y: hidden;
-  background-color: #21252b;
-  border-bottom: 1px solid #343a47;
-  position: sticky;
-  top: 0;
-  height: 38px;
-  min-height: 38px;
-  max-height: 38px;
-  z-index: 20; /* z-index 증가 */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
-}
-
-.tabs-header::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
-}
-
-.light .tabs-header {
-  background-color: #f0f0f0;
-  border-bottom: 1px solid #d4d4d4;
-}
-
-/* 커스텀 스크롤바를 상단에 위치 */
-.tabs-header::before {
-  content: "";
-  position: absolute;
-  top: -4px;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: transparent;
-  z-index: 20;
+  z-index: 1;
   pointer-events: none;
 }
-
-.tabs-header.scrollable::before {
-  background: linear-gradient(
-    to right,
-    rgba(107, 113, 125, 0.3) 0%,
-    rgba(107, 113, 125, 0.5) 50%,
-    rgba(107, 113, 125, 0.3) 100%
-  );
-  pointer-events: auto;
-}
-
-.light .tabs-header.scrollable::before {
-  background: linear-gradient(
-    to right,
-    rgba(150, 150, 150, 0.3) 0%,
-    rgba(150, 150, 150, 0.5) 50%,
-    rgba(150, 150, 150, 0.3) 100%
-  );
-}
-
-.tabs-header .file-tab {
-  flex-shrink: 0;
-  cursor: pointer;
-  transition: border-color 0.2s;
-  height: 38px;
-  min-height: 38px;
-  max-height: 38px;
-  display: flex;
-  align-items: center;
-  padding: 0 1rem;
-  border-right: 1px solid #343a47;
-  gap: 0.5rem;
-}
-
-.light .tabs-header .file-tab {
-  border-right: 1px solid #d4d4d4;
-}
-
-.tabs-header .file-tab.active {
-  border-bottom: 2px solid #61afef;
-}
-
-/* 모바일에서의 탭 헤더 스타일 */
 @media (max-width: 767px) {
-  .tabs-header {
-    height: 44px;
+  .file-tab {
     min-height: 44px;
-    max-height: 44px;
   }
-
-  .tabs-header .file-tab {
-    height: 44px;
-    min-height: 44px;
-    max-height: 44px;
+  .has-article .editor-main {
+    display: none;
   }
-}
-
-/* 반응형 그리드 */
-@media (min-width: 640px) {
-  .grid-cols-1 {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+  .article-viewer {
+    width: 100%;
+    border-left: none;
   }
 }
-
-@media (min-width: 768px) {
-  .grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto;
+    transition-duration: 0s;
+    animation-duration: 0s;
   }
-}
-
-@media (min-width: 1024px) {
-  .grid-cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 1280px) {
-  .grid-cols-4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-/* 고정 헤더 - 수정된 부분 */
-.sticky {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
-/* 콘텐츠 헤더 고정 - 탭 헤더보다 낮은 z-index */
-/* h1.sticky {
-  background-color: #282c34;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  margin-top: 0;
-  z-index: 10; /* 탭 헤더보다 낮음 */
-/* }
-
-.light h1.sticky {
-  background-color: #fafafa;
-} */
-
-/* 탭 제목 최대 너비 */
-.max-w-150 {
-  max-width: 150px;
-}
-
-/* 탭 활성화 표시 */
-.border-b-2 {
-  border-bottom-width: 2px;
-}
-
-.border-blue-500 {
-  border-color: #61afef;
-}
-
-/* 모바일 탭 스타일 */
-@media (max-width: 767px) {
-  .tabs-header {
-    height: 44px;
-  }
-
-  .tabs-header .file-tab {
-    height: 44px;
-  }
-}
-
-/* 언어 토글 버튼 라이트 모드 색상 보강 */
-html.light button[aria-label="Toggle language"] {
-  color: #6b7280 !important;
-}
-
-html.light button[aria-label="Toggle language"]:hover {
-  color: #2563eb !important;
 }

@@ -1,0 +1,48 @@
+{
+  "method": "FontTools 4.67.0 full-font WOFF2 compression; no subsetting; CFF outline/name bytes, all glyph order/cmap and horizontal metrics compared after decoding",
+  "fonts": [
+    {
+      "weight": "Regular",
+      "originalFile": "Pretendard-Regular.otf",
+      "file": "Pretendard-Regular.woff2",
+      "originalBytes": 1574352,
+      "bytes": 790860,
+      "glyphCount": 14716,
+      "characterCount": 14336,
+      "glyphsOutlinesMetricsAndNamingPreserved": true
+    },
+    {
+      "weight": "Medium",
+      "originalFile": "Pretendard-Medium.otf",
+      "file": "Pretendard-Medium.woff2",
+      "originalBytes": 1584068,
+      "bytes": 803684,
+      "glyphCount": 14716,
+      "characterCount": 14336,
+      "glyphsOutlinesMetricsAndNamingPreserved": true
+    },
+    {
+      "weight": "SemiBold",
+      "originalFile": "Pretendard-SemiBold.otf",
+      "file": "Pretendard-SemiBold.woff2",
+      "originalBytes": 1583704,
+      "bytes": 813328,
+      "glyphCount": 14716,
+      "characterCount": 14336,
+      "glyphsOutlinesMetricsAndNamingPreserved": true
+    },
+    {
+      "weight": "Bold",
+      "originalFile": "Pretendard-Bold.otf",
+      "file": "Pretendard-Bold.woff2",
+      "originalBytes": 1576660,
+      "bytes": 818940,
+      "glyphCount": 14716,
+      "characterCount": 14336,
+      "glyphsOutlinesMetricsAndNamingPreserved": true
+    }
+  ],
+  "originalBytes": 6318784,
+  "bytes": 3226812,
+  "reductionPercent": 48.93
+}

@@ -14,7 +14,12 @@ export interface BlogPost {
   url: string;
 }
 
+export type ProjectStatus = "ongoing" | "paused" | "completed";
+
 export interface ProjectMeta {
+  status: ProjectStatus;
+  summary: string;
+  role: string;
   id: string;
   slug: string;
   name: string;
@@ -23,5 +28,5 @@ export interface ProjectMeta {
   githubUrl: string;
   icon: ProjectIcon;
   pages: ProjectPage[];
-  relatedPosts: BlogPost[];  // 블로그 포스트를 직접 포함
+  relatedPosts: BlogPost[]; // 블로그 포스트를 직접 포함
 }

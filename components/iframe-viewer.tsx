@@ -1,36 +1,37 @@
-"use client"
-
-import type React from "react"
-
+"use client";
+import { useState } from "react";
 interface IframeViewerProps {
-  url: string
-  title: string
-  onClose: () => void
+  url: string;
+  title: string;
+  onClose: () => void;
 }
-
-export default function IframeViewer({ url, title, onClose }: IframeViewerProps) {
-  // URL이 이미 디코딩되어 있는지 확인
-  const isAlreadyDecoded = url === decodeURIComponent(url)
-  const finalUrl = isAlreadyDecoded ? url : decodeURIComponent(url)
-  
-  console.log('Original URL:', url)
-  console.log('Is already decoded:', isAlreadyDecoded)
-  console.log('Final URL:', finalUrl)
-
-  // const openInNewTab = () => {
-  //   window.open(url, "_blank", "noopener,noreferrer")
-  // }
-
+export default function IframeViewer({ url, title }: IframeViewerProps) {
+  const [loadedUrl, setLoadedUrl] = useState<string | null>(null);
   return (
-    <div className="h-full flex flex-col bg-[#282c34] dark:bg-[#282c34] light:bg-[#fafafa]">
-      <div className="flex-1 overflow-hidden h-full">
-        <iframe
-          src={finalUrl}
-          title={title}
-          className="w-full h-full border-0"
-          sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-        />
+    <div className="h-full flex flex-col">
+      <div className="px-4 py-2 border-b border-[var(--border)] text-sm">
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[var(--blue)] underline"
+        >
+          원문 새 창에서 열기 ↗
+        </a>
       </div>
+      {loadedUrl !== url && (
+        <p role="status" className="px-4 py-2 text-sm">
+          글을 불러오는 중입니다. 표시되지 않으면 원문 링크를 이용해 주세요.
+        </p>
+      )}
+      <iframe
+        key={url}
+        src={url}
+        title={title}
+        onLoad={() => setLoadedUrl(url)}
+        className="w-full min-h-0 flex-1 border-0"
+        sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+      />
     </div>
-  )
+  );
 }

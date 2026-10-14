@@ -1,9 +1,9 @@
 export const dynamic = 'force-dynamic';
 
 import { NextResponse } from 'next/server';
-import { NotionAPI } from 'notion-client';
+import { createPublicNotionClient } from '@/lib/public-notion-client';
 
-const notion = new NotionAPI({ authToken: process.env.NOTION_API_KEY });
+const notion = createPublicNotionClient();
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);

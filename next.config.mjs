@@ -1,15 +1,2 @@
-const nextConfig = {
-  // output: 'export',
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  images: {
-    unoptimized: true,
-  },
-  trailingSlash: true,
-};
-
+const nextConfig = { trailingSlash: true };
 export default nextConfig;
